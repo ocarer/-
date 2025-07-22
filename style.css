@@ -924,3 +924,254 @@ footer {
     padding: 30px;
     font-size: 1.1em;
 }
+/* auth.html 및 my_profile.html 관련 스타일 */
+
+/* auth.html의 .form-section에 적용 */
+.form-section {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    text-align: center; /* 제목과 버튼을 중앙 정렬 */
+}
+
+.form-section h2, .profile-page h2 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif; /* Poppins 폰트 사용 */
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 15px;
+    display: inline-block; /* border-bottom 너비 조절 */
+}
+
+.form-section .form-group {
+    margin-bottom: 20px;
+    text-align: left; /* 입력 필드는 왼쪽 정렬 */
+}
+
+.form-section .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-section .form-group input[type="email"],
+.form-section .form-group input[type="text"],
+.form-section .form-group input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-section .form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.2);
+    outline: none;
+}
+
+.form-section .button-submit { /* class="button-submit"로 변경 */
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: var(--primary-color); /* 기존 primary-color 사용 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-section .button-submit:hover {
+    background-color: var(--hover-color);
+}
+
+
+.form-section .auth-switch-link { /* auth-switch-link 클래스 추가 */
+    margin-top: 25px;
+    color: var(--light-text-color);
+    font-size: 0.95em;
+}
+
+.form-section .auth-switch-link a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-section .auth-switch-link a:hover {
+    text-decoration: underline;
+    color: var(--hover-color);
+}
+
+/* 프로필 페이지 스타일 */
+.profile-page {
+    max-width: 800px; /* 프로필 페이지 너비 약간 넓게 */
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.profile-info-card {
+    background-color: var(--input-background);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.profile-info-card h3 {
+    color: var(--primary-color);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.profile-info-card p {
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.profile-info-card p strong {
+    color: var(--dark-text-color);
+}
+
+.profile-info-card #logout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: var(--button-danger-background); /* 빨간색 계열 */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-info-card #logout-button:hover {
+    background-color: var(--button-danger-hover); /* 더 진한 빨간색 */
+}
+
+.profile-section {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.profile-section h3 {
+    color: var(--primary-color);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.profile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+    color: var(--text-color);
+    font-size: 1.05em;
+}
+
+.profile-list li:last-child {
+    border-bottom: none;
+}
+
+.profile-list li a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.profile-list li a:hover {
+    text-decoration: underline;
+    color: var(--hover-color);
+}
+
+.profile-list li .actions button {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--light-text-color);
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: all 0.2s ease;
+}
+
+.profile-list li .actions button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.profile-list li .loading-message,
+.profile-list li p { /* 기존 p 태그에도 적용 */
+    color: var(--light-text-color);
+    font-style: italic;
+    width: 100%; /* 너비 전체 사용 */
+    text-align: center; /* 중앙 정렬 */
+    padding: 10px 0;
+}
+
+/* 내비게이션 바 로그인/로그아웃 버튼 스타일 */
+nav .logout-button { /* nav 바로 아래 버튼에 적용 */
+    background-color: var(--button-danger-background);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+nav .logout-button:hover {
+    background-color: var(--button-danger-hover);
+}
+
+nav #nav-my-profile-link { /* 로그인 상태일 때 닉네임 강조 */
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 기존 색상 변수 추가 (혹시 없는 경우) */
+:root {
+    /* ... 기존 변수들 ... */
+    --button-danger-background: #dc3545; /* Red */
+    --button-danger-hover: #c82333; /* Darker Red */
+}
