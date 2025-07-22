@@ -1,0 +1,926 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+/* Color Palette (Bright Theme) */
+:root {
+    --primary-color: #007bff; /* 파란색 (메인 강조색) */
+    --secondary-color: #28a745; /* 녹색 (보조 강조색) */
+    --background-color: #f0f2f5; /* 아주 밝은 배경 */
+    --card-background: #ffffff; /* 카드 배경 (순백색) */
+    --text-color: #333333; /* 기본 텍스트 (진한 회색) */
+    --light-text-color: #6c757d; /* 보조 텍스트 (중간 회색) */
+    --border-color: #dee2e6; /* 테두리 색상 (연한 회색) */
+    --hover-color: #0056b3; /* primary-color 호버 */
+    --link-color: #007bff; /* 링크 색상 */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* 그림자 색상 (연하게) */
+    --input-background: #f8f9fa; /* 입력 필드 배경 */
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: var(--card-background); /* 헤더 배경도 밝게 */
+    padding: 15px 0;
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color); /* 헤더 제목 색상 변경 */
+    margin: 0;
+    font-size: 2.2em;
+    letter-spacing: 1px;
+    text-shadow: none; /* 그림자 제거 */
+}
+
+header h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header nav a {
+    color: var(--text-color); /* 네비게이션 링크 색상 변경 */
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Common button styles */
+.button-primary {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px; /* 살짝 둥글게 */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border: none;
+    cursor: pointer;
+}
+
+.button-primary:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+/* Hero Section (Index Page) */
+.hero-section {
+    text-align: center;
+    padding: 80px 20px;
+    background-color: var(--card-background);
+    border-radius: 8px; /* 살짝 둥글게 */
+    margin-top: 30px;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.hero-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: none;
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    color: var(--light-text-color);
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Controls Section (Search/Filter) */
+.controls-section {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px; /* 살짝 둥글게 */
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.search-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.controls-section input[type="text"],
+.controls-section select {
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* 살짝 둥글게 */
+    background-color: var(--input-background); /* 입력 필드 배경 */
+    color: var(--text-color);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* 화살표 색상 변경 */
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 18px;
+}
+
+.controls-section input[type="text"]::placeholder {
+    color: var(--light-text-color);
+}
+
+.controls-section input[type="text"]:focus,
+.controls-section select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* primary-color 기반 그림자 */
+}
+
+/* Challenge List (Vertical, One by One) */
+.challenge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.challenge-card {
+    background-color: var(--card-background);
+    border-radius: 8px; /* 살짝 둥글게 */
+    padding: 20px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.challenge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.challenge-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.challenge-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+.challenge-card-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.8em;
+    text-shadow: none;
+}
+
+.challenge-card .rank {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-right: 15px;
+    text-shadow: none;
+    min-width: 40px;
+    text-align: right;
+}
+
+.challenge-card p {
+    color: var(--light-text-color);
+    margin-bottom: 8px;
+}
+
+.challenge-card .difficulty {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+/* 난이도별 색상 (Geometry Dash 표준 난이도 색상 + 데몬 세부 등급) */
+.difficulty-easy { color: #4CAF50; } /* Easy - 녹색 */
+.difficulty-normal { color: #2196F3; } /* Normal - 파랑 */
+.difficulty-hard { color: #FFEB3B; } /* Hard - 노랑 */
+.difficulty-insane { color: #FF5722; } /* Insane - 주황 */
+.difficulty-easy_demon { color: #9C27B0; } /* Easy Demon - 보라 */
+.difficulty-medium_demon { color: #E91E63; } /* Medium Demon - 분홍 */
+.difficulty-hard_demon { color: #FFC107; } /* Hard Demon - 호박색 */
+.difficulty-insane_demon { color: #03A9F4; } /* Insane Demon - 하늘색 */
+.difficulty-extreme_demon { color: #F4436A; } /* Extreme Demon - 빨강 (좀 더 밝게) */
+
+
+.challenge-card .level-id-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.challenge-card .level-id-group span {
+    background-color: var(--input-background); /* 배경색 조정 */
+    padding: 6px 10px;
+    border-radius: 4px; /* 살짝 둥글게 */
+    font-family: monospace;
+    font-size: 0.9em;
+    margin-right: 10px;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.challenge-card .copy-btn {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px; /* 살짝 둥글게 */
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+}
+
+.challenge-card .copy-btn:hover {
+    background-color: #218838; /* 어두운 녹색 */
+}
+
+.challenge-card .card-footer {
+    display: flex;
+    flex-wrap: wrap; /* 내용이 많아지면 줄바꿈 */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    gap: 5px; /* 요소 간 간격 */
+}
+
+.challenge-card .creator,
+.challenge-card .verifier,
+.challenge-card .stats {
+    font-size: 0.9em;
+    color: var(--light-text-color);
+}
+
+.no-results {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--light-text-color);
+    padding: 50px 0;
+}
+
+/* Footer */
+footer {
+    background-color: var(--card-background); /* 푸터 배경도 밝게 */
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 3px solid var(--primary-color);
+    box-shadow: 0 -4px 15px var(--shadow-color);
+}
+
+/* Challenge Detail Page */
+.challenge-detail-page h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    text-shadow: none;
+}
+
+.challenge-detail-page .detail-item {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 8px; /* 살짝 둥글게 */
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.challenge-detail-page .detail-item strong {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+.challenge-detail-page .difficulty-display {
+    font-weight: 700;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.challenge-detail-page .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-top: 20px;
+    background-color: #000;
+    border-radius: 8px; /* 살짝 둥글게 */
+    border: 1px solid var(--border-color);
+}
+
+.challenge-detail-page .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.challenge-detail-page .go-back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: var(--light-text-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.challenge-detail-page .go-back-link:hover {
+    color: var(--primary-color);
+}
+
+/* General Form Styles (Upload, Auth, Submit Record) */
+.form-section {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 8px; /* 살짝 둥글게 */
+    margin-top: 30px;
+    margin-bottom: 50px;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.form-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 1.05em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* 살짝 둥글게 */
+    background-color: var(--input-background);
+    color: var(--text-color);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 18px;
+}
+
+.button-submit {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px; /* 살짝 둥글게 */
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.button-submit:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+/* Auth Page specific */
+.auth-switch-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-switch-link a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-switch-link a:hover {
+    color: var(--hover-color);
+}
+
+/* Profile Page specific */
+.profile-section {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 8px; /* 살짝 둥글게 */
+    margin-top: 30px;
+    margin-bottom: 50px;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.profile-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.profile-info p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: var(--light-text-color);
+}
+
+.profile-info strong {
+    color: var(--text-color);
+}
+
+.profile-records, .profile-uploads {
+    margin-top: 40px;
+}
+
+.profile-records h3, .profile-uploads h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--secondary-color);
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.profile-list {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-list li {
+    background-color: var(--input-background); /* 배경색 조정 */
+    padding: 15px;
+    border-radius: 6px; /* 살짝 둥글게 */
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.profile-list li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.profile-list li a:hover {
+    color: var(--hover-color);
+}
+
+.profile-list .actions button {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--light-text-color);
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.9em;
+    padding: 6px 10px;
+    border-radius: 4px; /* 살짝 둥글게 */
+    transition: all 0.3s ease;
+}
+
+.profile-list .actions button:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Submit Record Page specific */
+.record-challenge-info {
+    background-color: var(--input-background); /* 배경색 조정 */
+    padding: 20px;
+    border-radius: 6px; /* 살짝 둥글게 */
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+.record-challenge-info p {
+    margin: 5px 0;
+    color: var(--light-text-color);
+}
+.record-challenge-info strong {
+    color: var(--text-color);
+}
+
+/* No results / Not found messages */
+.loading-message, .not-found-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--light-text-color);
+    padding: 50px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header nav {
+        margin-top: 15px;
+    }
+
+    header nav a {
+        margin: 0 10px;
+    }
+
+    .hero-section h2 {
+        font-size: 2.2em;
+    }
+
+    .challenge-card {
+        padding: 15px;
+    }
+
+    .challenge-card-header h3 {
+        font-size: 1.5em;
+    }
+
+    .challenge-card .rank {
+        font-size: 1.8em;
+        margin-right: 10px;
+        min-width: 30px;
+    }
+
+    .controls-section input[type="text"],
+    .controls-section select {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .challenge-detail-page h2 {
+        font-size: 2.2em;
+    }
+
+    .challenge-detail-page .detail-item {
+        padding: 20px;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+
+    .form-section h2 {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .hero-section h2 {
+        font-size: 1.8em;
+    }
+
+    .challenge-card-header h3 {
+        font-size: 1.2em;
+    }
+
+    .challenge-card .rank {
+        font-size: 1.5em;
+    }
+    
+    .challenge-card .level-id-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .challenge-card .level-id-group span {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+}
+/* 챌린지 카드 내 이미지 미리보기 스타일 */
+.challenge-card-link {
+    display: flex; /* 가로 배열을 위해 flex 사용 */
+    align-items: flex-start; /* 상단 정렬 */
+    gap: 20px; /* 이미지와 텍스트 사이 간격 */
+    height: 100%; /* 카드 전체 높이 사용 */
+}
+
+.challenge-card-main-content {
+    flex-grow: 1; /* 텍스트 부분이 남은 공간을 차지하도록 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 푸터를 하단에 고정 */
+    height: 100%; /* 부모 flex-container의 높이를 상속 */
+}
+
+.challenge-image-preview {
+    flex-shrink: 0; /* 이미지가 줄어들지 않도록 */
+    width: 200px; /* 고정 너비 */
+    height: 150px; /* 고정 높이 */
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--input-background);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.challenge-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 */
+}
+
+/* 상세 페이지 기록 카드 내 클리어 이미지 스타일 */
+.record-card .record-image {
+    margin-top: 10px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; /* 컨테이너 너비를 넘지 않도록 */
+    height: auto;
+}
+
+.record-card .record-image img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* 이미지 하단 여백 제거 */
+}
+
+/* Zre Verified specific styles (철자 'Zre'로 변경) */
+.record-card.zre-verified {
+    border: 2px solid var(--secondary-color); /* Zre 인증 시 녹색 테두리 */
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); /* 녹색 그림자 */
+    background-color: #e6ffe6; /* 아주 연한 녹색 배경 */
+}
+
+.record-card.zre-verified .zre-proof {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--secondary-color); /* 녹색 점선 */
+    color: var(--text-color);
+}
+
+.record-card.zre-verified .zre-proof h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1em;
+}
+
+.record-card.zre-verified .zre-proof p {
+    font-size: 0.95em;
+    margin-bottom: 5px;
+}
+
+.record-card.zre-verified .zre-proof a {
+    color: var(--secondary-color); /* Zre 링크는 녹색 */
+    text-decoration: underline;
+}
+
+/* Optional: Zre badge for list items (profile page) */
+.profile-list li .zre-tag {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* Responsive adjustment for image preview */
+@media (max-width: 768px) {
+    .challenge-card-link {
+        flex-direction: column; /* 작은 화면에서는 세로로 쌓이도록 */
+        align-items: stretch; /* 늘어나도록 */
+    }
+
+    .challenge-image-preview {
+        width: 100%; /* 너비를 100%로 채움 */
+        height: 200px; /* 높이를 늘림 */
+        margin-top: 15px; /* 텍스트와 이미지 사이 간격 */
+    }
+}
+/* Zure Verification Styles */
+.submitted-records-section {
+    margin-top: 40px;
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.submitted-records-section h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.records-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.record-card {
+    background-color: var(--input-background); /* 카드 배경을 조금 더 어둡게 */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 그림자 연하게 */
+    position: relative;
+    overflow: hidden; /* 즈레 배지 오버플로우 대비 */
+}
+
+.record-card .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted var(--border-color);
+}
+
+.record-card .record-submitter {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.record-card .record-date {
+    font-size: 0.85em;
+    color: var(--light-text-color);
+}
+
+.record-card .record-comment {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.record-card .record-video a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.record-card .record-video a:hover {
+    color: var(--hover-color);
+}
+
+/* Zure Verified specific styles */
+.record-card.zure-verified {
+    border: 2px solid var(--secondary-color); /* 즈레인증 시 녹색 테두리 */
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); /* 녹색 그림자 */
+    background-color: #e6ffe6; /* 아주 연한 녹색 배경 */
+}
+
+.record-card.zure-verified .zure-proof {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--secondary-color); /* 녹색 점선 */
+    color: var(--text-color);
+}
+
+.record-card.zure-verified .zure-proof h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1em;
+}
+
+.record-card.zure-verified .zure-proof p {
+    font-size: 0.95em;
+    margin-bottom: 5px;
+}
+
+.record-card.zure-verified .zure-proof a {
+    color: var(--secondary-color); /* 즈레 링크는 녹색 */
+    text-decoration: underline;
+}
+
+/* Optional: Zure badge for list items (profile page) */
+.profile-list li .zure-tag {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.no-records-message {
+    text-align: center;
+    color: var(--light-text-color);
+    padding: 30px;
+    font-size: 1.1em;
+}

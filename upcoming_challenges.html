@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="upcoming-page-title">업커밍 챌린지 - Zre Challenge List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <div class="container">
+        <h1><a href="index.html">Zre Challenge List</a></h1>
+        <nav>
+            <a href="challenge_list.html">챌린지 목록</a>
+            <a href="upload_challenge.html">챌린지 업로드</a>
+            <a href="upcoming_challenges.html">업커밍 챌린지</a> <a href="my_profile.html">내 프로필</a>
+            <a href="auth.html">로그인/회원가입</a>
+        </nav>
+    </div>
+</header>
+
+    <main class="container">
+        <section class="hero-section" style="padding: 40px 20px;">
+            <h2>🚀 곧 공개될 챌린지들 🚀</h2>
+            <p>현재 검증 중이거나 곧 목록에 추가될 예정인 챌린지들을 여기서 확인하세요. 클리어 기록은 아직 제출할 수 없습니다.</p>
+        </section>
+
+        <section class="upcoming-section">
+            <div id="upcoming-challenge-list" class="challenge-list">
+                <p class="loading-message">업커밍 챌린지를 불러오는 중...</p>
+                <p class="not-found-message" style="display: none;">현재 등록된 업커밍 챌린지가 없습니다.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Zre Challenge List. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
