@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 프로필</title>
+    <title>내 프로필 - Zre Challenge List</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-    <div class="container">
-        <h1><a href="index.html">Zre Challenge List</a></h1>
-        <nav>
-            <a href="challenge_list.html">챌린지 목록</a>
-            <a href="upload_challenge.html">챌린지 업로드</a>
-            <a href="upcoming_challenges.html">업커밍 챌린지</a> <a href="my_profile.html">내 프로필</a>
-            <a href="auth.html">로그인/회원가입</a>
-        </nav>
-    </div>
-</header>
+        <div class="container">
+            <h1><a href="index.html">Zre Challenge List</a></h1>
+            <nav>
+                <a href="challenge_list.html">챌린지 목록</a>
+                <a href="upload_challenge.html">챌린지 업로드</a>
+                <a href="upcoming_challenges.html">업커밍 챌린지</a>
+                <a href="my_profile.html" id="nav-my-profile-link" style="display: none;">내 프로필</a>
+                <a href="auth.html" id="nav-auth-link">로그인/회원가입</a>
+                <button id="nav-logout-button" class="logout-button" style="display: none;">로그아웃</button>
+            </nav>
+        </div>
+    </header>
 
-    <main class="container">
+    <main class="container profile-page">
+        <h2 class="section-title">내 프로필</h2>
+
+        <div class="profile-info-card">
+            <h3>계정 정보</h3>
+            <p><strong>닉네임:</strong> <span id="profile-nickname"></span></p>
+            <p><strong>이메일:</strong> <span id="profile-email"></span></p>
+            <button id="logout-button" class="button-danger">로그아웃</button>
+        </div>
+
         <section class="profile-section">
-            <h2>내 프로필</h2>
-            <div class="profile-info">
-                <p><strong>닉네임:</strong> <span id="profile-nickname">Guest</span></p>
-                <p><strong>이메일:</strong> <span id="profile-email">guest@example.com</span></p>
-                <button class="button-primary profile-edit-btn">프로필 수정</button>
-            </div>
+            <h3>내가 업로드한 챌린지</h3>
+            <ul id="uploaded-challenges-list" class="profile-list">
+                <li><p class="loading-message">업로드한 챌린지를 불러오는 중...</p></li>
+            </ul>
+        </section>
 
-            <div class="profile-uploads">
-                <h3>내가 업로드한 챌린지</h3>
-                <ul id="uploaded-challenges-list" class="profile-list">
-                    <li><p>업로드한 챌린지가 없습니다.</p></li>
-                </ul>
-            </div>
-
-            <div class="profile-records">
-                <h3>내가 제출한 기록</h3>
-                <ul id="submitted-records-list" class="profile-list">
-                    <li><p>제출한 기록이 없습니다.</p></li>
-                </ul>
-            </div>
+        <section class="profile-section">
+            <h3>내가 제출한 기록</h3>
+            <ul id="submitted-records-list" class="profile-list">
+                <li><p class="loading-message">제출한 기록을 불러오는 중...</p></li>
+            </ul>
         </section>
     </main>
 

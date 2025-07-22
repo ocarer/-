@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 백엔드 API의 기본 URL을 정의합니다.
+    // 실제 배포 시에는 백엔드 서버의 실제 도메인으로 변경해야 합니다.
+    const BACKEND_API_URL = 'http://localhost:3000';
+
     // 챌린지 데이터 (업커밍 챌린지 분리)
     const challenges = [
         {
@@ -12,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 3500,
             completions: 1,
             attempts: 2000,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // 예시 유튜브 링크 (embed 형식)
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
         {
             id: '2', rank: 2,
@@ -66,12 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts: 264,
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         }
-    ].sort((a, b) => a.rank - b.rank); // 실제 랭킹 챌린지만 정렬
+    ].sort((a, b) => a.rank - b.rank);
 
-    // 업커밍 챌린지 데이터
     const upcomingChallenges = [
         {
-            id: '101', // ID는 기존 챌린지와 겹치지 않게 변경
+            id: '101',
             name: 'Gonna go FULL',
             difficulty: 'extreme_demon',
             description: '현재 Top 1으로 예상되는 매우 어려운 업커밍 챌린지입니다. 기대해주세요!',
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'PendingV',
             levelId: 'UPCOM001',
             views: 50,
-            expectedRank: 'Top 1', // 예상 랭크 추가
+            expectedRank: 'Top 1',
             videoUrl: ''
         },
         {
@@ -106,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             expectedRank: 'Top 1',
             videoUrl: ''
         }
-    ].sort((a, b) => a.name.localeCompare(b.name)); // 이름순으로 정렬 (혹은 원하는 기준으로)
+    ].sort((a, b) => a.name.localeCompare(b.name));
 
 
     const difficultyMap = {
@@ -124,14 +127,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPage = window.location.pathname.split('/').pop();
     const urlParams = new URLSearchParams(window.location.search);
 
+    // --- 가상의 사용자 데이터 및 세션 관리 (백엔드 연동) ---
+    // 로그인된 사용자 정보와 JWT 토큰을 localStorage에서 가져옵니다.
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
+    let authToken = localStorage.getItem('authToken') || null;
+
     // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
-    // challenge_list.html 에서 미리보기로도 사용됨
-    const submittedRecords = [
+    // 이 데이터는 백엔드와 연동될 때 서버에서 가져오고 저장해야 합니다.
+    let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [
         { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: 'https://via.placeholder.com/200x150?text=Clear+Image+1', comment: '간신히 깼습니다!', submitter: 'NormalUser', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: 'http://googleusercontent.com/file_content/10', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'Zre', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: 'https://via.placeholder.com/300x200?text=Zre+Proof+Image' },
+        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: 'http://googleusercontent.com/file_content/10', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: 'https://via.placeholder.com/300x200?text=Zre+Proof+Image' },
         { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: 'https://via.placeholder.com/200x150?text=Clear+Image+3', comment: '깔끔하게 클리어!', submitter: 'WavePro', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
         { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: 'https://via.placeholder.com/200x150?text=Gonna+go+Clear', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', isZre: false, zreVideoUrl: '', zreImageUrl: '' }
     ];
+
+    // 임시 업로드 챌린지 데이터
+    // 이 데이터도 백엔드와 연동될 때 서버에서 가져오고 저장해야 합니다.
+    let uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges')) || [
+        {
+            id: 'upl1',
+            name: 'My Custom Easy Demon',
+            difficulty: 'easy_demon',
+            description: '내가 만든 쉬운 데몬 챌린지!',
+            creator: 'TestUser',
+            verifier: 'GDPro',
+            levelId: 'MYLEVEL001',
+            views: 100,
+            completions: 5,
+            attempts: 50,
+            videoUrl: ''
+        },
+        {
+            id: 'upl2',
+            name: 'Another Hard One',
+            difficulty: 'hard_demon',
+            description: '매우 어려운 챌린지.',
+            creator: 'TestUser',
+            verifier: 'ExpertV',
+            levelId: 'MYLEVEL002',
+            views: 200,
+            completions: 1,
+            attempts: 300,
+            videoUrl: ''
+        }
+    ];
+
 
     // --- Helper Functions ---
     function copyToClipboard(text, buttonElement) {
@@ -147,6 +187,124 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('클립보드 복사 실패:', err);
             alert('클립보드 복사에 실패했습니다. 수동으로 복사해주세요: ' + text);
         });
+    }
+
+    // --- 내비게이션 바 업데이트 ---
+    function updateAuthNavItem() {
+        const navMyProfileLink = document.getElementById('nav-my-profile-link');
+        const navAuthLink = document.getElementById('nav-auth-link');
+        const navLogoutButton = document.getElementById('nav-logout-button');
+
+        if (loggedInUser && authToken) { // 토큰도 함께 확인
+            if (navMyProfileLink) {
+                navMyProfileLink.textContent = `내 프로필 (${loggedInUser.nickname})`;
+                navMyProfileLink.style.display = 'inline-block';
+            }
+            if (navAuthLink) {
+                navAuthLink.style.display = 'none';
+            }
+            if (navLogoutButton) {
+                navLogoutButton.style.display = 'inline-block';
+                navLogoutButton.onclick = () => {
+                    loggedInUser = null;
+                    authToken = null;
+                    localStorage.removeItem('loggedInUser');
+                    localStorage.removeItem('authToken');
+                    alert('로그아웃 되었습니다.');
+                    window.location.href = 'index.html';
+                };
+            }
+        } else {
+            if (navMyProfileLink) {
+                navMyProfileLink.style.display = 'none';
+            }
+            if (navAuthLink) {
+                navAuthLink.style.display = 'inline-block';
+                navAuthLink.textContent = '로그인/회원가입';
+            }
+            if (navLogoutButton) {
+                navLogoutButton.style.display = 'none';
+            }
+        }
+    }
+    updateAuthNavItem(); // 페이지 로드 시 내비게이션 바 업데이트
+
+    // --- 페이지별 로직 ---
+
+    // --- 메인 페이지 로직 (`index.html`) ---
+    if (currentPage === 'index.html' || currentPage === '') {
+        const topChallengesContainer = document.getElementById('top-challenges-container');
+        const upcomingChallengesContainer = document.getElementById('upcoming-challenges-container');
+
+        if (topChallengesContainer) {
+            topChallengesContainer.innerHTML = '';
+            challenges.slice(0, 5).forEach(challenge => {
+                const card = createChallengeCard(challenge, false);
+                topChallengesContainer.appendChild(card);
+            });
+        }
+
+        if (upcomingChallengesContainer) {
+            upcomingChallengesContainer.innerHTML = '';
+            const latestUpcoming = [...upcomingChallenges].sort((a,b) => parseInt(b.id.replace('UPCOM', '')) - parseInt(a.id.replace('UPCOM', ''))).slice(0, 3);
+
+            latestUpcoming.forEach(challenge => {
+                const card = createChallengeCard(challenge, true);
+                upcomingChallengesContainer.appendChild(card);
+            });
+        }
+
+        function createChallengeCard(challenge, isUpcoming) {
+            const card = document.createElement('div');
+            card.classList.add('challenge-card');
+
+            const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
+            const attemptsInfo = challenge.attempts > 0 ? ` (${challenge.attempts} att Clear)` : '';
+            const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
+            const rankDisplay = challenge.rank ? `<span class="rank">#${challenge.rank}</span>` : '';
+            const expectedRankDisplay = isUpcoming && challenge.expectedRank ? `<p class="expected-rank"><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
+
+            const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id);
+            let imagePreviewHtml = '';
+            if (!isUpcoming && firstRecord && firstRecord.recordImageUrl) {
+                imagePreviewHtml = `
+                    <div class="challenge-image-preview">
+                        <img src="${firstRecord.recordImageUrl}" alt="${challenge.name} 클리어 이미지">
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <a href="challenge_detail.html?id=${challenge.id}${isUpcoming ? '&upcoming=true' : ''}" class="challenge-card-link">
+                    <div class="challenge-card-main-content">
+                        <div class="challenge-card-header">
+                            ${rankDisplay}
+                            <h3>${challenge.name}${attemptsInfo}</h3>
+                        </div>
+                        <p class="difficulty ${difficultyInfo.class}">${difficultyInfo.name}</p>
+                        ${expectedRankDisplay}
+                        <p class="description-preview">${challenge.description.length > 100 ? challenge.description.substring(0, 100) + '...' : challenge.description}</p>
+                        <div class="level-id-group">
+                            <span>ID: ${challenge.levelId}</span>
+                            <button class="copy-btn" data-id="${challenge.levelId}" type="button">복사</button>
+                        </div>
+                        <div class="card-footer">
+                            <span class="creator">제작: ${challenge.creator}</span>
+                            ${verifierInfo}
+                            <span class="stats">조회수: ${challenge.views} | 완료: ${challenge.completions || 0}</span>
+                        </div>
+                    </div>
+                    ${imagePreviewHtml}
+                </a>
+            `;
+            card.querySelector('.copy-btn')?.addEventListener('click', (event) => {
+                event.stopPropagation();
+                event.preventDefault();
+                copyToClipboard(event.target.dataset.id, event.target);
+            });
+            return card;
+        }
+
     }
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
@@ -174,8 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const attemptsInfo = challenge.attempts > 0 ? ` (${challenge.attempts} att Clear)` : '';
                 const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
 
-                // 해당 챌린지의 첫 번째 기록 이미지 가져오기
-                const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id);
+                const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id && record.recordImageUrl);
                 let imagePreviewHtml = '';
                 if (firstRecord && firstRecord.recordImageUrl) {
                     imagePreviewHtml = `
@@ -187,7 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 card.innerHTML = `
                     <a href="challenge_detail.html?id=${challenge.id}" class="challenge-card-link">
-                        <div class="challenge-card-main-content"> <div class="challenge-card-header">
+                        <div class="challenge-card-main-content">
+                            <div class="challenge-card-header">
                                 <span class="rank">#${challenge.rank}</span>
                                 <h3>${challenge.name}${attemptsInfo}</h3>
                             </div>
@@ -263,7 +421,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filterAndSortChallenges();
 
-    // --- 업커밍 챌린지 페이지 로직 (`upcoming_challenges.html`) ---
     } else if (currentPage === 'upcoming_challenges.html') {
         const upcomingListContainer = document.getElementById('upcoming-challenge-list');
         const noResultsMessage = document.querySelector('.not-found-message');
@@ -287,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
                 const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
                 const expectedRankInfo = challenge.expectedRank ? `<p><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
-                
+
                 card.innerHTML = `
                     <a href="challenge_detail.html?id=${challenge.id}&upcoming=true" class="challenge-card-link">
                         <div class="challenge-card-main-content">
@@ -324,7 +481,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         displayUpcomingChallenges();
 
-    // --- 챌린지 상세 페이지 로직 (`challenge_detail.html`) ---
     } else if (currentPage === 'challenge_detail.html') {
         const challengeId = urlParams.get('id');
         const isUpcoming = urlParams.get('upcoming') === 'true';
@@ -338,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             foundChallenge = challenges.find(c => c.id === challengeId);
         }
-        
+
         if (foundChallenge) {
             const difficultyInfo = difficultyMap[foundChallenge.difficulty] || { name: foundChallenge.difficulty, class: '', order: 0 };
             detailPageTitle.textContent = `${foundChallenge.name} - 챌린지 상세`;
@@ -390,7 +546,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <section class="submitted-records-section">
                     <h3>클리어 기록</h3>
                     <div id="records-list-container" class="records-list">
-                        </div>
+                        <!-- 클리어 기록이 여기에 로드됩니다 -->
+                    </div>
                 </section>
                 <a href="${isUpcoming ? 'upcoming_challenges.html' : 'challenge_list.html'}" class="go-back-link">← ${isUpcoming ? '업커밍 챌린지' : '챌린지'} 목록으로 돌아가기</a>
             `;
@@ -399,53 +556,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 copyToClipboard(event.target.dataset.id, event.target);
             });
 
-            // 해당 챌린지의 기록만 필터링하여 표시
             const relevantRecords = submittedRecords.filter(record => record.challengeId === foundChallenge.id);
             const recordsListDiv = document.getElementById('records-list-container');
-            if (relevantRecords.length > 0) {
-                recordsListDiv.innerHTML = '';
-                relevantRecords.forEach(record => {
-                    const recordCard = document.createElement('div');
-                    recordCard.classList.add('record-card');
-                    if (record.isZre) { // Zre로 철자 변경
-                        recordCard.classList.add('zre-verified');
-                    }
+            if (recordsListDiv) { // recordsListDiv가 존재하는지 확인
+                if (relevantRecords.length > 0) {
+                    recordsListDiv.innerHTML = '';
+                    relevantRecords.forEach(record => {
+                        const recordCard = document.createElement('div');
+                        recordCard.classList.add('record-card');
+                        if (record.isZre) {
+                            recordCard.classList.add('zre-verified');
+                        }
 
-                    let zreProofHtml = ''; // Zre로 철자 변경
-                    if (record.isZre) { // Zre로 철자 변경
-                        zreProofHtml = `
-                            <div class="zre-proof">
-                                <h4>✅ Zre 인증됨</h4>
-                                ${record.zreVideoUrl ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
-                                ${record.zreImageUrl ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;">` : ''}
+                        let zreProofHtml = '';
+                        if (record.isZre) {
+                            zreProofHtml = `
+                                <div class="zre-proof">
+                                    <h4>✅ Zre 인증됨</h4>
+                                    ${record.zreVideoUrl && record.zreVideoUrl !== '' ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
+                                    ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;">` : ''}
+                                </div>
+                            `;
+                        }
+
+                        recordCard.innerHTML = `
+                            <div class="record-header">
+                                <span class="record-submitter">${record.submitter}</span>
+                                <span class="record-date">${record.date}</span>
                             </div>
+                            <p class="record-comment">${record.comment}</p>
+                            <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
+                            ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지"></div>` : ''}
+                            ${zreProofHtml}
                         `;
-                    }
-
-                    recordCard.innerHTML = `
-                        <div class="record-header">
-                            <span class="record-submitter">${record.submitter}</span>
-                            <span class="record-date">${record.date}</span>
-                        </div>
-                        <p class="record-comment">${record.comment}</p>
-                        <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
-                        ${record.recordImageUrl ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지"></div>` : ''}
-                        ${zreProofHtml}
-                    `;
-                    recordsListDiv.appendChild(recordCard);
-                });
-            } else {
-                recordsListDiv.innerHTML = '<p class="no-records-message">아직 이 챌린지에 대한 클리어 기록이 없습니다.</p>';
+                        recordsListDiv.appendChild(recordCard);
+                    });
+                } else {
+                    recordsListDiv.innerHTML = '<p class="no-records-message">아직 이 챌린지에 대한 클리어 기록이 없습니다.</p>';
+                }
             }
+
 
         } else {
             document.querySelector('.loading-message').style.display = 'none';
             document.querySelector('.not-found-message').style.display = 'block';
-            detailPageTitle.textContent = `챌린지 없음 - Geometry Dash Challenge List`;
+            detailPageTitle.textContent = `챌린지 없음 - Zre Challenge List`;
         }
 
-    // --- 챌린지 업로드 페이지 로직 (`upload_challenge.html`) ---
     } else if (currentPage === 'upload_challenge.html') {
+        // 로그인 여부 확인
+        if (!loggedInUser) {
+            alert('챌린지를 업로드하려면 로그인이 필요합니다.');
+            window.location.href = 'auth.html';
+            return;
+        }
+
         const uploadForm = document.getElementById('upload-challenge-form');
         if (uploadForm) {
             const verifierInputHtml = `
@@ -481,11 +646,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const isUpcomingChecked = document.getElementById('is-upcoming').checked;
                 const newChallenge = {
-                    id: String(challenges.length + upcomingChallenges.length + 1),
+                    id: String(challenges.length + upcomingChallenges.length + uploadedChallenges.length + 1),
                     name: document.getElementById('challenge-name').value,
                     difficulty: document.getElementById('difficulty').value,
                     description: document.getElementById('description').value,
-                    creator: currentUser.nickname,
+                    creator: loggedInUser.nickname,
                     verifier: document.getElementById('verifier').value,
                     levelId: document.getElementById('gd-level-id').value,
                     views: 0,
@@ -506,7 +671,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     challenges.sort((a,b) => a.rank - b.rank);
                 }
 
-                alert('챌린지가 성공적으로 업로드되었습니다! (실제 저장되지 않음)');
+                uploadedChallenges.push(newChallenge);
+                localStorage.setItem('uploadedChallenges', JSON.stringify(uploadedChallenges));
+
+                alert('챌린지가 성공적으로 업로드되었습니다! (새로고침 시 데이터 초기화)');
                 console.log('새 챌린지:', newChallenge);
 
                 uploadForm.reset();
@@ -514,71 +682,74 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-    // --- 내 프로필 페이지 로직 (`my_profile.html`) ---
     } else if (currentPage === 'my_profile.html') {
+        if (!loggedInUser) {
+            alert('프로필을 보려면 로그인이 필요합니다.');
+            window.location.href = 'auth.html';
+            return;
+        }
+
         const profileNickname = document.getElementById('profile-nickname');
         const profileEmail = document.getElementById('profile-email');
         const uploadedChallengesList = document.getElementById('uploaded-challenges-list');
         const submittedRecordsList = document.getElementById('submitted-records-list');
+        const logoutButton = document.getElementById('logout-button');
 
-        const currentUser = {
-            isLoggedIn: true,
-            nickname: 'TestUser',
-            email: 'test@example.com',
-            uploadedChallenges: [...challenges.filter(c => c.creator === 'TestUser'), ...upcomingChallenges.filter(c => c.creator === 'TestUser')],
-            // 여기서는 실제 유저가 제출한 기록을 위한 임시 더미 데이터를 사용 (즈레인증 포함)
-            submittedRecords: submittedRecords.filter(r => r.submitter === 'TestUser') // TestUser의 기록만 가져옴
-        };
+        profileNickname.textContent = loggedInUser.nickname;
+        profileEmail.textContent = loggedInUser.email;
 
-        if (currentUser.isLoggedIn) {
-            profileNickname.textContent = currentUser.nickname;
-            profileEmail.textContent = currentUser.email;
+        const userUploadedChallenges = uploadedChallenges.filter(c => c.creator === loggedInUser.nickname);
 
-            if (currentUser.uploadedChallenges.length > 0) {
-                uploadedChallengesList.innerHTML = '';
-                currentUser.uploadedChallenges.forEach(challenge => {
-                    const li = document.createElement('li');
-                    const linkTarget = challenge.expectedRank ? `challenge_detail.html?id=${challenge.id}&upcoming=true` : `challenge_detail.html?id=${challenge.id}`;
-                    const challengeType = challenge.expectedRank ? ' (업커밍)' : '';
+        if (userUploadedChallenges.length > 0) {
+            uploadedChallengesList.innerHTML = '';
+            userUploadedChallenges.forEach(challenge => {
+                const li = document.createElement('li');
+                const linkTarget = challenge.expectedRank ? `challenge_detail.html?id=${challenge.id}&upcoming=true` : `challenge_detail.html?id=${challenge.id}`;
+                const challengeType = challenge.expectedRank ? ' (업커밍)' : '';
 
-                    li.innerHTML = `
-                        <a href="${linkTarget}">${challenge.name}${challengeType}</a>
-                        <div class="actions">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    `;
-                    uploadedChallengesList.appendChild(li);
-                });
-            } else {
-                uploadedChallengesList.innerHTML = '<li><p>아직 업로드한 챌린지가 없습니다.</p></li>';
-            }
-
-            if (currentUser.submittedRecords.length > 0) {
-                submittedRecordsList.innerHTML = '';
-                currentUser.submittedRecords.forEach(record => {
-                    const li = document.createElement('li');
-                    const zreTag = record.isZre ? ' <span class="zre-tag">Zre 인증</span>' : ''; // Zre로 철자 변경
-                    li.innerHTML = `
-                        <a href="challenge_detail.html?id=${record.challengeId}">${record.challengeName}</a>
-                        <span>(내 기록)${zreTag}</span>
-                        <div class="actions">
-                            <button>보기</button>
-                            <button>삭제</button>
-                        </div>
-                    `;
-                    submittedRecordsList.appendChild(li);
-                });
-            } else {
-                submittedRecordsList.innerHTML = '<li><p>아직 제출한 기록이 없습니다.</p></li>';
-            }
-
+                li.innerHTML = `
+                    <a href="${linkTarget}">${challenge.name}${challengeType}</a>
+                    <div class="actions">
+                        <button>수정</button>
+                        <button>삭제</button>
+                    </div>
+                `;
+                uploadedChallengesList.appendChild(li);
+            });
         } else {
-            alert('로그인이 필요합니다.');
-            window.location.href = 'auth.html';
+            uploadedChallengesList.innerHTML = '<li><p>아직 업로드한 챌린지가 없습니다.</p></li>';
         }
 
-    // --- 로그인/회원가입 페이지 로직 (`auth.html`) ---
+        const userSubmittedRecords = submittedRecords.filter(r => r.submitter === loggedInUser.nickname);
+
+        if (userSubmittedRecords.length > 0) {
+            submittedRecordsList.innerHTML = '';
+            userSubmittedRecords.forEach(record => {
+                const li = document.createElement('li');
+                const zreTag = record.isZre ? ' <span class="zre-tag">Zre 인증</span>' : '';
+                li.innerHTML = `
+                    <a href="challenge_detail.html?id=${record.challengeId}">${record.challengeName}</a>
+                    <span>(내 기록)${zreTag}</span>
+                    <div class="actions">
+                        <button>보기</button>
+                        <button>삭제</button>
+                    </div>
+                `;
+                submittedRecordsList.appendChild(li);
+            });
+        } else {
+            submittedRecordsList.innerHTML = '<li><p>아직 제출한 기록이 없습니다.</p></li>';
+        }
+
+        logoutButton.addEventListener('click', () => {
+            loggedInUser = null;
+            authToken = null;
+            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('authToken');
+            alert('로그아웃 되었습니다.');
+            window.location.href = 'index.html';
+        });
+
     } else if (currentPage === 'auth.html') {
         const authHeading = document.getElementById('auth-heading');
         const authButton = document.getElementById('auth-button');
@@ -587,7 +758,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const authForm = document.getElementById('auth-form');
         const authPageTitle = document.getElementById('auth-page-title');
 
-        let isLoginMode = true;
+        let isLoginMode = true; // 초기 모드: 로그인
+
+        if (loggedInUser) {
+            alert('이미 로그인되어 있습니다. 프로필 페이지로 이동합니다.');
+            window.location.href = 'my_profile.html';
+            return;
+        }
 
         function updateAuthMode() {
             if (isLoginMode) {
@@ -596,13 +773,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('switch-text').innerHTML = '계정이 없으신가요? <a href="#" id="switch-auth-mode">회원가입</a>';
                 nicknameGroup.style.display = 'none';
                 authPageTitle.textContent = '로그인';
+                document.getElementById('auth-nickname').removeAttribute('required');
             } else {
                 authHeading.textContent = '회원가입';
                 authButton.textContent = '회원가입';
                 document.getElementById('switch-text').innerHTML = '이미 계정이 있으신가요? <a href="#" id="switch-auth-mode">로그인</a>';
                 nicknameGroup.style.display = 'block';
                 authPageTitle.textContent = '회원가입';
+                document.getElementById('auth-nickname').setAttribute('required', 'required');
             }
+            // 스위치 링크 이벤트 리스너는 항상 재등록
             document.getElementById('switch-auth-mode').addEventListener('click', (e) => {
                 e.preventDefault();
                 isLoginMode = !isLoginMode;
@@ -612,38 +792,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateAuthMode();
 
-        authForm.addEventListener('submit', (event) => {
+        authForm.addEventListener('submit', async (event) => { // async 추가
             event.preventDefault();
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
             const nickname = document.getElementById('auth-nickname').value;
 
-            const tempUser = {
-                email: 'test@example.com',
-                password: 'password'
-            };
+            let apiUrl = '';
+            let requestBody = {};
 
             if (isLoginMode) {
-                if (email === tempUser.email && password === tempUser.password) {
-                    alert('로그인 성공!');
-                    window.location.href = 'my_profile.html';
-                } else {
-                    alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-                }
+                apiUrl = `${BACKEND_API_URL}/api/login`;
+                requestBody = { email, password };
             } else {
-                if (email && password && nickname) {
-                    alert(`${nickname}님, 회원가입을 환영합니다! (실제 저장되지 않음)`);
-                    isLoginMode = true;
-                    updateAuthMode();
-                    authForm.reset();
-                } else {
-                    alert('모든 필드를 채워주세요.');
+                apiUrl = `${BACKEND_API_URL}/api/signup`;
+                requestBody = { nickname, email, password };
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) { // HTTP 상태 코드가 2xx인 경우
+                    alert(data.message);
+                    if (isLoginMode) {
+                        loggedInUser = data.user;
+                        authToken = data.token;
+                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                        localStorage.setItem('authToken', authToken);
+                        updateAuthNavItem(); // 내비게이션 바 업데이트
+                        window.location.href = 'my_profile.html'; // 프로필 페이지로 이동
+                    } else {
+                        isLoginMode = true; // 회원가입 성공 후 로그인 모드로 전환
+                        updateAuthMode();
+                        authForm.reset(); // 폼 초기화
+                    }
+                } else { // HTTP 상태 코드가 2xx가 아닌 경우 (예: 400, 409, 500)
+                    alert(`오류: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
                 }
+            } catch (error) {
+                console.error('네트워크 또는 서버 통신 오류:', error);
+                alert('서버와 통신하는 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
             }
         });
 
-    // --- 기록 제출 페이지 로직 (`submit_record.html`) ---
     } else if (currentPage === 'submit_record.html') {
+        if (!loggedInUser) {
+            alert('기록을 제출하려면 로그인이 필요합니다.');
+            window.location.href = 'auth.html';
+            return;
+        }
+
         const challengeIdToSubmit = urlParams.get('challengeId');
         const recordChallengeInfo = document.getElementById('record-challenge-info');
         const submitRecordForm = document.getElementById('submit-record-form');
@@ -651,88 +857,103 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitRecordHeading = document.getElementById('submit-record-heading');
         const submitPageTitle = document.getElementById('submit-page-title');
 
-        const isZreCheckbox = document.getElementById('is-zre-verified'); // Zre로 철자 변경
-        const zreProofFields = document.getElementById('zre-proof-fields'); // Zre로 철자 변경
-        const recordImageUrlInput = document.getElementById('record-image-url'); // 일반 클리어 이미지 URL 입력 필드
+        const isZreCheckbox = document.getElementById('is-zre-verified');
+        const zreProofFields = document.getElementById('zre-proof-fields');
+        const recordImageUrlInput = document.getElementById('record-image-url');
 
-        // Zre 인증 체크박스 변경 이벤트 리스너
         if (isZreCheckbox) {
             isZreCheckbox.addEventListener('change', () => {
                 if (isZreCheckbox.checked) {
                     zreProofFields.style.display = 'block';
                 } else {
                     zreProofFields.style.display = 'none';
-                    // 체크 해제 시 필드 초기화 (선택 사항)
                     document.getElementById('zre-video-url').value = '';
                     document.getElementById('zre-image-url').value = '';
                 }
             });
         }
 
-
         const targetChallenge = challenges.find(c => c.id === challengeIdToSubmit);
-
-        // 임시 더미 사용자 데이터 (이 페이지에서만 사용되는 임시 데이터)
-        const currentUser = {
-            isLoggedIn: true,
-            nickname: 'TestUser',
-            submittedRecords: [] // 이 배열은 실제 제출 시에만 사용되므로 비워둠
-        };
 
         if (targetChallenge) {
             submitRecordHeading.textContent = `${targetChallenge.name} - 기록 제출`;
             submitPageTitle.textContent = `기록 제출 - ${targetChallenge.name}`;
             recordChallengeInfo.innerHTML = `
                 <p><strong>챌린지 이름:</strong> ${targetChallenge.name}</p>
-                <p><strong>난이도:</strong> <span class="${difficultyMap[targetChallenge.difficulty].class}">${difficultyMap[targetTargetChallenge.difficulty].name}</span></p>
+                <p><strong>난이도:</strong> <span class="${difficultyMap[targetChallenge.difficulty].class}">${difficultyMap[targetChallenge.difficulty].name}</span></p>
                 <p><strong>레벨 ID:</strong> ${targetChallenge.levelId}</p>
             `;
             submitRecordForm.style.display = 'block';
 
-            submitRecordForm.addEventListener('submit', (event) => {
+            submitRecordForm.addEventListener('submit', async (event) => { // async 추가
                 event.preventDefault();
                 const recordVideoUrl = document.getElementById('record-video-url').value;
-                const recordImageUrl = recordImageUrlInput.value; // 일반 클리어 이미지 URL 가져오기
+                const recordImageUrl = recordImageUrlInput.value;
                 const recordComment = document.getElementById('record-comment').value;
-                const isZre = document.getElementById('is-zre-verified').checked; // Zre로 철자 변경
-                const zreVideoUrl = document.getElementById('zre-video-url').value; // Zre로 철자 변경
-                const zreImageUrl = document.getElementById('zre-image-url').value; // Zre로 철자 변경
+                const isZre = document.getElementById('is-zre-verified').checked;
+                const zreVideoUrl = document.getElementById('zre-video-url').value;
+                const zreImageUrl = document.getElementById('zre-image-url').value;
 
                 if (!recordVideoUrl) {
                     alert('플레이 영상 URL을 입력해주세요.');
                     return;
                 }
-                
-                // Zre 인증 체크 시, 인증 영상 또는 인증 사진 중 하나는 필수
+
                 if (isZre && (!zreVideoUrl && !zreImageUrl)) {
                     alert('Zre 인증 시에는 인증 영상 또는 인증 사진 중 하나를 반드시 입력해야 합니다.');
                     return;
                 }
 
                 const newRecord = {
-                    id: 'rec' + (submittedRecords.length + 1), // submittedRecords의 길이에 기반하여 새 ID 생성
+                    id: 'rec' + (submittedRecords.length + 1),
                     challengeId: targetChallenge.id,
                     challengeName: targetChallenge.name,
                     videoUrl: recordVideoUrl,
-                    recordImageUrl: recordImageUrl, // 일반 클리어 이미지 URL 저장
+                    recordImageUrl: recordImageUrl,
                     comment: recordComment,
-                    submitter: currentUser.nickname,
+                    submitter: loggedInUser.nickname,
                     date: new Date().toLocaleDateString('ko-KR'),
                     isZre: isZre,
                     zreVideoUrl: zreVideoUrl,
                     zreImageUrl: zreImageUrl
                 };
 
-                // 실제로는 서버에 전송되어야 하며, 데이터가 영구적으로 저장됩니다.
-                // 여기서는 임시로 콘솔에 출력하고, submittedRecords 배열에 추가하여 다음 페이지 로드 시 반영되도록 함 (데모용)
+                // 실제로는 백엔드 API를 통해 기록을 제출해야 합니다. (예시)
+                // try {
+                //     const response = await fetch(`${BACKEND_API_URL}/api/records`, {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
+                //         },
+                //         body: JSON.stringify(newRecord),
+                //     });
+                //     const data = await response.json();
+                //     if (response.ok) {
+                //         alert(data.message);
+                //         // 실제 데이터베이스에 저장된 기록으로 submittedRecords 업데이트
+                //         // submittedRecords.push(data.record);
+                //         // localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
+                //         window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
+                //     } else {
+                //         alert(`기록 제출 실패: ${data.message}`);
+                //     }
+                // } catch (error) {
+                //     console.error('기록 제출 오류:', error);
+                //     alert('기록 제출 중 오류가 발생했습니다.');
+                // }
+
+                // 현재는 로컬 스토리지에만 저장 (데모용)
                 submittedRecords.push(newRecord);
+                localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
+
+                alert(`${targetChallenge.name} 챌린지 기록이 성공적으로 제출되었습니다! (새로고침 시 데이터 초기화)`);
                 console.log('새 기록:', newRecord);
-                alert(`${targetChallenge.name} 챌린지 기록이 성공적으로 제출되었습니다! (실제 저장되지 않음)`);
 
                 submitRecordForm.reset();
-                zreProofFields.style.display = 'none'; // 필드 숨기기
-                isZreCheckbox.checked = false; // 체크박스 해제
-                window.location.href = `challenge_detail.html?id=${targetChallenge.id}`; // 상세 페이지로 이동
+                zreProofFields.style.display = 'none';
+                isZreCheckbox.checked = false;
+                window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
             });
         } else {
             recordChallengeInfo.style.display = 'none';
