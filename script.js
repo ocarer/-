@@ -18,9 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts: 2000,
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
-        // Chaos Ship (업커밍에서 일반 챌린지로 이동, 2등, 즈레 인증 추가)
+        // Rebition 2 (새로운 챌린지 추가, 2등)
         {
-            id: '102', rank: 2, // 기존 upcoming ID 유지, 새로운 랭크
+            id: '72591414', rank: 2, // 새로운 ID, 요청된 랭크
+            name: 'Rebition 2',
+            difficulty: 'extreme_demon', // 난이도 추정
+            description: '새롭게 추가된 챌린지입니다. 649 어템으로 클리어되었습니다.',
+            creator: 'Unknown', // 제작자 추정
+            verifier: 'Unknown', // 검증자 추정
+            levelId: '72591414', // 레벨 ID는 챌린지 ID와 동일하게 설정
+            views: 0,
+            completions: 0,
+            attempts: 649, // 요청된 어템 수
+            videoUrl: '' // 영상 URL은 제공되지 않음
+        },
+        // Chaos Ship (업커밍에서 일반 챌린지로 이동, 3등으로 조정)
+        {
+            id: '102', rank: 3, // 기존 upcoming ID 유지, 새로운 랭크 3
             name: 'Chaos Ship',
             difficulty: 'insane_demon',
             description: '혼란스러운 패턴이 특징인 쉬프 챌린지입니다. 이제 공식 챌린지 목록에 추가되었습니다.',
@@ -28,29 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'ChaosV',
             levelId: 'UPCOM002',
             views: 40,
-            completions: 0, // 챌린지로 이동 시 초기 완료/시도 횟수는 0으로 설정
+            completions: 0,
             attempts: 0,
-            videoUrl: 'https://www.youtube.com/embed/your_chaos_ship_official_video', // 공식 영상 URL (필요시 업데이트)
-            isZre: true, // 즈레 인증됨
-            zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', // 즈레 인증 영상 예시
-            zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof' // 즈레 인증 이미지 예시
+            videoUrl: 'https://www.youtube.com/embed/your_chaos_ship_official_video',
+            isZre: true,
+            zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video',
+            zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof'
         },
-        // Persephone (새로운 챌린지 추가, 3등)
+        // Persephone (4등으로 조정)
         {
-            id: '6', rank: 3, // 새로운 ID, 요청된 랭크
+            id: '6', rank: 4, // 랭크 4로 조정
             name: 'Persephone',
             difficulty: 'extreme_demon',
-            description: '새롭게 추가된 익스트림 데몬 챌린지입니다.', // 설명 추가
+            description: '새롭게 추가된 익스트림 데몬 챌린지입니다.',
             creator: '레즈',
             verifier: 'GDVerifierPro',
-            levelId: '20000006', // 중복되지 않는 새로운 레벨 ID
-            views: 0, // 초기 조회수
-            completions: 0, // 초기 완료 횟수
-            attempts: 0, // 초기 시도 횟수
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // 예시 유튜브 링크
+            levelId: '20000006',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
         {
-            id: '2', rank: 4, // 기존 'Gonna go' 랭크 조정
+            id: '2', rank: 5, // 랭크 5로 조정
             name: 'Gonna go',
             difficulty: 'insane_demon',
             description: '매우 높은 순위의 챌린지로, 1125번의 시도 끝에 클리어되었습니다.',
@@ -63,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
         {
-            id: '3', rank: 5, // 기존 'Wave Hold' 랭크 조정
+            id: '3', rank: 6, // 랭크 6으로 조정
             name: 'Wave Hold',
             difficulty: 'hard_demon',
             description: '172번의 시도로 클리어된 챌린지입니다. 웨이브 컨트롤이 중요합니다.',
@@ -76,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
         {
-            id: '4', rank: 6, // 기존 'AAAAAAAAAAAAAAAAAAAAAA' 랭크 조정
+            id: '4', rank: 7, // 랭크 7로 조정
             name: 'AAAAAAAAAAAAAAAAAAAAAA',
             difficulty: 'medium_demon',
             description: '445번의 시도 끝에 클리어된 독특한 이름의 챌린지입니다.',
@@ -88,21 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts: 445,
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
-        {
-            id: '5', rank: 7, // 기존 'Unnamed 0' 랭크 조정
-            name: 'Unnamed 0',
-            difficulty: 'easy_demon',
-            description: '264번의 시도로 클리어된 챌린지입니다. 심플하지만 난이도가 있습니다.',
-            creator: 'MysteryPlayer',
-            verifier: 'TheUnnamer',
-            levelId: '02640005',
-            views: 900,
-            completions: 12,
-            attempts: 264,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-        }
-    ].sort((a, b) => a.rank - b.rank); // 랭크 기준으로 정렬
-
+    ];
     const upcomingChallenges = [
         {
             id: '101',
@@ -160,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: 'https://via.placeholder.com/200x150?text=Clear+Image+3', comment: '깔끔하게 클리어!', submitter: 'WavePro', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
         { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: 'https://via.placeholder.com/200x150?text=Gonna+go+Clear', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
         // Chaos Ship Zre 인증 기록 추가
-        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: 'https://placehold.co/200x150/000/FFF?text=Chaos+Ship+Clear', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof' }
+        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: 'https://placehold.co/200x150/000/FFF?text=Chaos+Ship+Clear', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof' },
+        // Rebition 2 샘플 기록 추가
+        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: 'https://placehold.co/200x150/000/FFF?text=Rebition+2+Clear', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', isZre: false, zreVideoUrl: '', zreImageUrl: '' }
     ];
 
     // 임시 업로드 챌린지 데이터
