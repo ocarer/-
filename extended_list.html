@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="upcoming-page-title">업커밍 챌린지 - Zre Challenge List</title>
+    <title>Extended List - Zre Challenge List</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -24,15 +25,11 @@
 </header>
 
     <main class="container">
-        <section class="hero-section" style="padding: 40px 20px;">
-            <h2>🚀 곧 공개될 챌린지들 🚀</h2>
-            <p>현재 검증 중이거나 곧 목록에 추가될 예정인 챌린지들을 여기서 확인하세요. 클리어 기록은 아직 제출할 수 없습니다.</p>
-        </section>
-
-        <section class="upcoming-section">
-            <div id="upcoming-challenge-list" class="challenge-list">
-                <p class="loading-message">업커밍 챌린지를 불러오는 중...</p>
-                <p class="not-found-message" style="display: none;">현재 등록된 업커밍 챌린지가 없습니다.</p>
+        <section class="challenge-list-section">
+            <h2 class="section-title">Extended List (10위 이하)</h2>
+            <div id="extended-challenge-list" class="challenge-cards-grid">
+                <p class="loading-message">챌린지를 불러오는 중...</p>
+                <p class="no-results" style="display: none;">해당 랭크의 챌린지가 없습니다.</p>
             </div>
         </section>
     </main>

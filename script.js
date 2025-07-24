@@ -3,7 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 실제 배포 시에는 백엔드 서버의 실제 도메인으로 변경해야 합니다.
     const BACKEND_API_URL = 'https://당신의-vercel-백엔드-도메인.vercel.app'; // <--- 이 부분을 Vercel에서 발급받은 URL로 변경하세요!
 
+    // 챌린지 랭크 기준 상수
+    // 챌린지 목록 (challenge_list.html)에 표시될 최대 랭크
+    const MAX_RANK_MAIN_LIST = 9;
+    // Extended List (extended_list.html)에 표시될 최대 랭크 (이 랭크를 초과하는 챌린지는 Legacy List로)
+    const MAX_RANK_EXTENDED_LIST_UPPER_BOUND = 19;
+
     // 챌린지 데이터 (업커밍 챌린지 분리)
+    // 요청하신 새로운 랭킹 순서와 챌린지 정보로 재구성
     const challenges = [
         {
             id: '1', rank: 1,
@@ -18,23 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts: 2000,
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
-        // Rebition 2 (새로운 챌린지 추가, 2등)
         {
-            id: '72591414', rank: 2, // 새로운 ID, 요청된 랭크
+            id: '72591414', rank: 2, // Rebition 2
             name: 'Rebition 2',
-            difficulty: 'extreme_demon', // 난이도 추정
-            description: '새롭게 추가된 챌린지입니다. 649 어템으로 클리어되었습니다.',
-            creator: 'Unknown', // 제작자 추정
-            verifier: 'Unknown', // 검증자 추정
-            levelId: '72591414', // 레벨 ID는 챌린지 ID와 동일하게 설정
-            views: 0,
-            completions: 0,
-            attempts: 649, // 요청된 어템 수
-            videoUrl: '' // 영상 URL은 제공되지 않음
+            difficulty: 'extreme_demon',
+            description: '새롭게 2위로 등극한 챌린지입니다. 649 어템으로 클리어되었습니다.',
+            creator: 'Unknown',
+            verifier: 'Unknown',
+            levelId: '72591414',
+            views: 650,
+            completions: 1,
+            attempts: 649,
+            videoUrl: ''
         },
-        // Chaos Ship (업커밍에서 일반 챌린지로 이동, 3등으로 조정)
         {
-            id: '102', rank: 3, // 기존 upcoming ID 유지, 새로운 랭크 3
+            id: '2', rank: 3, // Gonna Go
+            name: 'Gonna go',
+            difficulty: 'insane_demon',
+            description: '매우 높은 순위의 챌린지로, 1125번의 시도 끝에 클리어되었습니다.',
+            creator: 'GDMaster',
+            verifier: 'OfficialGDV',
+            levelId: '11250002',
+            views: 2800,
+            completions: 3,
+            attempts: 1125,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+        },
+        {
+            id: '102', rank: 4, // Chaos Ship (업커밍에서 이동, 즈레 인증 유지)
             name: 'Chaos Ship',
             difficulty: 'insane_demon',
             description: '혼란스러운 패턴이 특징인 쉬프 챌린지입니다. 이제 공식 챌린지 목록에 추가되었습니다.',
@@ -49,9 +67,47 @@ document.addEventListener('DOMContentLoaded', () => {
             zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video',
             zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof'
         },
-        // Persephone (4등으로 조정)
         {
-            id: '6', rank: 4, // 랭크 4로 조정
+            id: '7', rank: 5, // Rusttttt (새로운 챌린지)
+            name: 'Rusttttt',
+            difficulty: 'hard_demon', // 난이도 추정
+            description: '새롭게 추가된 챌린지입니다. 녹슨 듯한 분위기가 특징입니다.',
+            creator: 'NewCreator',
+            verifier: 'NewVerifier',
+            levelId: '77777777',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '8', rank: 6, // Buzori (새로운 챌린지)
+            name: 'Buzori',
+            difficulty: 'medium_demon', // 난이도 추정
+            description: '새롭게 추가된 챌린지입니다. 독특한 리듬감이 돋보입니다.',
+            creator: 'RhythmMaster',
+            verifier: 'SoundPro',
+            levelId: '88888888',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '4', rank: 7, // AAAAAAAAAAA
+            name: 'AAAAAAAAAAAAAAAAAAAAAA',
+            difficulty: 'medium_demon',
+            description: '445번의 시도 끝에 클리어된 독특한 이름의 챌린지입니다.',
+            creator: 'GDFunny',
+            verifier: 'RandomVerifier',
+            levelId: '04450004',
+            views: 1200,
+            completions: 8,
+            attempts: 445,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+        },
+        {
+            id: '6', rank: 8, // Persephone
             name: 'Persephone',
             difficulty: 'extreme_demon',
             description: '새롭게 추가된 익스트림 데몬 챌린지입니다.',
@@ -64,20 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
         {
-            id: '2', rank: 5, // 랭크 5로 조정
-            name: 'Gonna go',
-            difficulty: 'insane_demon',
-            description: '매우 높은 순위의 챌린지로, 1125번의 시도 끝에 클리어되었습니다.',
-            creator: 'GDMaster',
-            verifier: 'OfficialGDV',
-            levelId: '11250002',
-            views: 2800,
-            completions: 3,
-            attempts: 1125,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-        },
-        {
-            id: '3', rank: 6, // 랭크 6으로 조정
+            id: '3', rank: 9, // Wave Hold
             name: 'Wave Hold',
             difficulty: 'hard_demon',
             description: '172번의 시도로 클리어된 챌린지입니다. 웨이브 컨트롤이 중요합니다.',
@@ -89,20 +132,101 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts: 172,
             videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         },
+        // Extended List에 포함될 챌린지 (10위부터 19위까지)
         {
-            id: '4', rank: 7, // 랭크 7로 조정
-            name: 'AAAAAAAAAAAAAAAAAAAAAA',
-            difficulty: 'medium_demon',
-            description: '445번의 시도 끝에 클리어된 독특한 이름의 챌린지입니다.',
-            creator: 'GDFunny',
-            verifier: 'RandomVerifier',
-            levelId: '04450004',
-            views: 1200,
-            completions: 8,
-            attempts: 445,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+            id: '12', rank: 10,
+            name: 'Test Challenge Ten',
+            difficulty: 'easy_demon',
+            description: '10위 테스트 챌린지입니다.',
+            creator: 'Test',
+            verifier: 'TestV',
+            levelId: '10101010',
+            views: 10,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
         },
-    ];
+        {
+            id: '13', rank: 11,
+            name: 'Test Challenge Eleven',
+            difficulty: 'normal',
+            description: '11위 테스트 챌린지입니다.',
+            creator: 'Test',
+            verifier: 'TestV',
+            levelId: '11111111',
+            views: 11,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '9', rank: 12, // Ship Challenge 10000
+            name: 'Ship Challenge 10000',
+            difficulty: 'hard_demon',
+            description: '10000개의 배 구간을 통과해야 하는 챌린지입니다.',
+            creator: 'ShipLover',
+            verifier: 'ShipExpert',
+            levelId: '10000000',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '10', rank: 13, // Invincible Wave
+            name: 'Invincible Wave',
+            difficulty: 'insane_demon',
+            description: '무적 웨이브를 테마로 한 고난이도 챌린지입니다.',
+            creator: 'WaveGod',
+            verifier: 'ImmortalV',
+            levelId: '99999999',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '11', rank: 14, // Speeeeeeeeeeeeeed
+            name: 'Speeeeeeeeeeeeeed',
+            difficulty: 'easy_demon', // 난이도 추정
+            description: '매우 빠른 속도감을 자랑하는 챌린지입니다.',
+            creator: 'SpeedDemon',
+            verifier: 'FastV',
+            levelId: '12345678',
+            views: 0,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        // Legacy List에 포함될 챌린지 (20위부터)
+        {
+            id: '14', rank: 20,
+            name: 'Test Legacy One',
+            difficulty: 'easy',
+            description: '20위 테스트 레거시 챌린지입니다.',
+            creator: 'OldSchool',
+            verifier: 'OldV',
+            levelId: '20202020',
+            views: 5,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        },
+        {
+            id: '15', rank: 21,
+            name: 'Test Legacy Two',
+            difficulty: 'normal',
+            description: '21위 테스트 레거시 챌린지입니다.',
+            creator: 'OldSchool',
+            verifier: 'OldV',
+            levelId: '21212121',
+            views: 6,
+            completions: 0,
+            attempts: 0,
+            videoUrl: ''
+        }
+    ].sort((a, b) => a.rank - b.rank); // 랭크 기준으로 정렬
+
     const upcomingChallenges = [
         {
             id: '101',
@@ -116,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
             expectedRank: 'Top 1',
             videoUrl: ''
         },
-        // id: '102' Chaos Ship은 challenges 배열로 이동했으므로 여기서는 제거됩니다.
         {
             id: '103',
             name: 'Quantum on track',
@@ -213,13 +336,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // createChallengeCard 함수를 전역 스코프로 이동
+    function createChallengeCard(challenge, isUpcoming) {
+        const card = document.createElement('div');
+        card.classList.add('challenge-card');
+
+        const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
+        const attemptsInfo = challenge.attempts > 0 ? ` (${challenge.attempts} att Clear)` : '';
+        const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
+        const rankDisplay = challenge.rank ? `<span class="rank">#${challenge.rank}</span>` : '';
+        const expectedRankDisplay = isUpcoming && challenge.expectedRank ? `<p class="expected-rank"><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
+
+        const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id);
+        let imagePreviewHtml = '';
+        if (!isUpcoming && firstRecord && firstRecord.recordImageUrl) {
+            imagePreviewHtml = `
+                <div class="challenge-image-preview">
+                    <img src="${firstRecord.recordImageUrl}" alt="${challenge.name} 클리어 이미지">
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <a href="challenge_detail.html?id=${challenge.id}${isUpcoming ? '&upcoming=true' : ''}" class="challenge-card-link">
+                <div class="challenge-card-main-content">
+                    <div class="challenge-card-header">
+                        ${rankDisplay}
+                        <h3>${challenge.name}${attemptsInfo}</h3>
+                    </div>
+                    <p class="difficulty ${difficultyInfo.class}">${difficultyInfo.name}</p>
+                    ${expectedRankDisplay}
+                    <p class="description-preview">${challenge.description.length > 100 ? challenge.description.substring(0, 100) + '...' : challenge.description}</p>
+                    <div class="level-id-group">
+                        <span>ID: ${challenge.levelId}</span>
+                        <button class="copy-btn" data-id="${challenge.levelId}" type="button">복사</button>
+                    </div>
+                    <div class="card-footer">
+                        <span class="creator">제작: ${challenge.creator}</span>
+                        ${verifierInfo}
+                        <span class="stats">조회수: ${challenge.views} | 완료: ${challenge.completions || 0}</span>
+                    </div>
+                </div>
+                ${imagePreviewHtml}
+            </a>
+        `;
+        card.querySelector('.copy-btn')?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            copyToClipboard(event.target.dataset.id, event.target);
+        });
+        return card;
+    }
+
     // --- 내비게이션 바 업데이트 ---
     function updateAuthNavItem() {
         const navMyProfileLink = document.getElementById('nav-my-profile-link');
         const navAuthLink = document.getElementById('nav-auth-link');
         const navLogoutButton = document.getElementById('nav-logout-button');
+        const navExtendedListLink = document.getElementById('nav-extended-list-link');
+        const navLegacyListLink = document.getElementById('nav-legacy-list-link');
 
-        if (loggedInUser && authToken) { // 토큰도 함께 확인
+        if (loggedInUser && authToken) {
             if (navMyProfileLink) {
                 navMyProfileLink.textContent = `내 프로필 (${loggedInUser.nickname})`;
                 navMyProfileLink.style.display = 'inline-block';
@@ -250,6 +427,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 navLogoutButton.style.display = 'none';
             }
         }
+        if (navExtendedListLink) navExtendedListLink.style.display = 'inline-block';
+        if (navLegacyListLink) navLegacyListLink.style.display = 'inline-block';
     }
     updateAuthNavItem(); // 페이지 로드 시 내비게이션 바 업데이트
 
@@ -262,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (topChallengesContainer) {
             topChallengesContainer.innerHTML = '';
-            challenges.slice(0, 5).forEach(challenge => {
+            challenges.filter(c => c.rank <= 5).forEach(challenge => { // TOP 5만 표시
                 const card = createChallengeCard(challenge, false);
                 topChallengesContainer.appendChild(card);
             });
@@ -277,58 +456,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 upcomingChallengesContainer.appendChild(card);
             });
         }
-
-        function createChallengeCard(challenge, isUpcoming) {
-            const card = document.createElement('div');
-            card.classList.add('challenge-card');
-
-            const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
-            const attemptsInfo = challenge.attempts > 0 ? ` (${challenge.attempts} att Clear)` : '';
-            const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
-            const rankDisplay = challenge.rank ? `<span class="rank">#${challenge.rank}</span>` : '';
-            const expectedRankDisplay = isUpcoming && challenge.expectedRank ? `<p class="expected-rank"><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
-
-            const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id);
-            let imagePreviewHtml = '';
-            if (!isUpcoming && firstRecord && firstRecord.recordImageUrl) {
-                imagePreviewHtml = `
-                    <div class="challenge-image-preview">
-                        <img src="${firstRecord.recordImageUrl}" alt="${challenge.name} 클리어 이미지">
-                    </div>
-                `;
-            }
-
-            card.innerHTML = `
-                <a href="challenge_detail.html?id=${challenge.id}${isUpcoming ? '&upcoming=true' : ''}" class="challenge-card-link">
-                    <div class="challenge-card-main-content">
-                        <div class="challenge-card-header">
-                            ${rankDisplay}
-                            <h3>${challenge.name}${attemptsInfo}</h3>
-                        </div>
-                        <p class="difficulty ${difficultyInfo.class}">${difficultyInfo.name}</p>
-                        ${expectedRankDisplay}
-                        <p class="description-preview">${challenge.description.length > 100 ? challenge.description.substring(0, 100) + '...' : challenge.description}</p>
-                        <div class="level-id-group">
-                            <span>ID: ${challenge.levelId}</span>
-                            <button class="copy-btn" data-id="${challenge.levelId}" type="button">복사</button>
-                        </div>
-                        <div class="card-footer">
-                            <span class="creator">제작: ${challenge.creator}</span>
-                            ${verifierInfo}
-                            <span class="stats">조회수: ${challenge.views} | 완료: ${challenge.completions || 0}</span>
-                        </div>
-                    </div>
-                    ${imagePreviewHtml}
-                </a>
-            `;
-            card.querySelector('.copy-btn')?.addEventListener('click', (event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                copyToClipboard(event.target.dataset.id, event.target);
-            });
-            return card;
-        }
-
     }
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
@@ -349,45 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             filteredChallenges.forEach(challenge => {
-                const card = document.createElement('div');
-                card.classList.add('challenge-card');
-
-                const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
-                const attemptsInfo = challenge.attempts > 0 ? ` (${challenge.attempts} att Clear)` : '';
-                const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
-
-                const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id && record.recordImageUrl);
-                let imagePreviewHtml = '';
-                if (firstRecord && firstRecord.recordImageUrl) {
-                    imagePreviewHtml = `
-                        <div class="challenge-image-preview">
-                            <img src="${firstRecord.recordImageUrl}" alt="${challenge.name} 클리어 이미지">
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <a href="challenge_detail.html?id=${challenge.id}" class="challenge-card-link">
-                        <div class="challenge-card-main-content">
-                            <div class="challenge-card-header">
-                                <span class="rank">#${challenge.rank}</span>
-                                <h3>${challenge.name}${attemptsInfo}</h3>
-                            </div>
-                            <p class="difficulty ${difficultyInfo.class}">${difficultyInfo.name}</p>
-                            <p class="description-preview">${challenge.description.length > 100 ? challenge.description.substring(0, 100) + '...' : challenge.description}</p>
-                            <div class="level-id-group">
-                                <span>ID: ${challenge.levelId}</span>
-                                <button class="copy-btn" data-id="${challenge.levelId}" type="button">복사</button>
-                            </div>
-                            <div class="card-footer">
-                                <span class="creator">제작: ${challenge.creator}</span>
-                                ${verifierInfo}
-                                <span class="stats">조회수: ${challenge.views} | 완료: ${challenge.completions}</span>
-                            </div>
-                        </div>
-                        ${imagePreviewHtml}
-                    </a>
-                `;
+                const card = createChallengeCard(challenge, false); // createChallengeCard 재사용
                 challengeListContainer.appendChild(card);
             });
 
@@ -401,7 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortChallenges() {
-            let currentChallenges = [...challenges];
+            // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
+            let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
@@ -462,35 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             upcomingChallenges.forEach(challenge => {
-                const card = document.createElement('div');
-                card.classList.add('challenge-card');
-
-                const difficultyInfo = difficultyMap[challenge.difficulty] || { name: challenge.difficulty, class: '', order: 0 };
-                const verifierInfo = challenge.verifier ? `<span class="verifier">검증: ${challenge.verifier}</span>` : '';
-                const expectedRankInfo = challenge.expectedRank ? `<p><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
-
-                card.innerHTML = `
-                    <a href="challenge_detail.html?id=${challenge.id}&upcoming=true" class="challenge-card-link">
-                        <div class="challenge-card-main-content">
-                            <div class="challenge-card-header">
-                                <span class="rank">#${challenge.id}</span>
-                                <h3>${challenge.name}</h3>
-                            </div>
-                            <p class="difficulty ${difficultyInfo.class}">${difficultyInfo.name}</p>
-                            ${expectedRankInfo}
-                            <p class="description-preview">${challenge.description.length > 100 ? challenge.description.substring(0, 100) + '...' : challenge.description}</p>
-                            <div class="level-id-group">
-                                <span>ID: ${challenge.levelId}</span>
-                                <button class="copy-btn" data-id="${challenge.levelId}" type="button">복사</button>
-                            </div>
-                            <div class="card-footer">
-                                <span class="creator">제작: ${challenge.creator}</span>
-                                ${verifierInfo}
-                                <span class="stats">조회수: ${challenge.views}</span>
-                            </div>
-                        </div>
-                    </a>
-                `;
+                const card = createChallengeCard(challenge, true);
                 if (upcomingListContainer) upcomingListContainer.appendChild(card);
             });
 
@@ -504,6 +566,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         displayUpcomingChallenges();
+
+    } else if (currentPage === 'extended_list.html') { // Extended List 페이지 로직
+        const extendedListContainer = document.getElementById('extended-challenge-list');
+        const noResultsMessage = document.querySelector('.no-results');
+        const loadingMessage = document.querySelector('.loading-message');
+
+        function displayExtendedChallenges() {
+            if (loadingMessage) loadingMessage.style.display = 'none';
+            if (extendedListContainer) extendedListContainer.innerHTML = '';
+
+            // 10위부터 19위까지의 챌린지만 필터링
+            const filteredChallenges = challenges.filter(c => c.rank > MAX_RANK_MAIN_LIST && c.rank <= MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+
+            if (filteredChallenges.length === 0) {
+                if (noResultsMessage) noResultsMessage.style.display = 'block';
+                return;
+            } else {
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
+            }
+
+            filteredChallenges.forEach(challenge => {
+                const card = createChallengeCard(challenge, false);
+                if (extendedListContainer) extendedListContainer.appendChild(card);
+            });
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    copyToClipboard(event.target.dataset.id, event.target);
+                });
+            });
+        }
+        displayExtendedChallenges();
+
+    } else if (currentPage === 'legacy_list.html') { // Legacy List 페이지 로직
+        const legacyListContainer = document.getElementById('legacy-challenge-list');
+        const noResultsMessage = document.querySelector('.no-results');
+        const loadingMessage = document.querySelector('.loading-message');
+
+        function displayLegacyChallenges() {
+            if (loadingMessage) loadingMessage.style.display = 'none';
+            if (legacyListContainer) legacyListContainer.innerHTML = '';
+
+            // 20위 이상 챌린지만 필터링
+            const filteredChallenges = challenges.filter(c => c.rank > MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+
+            if (filteredChallenges.length === 0) {
+                if (noResultsMessage) noResultsMessage.style.display = 'block';
+                return;
+            } else {
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
+            }
+
+            filteredChallenges.forEach(challenge => {
+                const card = createChallengeCard(challenge, false);
+                if (legacyListContainer) legacyListContainer.appendChild(card);
+            });
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    copyToClipboard(event.target.dataset.id, event.target);
+                });
+            });
+        }
+        displayLegacyChallenges();
 
     } else if (currentPage === 'challenge_detail.html') {
         const challengeId = urlParams.get('id');
