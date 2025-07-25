@@ -560,8 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function filterAndSortChallenges() {
             // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
-            // 모든 챌린지를 보여주도록 필터링 조건을 제거했습니다.
-            let currentChallenges = challenges; // 이 줄을 수정했습니다.
+            let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST); // 이 줄을 수정했습니다.
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
@@ -1352,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (noScoresMessage) noScoresMessage.style.display = 'block';
                 return;
             } else {
-                if (noScoresMessage) noScoresMessage.style.display = 'none';
+                if (noScoresMessage) noResultsMessage.style.display = 'none';
             }
 
             sortedScores.forEach((user, index) => {
