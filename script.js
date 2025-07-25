@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function filterAndSortChallenges() {
             // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
-            let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST); // 이 줄을 수정했습니다.
+            let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
