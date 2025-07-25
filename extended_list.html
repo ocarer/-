@@ -28,6 +28,28 @@
     <main class="container">
         <section class="challenge-list-section">
             <h2 class="section-title">Extended List (10위 이하)</h2>
+            <div class="filters-sort-search">
+                <input type="text" id="search-input" placeholder="챌린지 이름, ID, 검증자 검색...">
+                <select id="difficulty-filter">
+                    <option value="all">모든 난이도</option>
+                    <option value="easy">Easy</option>
+                    <option value="normal">Normal</option>
+                    <option value="hard">Hard</option>
+                    <option value="insane">Insane</option>
+                    <option value="easy_demon">Easy Demon</option>
+                    <option value="medium_demon">Medium Demon</option>
+                    <option value="hard_demon">Hard Demon</option>
+                    <option value="insane_demon">Insane Demon</option>
+                    <option value="extreme_demon">Extreme Demon</option>
+                </select>
+                <select id="sort-order">
+                    <option value="rank">랭크 순</option>
+                    <option value="latest">최신 순</option>
+                    <option value="difficulty_asc">난이도 낮은 순</option>
+                    <option value="difficulty_desc">난이도 높은 순</option>
+                    <option value="popular">인기 순</option>
+                </select>
+            </div>
             <div id="extended-challenge-list" class="challenge-cards-grid">
                 <p class="loading-message">챌린지를 불러오는 중...</p>
                 <p class="no-results" style="display: none;">해당 랭크의 챌린지가 없습니다.</p>
