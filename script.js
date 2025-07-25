@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 백엔드 API의 기본 URL을 정의합니다.
     // 실제 배포 시에는 백엔드 서버의 실제 도메인으로 변경해야 합니다.
-    const BACKEND_API_URL = 'https://당신의-vercel-백엔드-도메인.vercel.app'; // <--- 이 부분을 Vercel에서 발급받은 URL로 변경하세요!
+    const BACKEND_API_URL = 'https://182.224.24.187:3000'; // <--- 이 부분을 Vercel에서 발급받은 URL로 변경하세요!
 
     // 챌린지 랭크 기준 상수
     // 챌린지 목록 (challenge_list.html)에 표시될 최대 랭크
