@@ -1,28 +1,29 @@
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
-
-/* Color Palette (Bright Theme) */
+/* 기본 스타일 */
 :root {
-    --primary-color: #007bff; /* 파란색 (메인 강조색) */
-    --secondary-color: #28a745; /* 녹색 (보조 강조색) */
-    --background-color: #f0f2f5; /* 아주 밝은 배경 */
-    --card-background: #ffffff; /* 카드 배경 (순백색) */
-    --text-color: #333333; /* 기본 텍스트 (진한 회색) */
-    --light-text-color: #6c757d; /* 보조 텍스트 (중간 회색) */
-    --border-color: #dee2e6; /* 테두리 색상 (연한 회색) */
-    --hover-color: #0056b3; /* primary-color 호버 */
-    --link-color: #007bff; /* 링크 색상 */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* 그림자 색상 (연하게) */
-    --input-background: #f8f9fa; /* 입력 필드 배경 */
+    --primary-color: #6A0572; /* 보라색 계열 */
+    --secondary-color: #A030A9; /* 더 밝은 보라색 */
+    --accent-color: #FFC300; /* 강조 색상 (노란색) */
+    --background-color: #F8F8F8; /* 밝은 배경 */
+    --card-background: #FFFFFF; /* 카드 배경 */
+    --text-color: #333333; /* 어두운 텍스트 */
+    --light-text-color: #666666; /* 밝은 텍스트 */
+    --border-color: #E0E0E0; /* 경계선 색상 */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* 그림자 색상 (투명도 약간 증가) */
+    --success-color: #28A745; /* 성공 메시지 */
+    --error-color: #DC3545; /* 오류 메시지 */
+    --info-color: #17A2B8; /* 정보 메시지 */
 }
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
-    margin: 0;
     line-height: 1.6;
-    overflow-x: hidden; /* 가로 스크롤 방지 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
@@ -31,332 +32,328 @@ body {
     padding: 20px;
 }
 
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.5em; }
+
+/* 헤더 */
 header {
-    background-color: var(--card-background); /* 헤더 배경도 밝게 */
+    background-color: var(--primary-color);
+    color: #FFFFFF;
     padding: 15px 0;
-    border-bottom: 3px solid var(--primary-color);
-    box-shadow: 0 4px 15px var(--shadow-color);
+    box-shadow: 0 2px 5px var(--shadow-color);
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* 모바일에서 줄 바꿈 */
 }
 
 header h1 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color); /* 헤더 제목 색상 변경 */
     margin: 0;
-    font-size: 2.2em;
-    letter-spacing: 1px;
-    text-shadow: none; /* 그림자 제거 */
+    font-size: 1.8em;
 }
 
 header h1 a {
-    color: inherit;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
-header nav a {
-    color: var(--text-color); /* 네비게이션 링크 색상 변경 */
+header nav a,
+header nav button {
+    color: #FFFFFF;
     text-decoration: none;
-    margin-left: 25px;
+    margin-left: 20px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
     font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-header nav a:hover {
-    color: var(--primary-color);
-}
-
-/* Common button styles */
-.button-primary {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 6px; /* 살짝 둥글게 */
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    background: none;
     border: none;
     cursor: pointer;
-}
-
-.button-primary:hover {
-    background-color: var(--hover-color);
-    transform: translateY(-2px);
-}
-
-/* Hero Section (Index Page) */
-.hero-section {
-    text-align: center;
-    padding: 80px 20px;
-    background-color: var(--card-background);
-    border-radius: 8px; /* 살짝 둥글게 */
-    margin-top: 30px;
-    box-shadow: 0 6px 20px var(--shadow-color);
-    border: 1px solid var(--border-color);
-}
-
-.hero-section h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    font-size: 3em;
-    margin-bottom: 20px;
-    text-shadow: none;
-}
-
-.hero-section p {
-    font-size: 1.2em;
-    color: var(--light-text-color);
-    margin-bottom: 30px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Controls Section (Search/Filter) */
-.controls-section {
-    background-color: var(--card-background);
-    padding: 20px;
-    border-radius: 8px; /* 살짝 둥글게 */
-    margin-bottom: 30px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px var(--shadow-color);
-}
-
-.search-filter-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-}
-
-.controls-section input[type="text"],
-.controls-section select {
-    flex: 1;
-    min-width: 180px;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px; /* 살짝 둥글게 */
-    background-color: var(--input-background); /* 입력 필드 배경 */
-    color: var(--text-color);
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 1em;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* 화살표 색상 변경 */
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 18px;
 }
 
-.controls-section input[type="text"]::placeholder {
-    color: var(--light-text-color);
+header nav a:hover,
+header nav button:hover {
+    background-color: var(--secondary-color);
+    text-decoration: none;
 }
 
-.controls-section input[type="text"]:focus,
-.controls-section select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* primary-color 기반 그림자 */
+header nav button.logout-button {
+    background-color: #DC3545;
 }
 
-/* Challenge List (Vertical, One by One) */
-.challenge-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+header nav button.logout-button:hover {
+    background-color: #C82333;
 }
 
-.challenge-card {
+/* 메인 콘텐츠 */
+main {
+    flex-grow: 1;
+    padding: 40px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    color: var(--primary-color);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+/* 챌린지 카드 그리드 */
+.challenge-cards-grid,
+.creator-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 모든 화면 크기에서 한 줄에 하나씩 (세로 정렬) */
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.challenge-card,
+.creator-card {
     background-color: var(--card-background);
-    border-radius: 8px; /* 살짝 둥글게 */
-    padding: 20px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Flexbox를 사용하여 내부 요소를 정렬합니다 */
+    flex-direction: column; /* 기본적으로 세로 정렬 */
 }
 
-.challenge-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--shadow-color);
+.challenge-card:hover,
+.creator-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .challenge-card-link {
-    text-decoration: none;
+    display: flex;
+    flex-direction: row; /* 이미지를 왼쪽에 배치하기 위해 가로 정렬로 변경 */
+    height: 100%;
     color: inherit;
+    text-decoration: none;
+    align-items: stretch; /* 자식 요소들이 높이를 채우도록 */
+}
+
+.challenge-image-preview {
+    width: 500px; /* 이미지 미리보기 너비 확대 */
+    height: 250px; /* 이미지 미리보기 높이 확대 */
+    flex-shrink: 0; /* 이미지 미리보기가 줄어들지 않도록 */
+    overflow: hidden; /* 이 부분을 통해 이미지가 컨테이너를 벗어나면 잘립니다 */
+    border-top-left-radius: 12px; /* 좌측 상단 둥글게 */
+    border-bottom-left-radius: 12px; /* 좌측 하단 둥글게 */
+    border-right: 1px solid var(--border-color); /* 오른쪽에 얇은 경계선 추가 */
+}
+
+.challenge-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지를 컨테이너에 맞게 자르고 채웁니다 (비율 유지) */
+    display: block;
+}
+
+.challenge-card-main-content {
+    padding: 20px;
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 */
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .challenge-card-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
-}
-.challenge-card-header h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    margin: 0;
-    font-size: 1.8em;
-    text-shadow: none;
 }
 
 .challenge-card .rank {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2em;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
     font-weight: 700;
-    color: var(--secondary-color);
-    margin-right: 15px;
-    text-shadow: none;
-    min-width: 40px;
-    text-align: right;
+    padding: 4px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 0.9em;
 }
 
-.challenge-card p {
-    color: var(--light-text-color);
-    margin-bottom: 8px;
+.challenge-card h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: var(--primary-color);
+    flex-grow: 1;
 }
 
 .challenge-card .difficulty {
-    font-weight: 600;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
     margin-bottom: 10px;
-    font-size: 1.1em;
+    font-size: 0.85em;
+    text-transform: uppercase;
 }
 
-/* 난이도별 색상 (Geometry Dash 표준 난이도 색상 + 데몬 세부 등급) */
-.difficulty-easy { color: #4CAF50; } /* Easy - 녹색 */
-.difficulty-normal { color: #2196F3; } /* Normal - 파랑 */
-.difficulty-hard { color: #FFEB3B; } /* Hard - 노랑 */
-.difficulty-insane { color: #FF5722; } /* Insane - 주황 */
-.difficulty-easy_demon { color: #9C27B0; } /* Easy Demon - 보라 */
-.difficulty-medium_demon { color: #E91E63; } /* Medium Demon - 분홍 */
-.difficulty-hard_demon { color: #FFC107; } /* Hard Demon - 호박색 */
-.difficulty-insane_demon { color: #03A9F4; } /* Insane Demon - 하늘색 */
-.difficulty-extreme_demon { color: #F4436A; } /* Extreme Demon - 빨강 (좀 더 밝게) */
+/* 난이도별 색상 */
+.difficulty-easy { background-color: #4CAF50; color: white; }
+.difficulty-normal { background-color: #8BC34A; color: white; }
+.difficulty-hard { background-color: #FFEB3B; color: var(--text-color); }
+.difficulty-insane { background-color: #FF9800; color: white; }
+.difficulty-easy_demon { background-color: #F44336; color: white; }
+.difficulty-medium_demon { background-color: #E91E63; color: white; }
+.difficulty-hard_demon { background-color: #9C27B0; color: white; }
+.difficulty-insane_demon { background-color: #673AB7; color: white; }
+.difficulty-extreme_demon { background-color: #3F51B5; color: white; }
 
+.challenge-card .description-preview {
+    font-size: 0.95em;
+    color: var(--light-text-color);
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
 
 .challenge-card .level-id-group {
     display: flex;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
-
-.challenge-card .level-id-group span {
-    background-color: var(--input-background); /* 배경색 조정 */
-    padding: 6px 10px;
-    border-radius: 4px; /* 살짝 둥글게 */
-    font-family: monospace;
+    margin-bottom: 10px;
     font-size: 0.9em;
-    margin-right: 10px;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+    color: var(--light-text-color);
 }
 
-.challenge-card .copy-btn {
+.challenge-card .level-id-group .copy-btn {
     background-color: var(--secondary-color);
-    color: #fff;
+    color: white;
     border: none;
-    padding: 6px 12px;
-    border-radius: 4px; /* 살짝 둥글게 */
+    padding: 5px 10px;
+    border-radius: 5px;
     cursor: pointer;
+    margin-left: 10px;
     font-size: 0.8em;
     transition: background-color 0.3s ease;
 }
 
-.challenge-card .copy-btn:hover {
-    background-color: #218838; /* 어두운 녹색 */
+.challenge-card .level-id-group .copy-btn:hover {
+    background-color: var(--primary-color);
 }
 
 .challenge-card .card-footer {
     display: flex;
-    flex-wrap: wrap; /* 내용이 많아지면 줄바꿈 */
     justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 15px;
+    font-size: 0.85em;
+    color: var(--light-text-color);
+    margin-top: auto; /* 하단 정렬 */
+    padding-top: 10px;
     border-top: 1px solid var(--border-color);
-    gap: 5px; /* 요소 간 간격 */
 }
 
 .challenge-card .creator,
 .challenge-card .verifier,
 .challenge-card .stats {
-    font-size: 0.9em;
-    color: var(--light-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.no-results {
-    text-align: center;
-    font-size: 1.2em;
-    color: var(--light-text-color);
-    padding: 50px 0;
+.challenge-card .verifier {
+    font-weight: 500;
 }
 
-/* Footer */
-footer {
-    background-color: var(--card-background); /* 푸터 배경도 밝게 */
-    color: var(--light-text-color);
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 50px;
-    border-top: 3px solid var(--primary-color);
-    box-shadow: 0 -4px 15px var(--shadow-color);
-}
 
-/* Challenge Detail Page */
-.challenge-detail-page h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    font-size: 2.8em;
-    margin-bottom: 15px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-    text-shadow: none;
-}
-
-.challenge-detail-page .detail-item {
+/* 챌린지 상세 페이지 */
+.challenge-detail-page {
     background-color: var(--card-background);
-    padding: 25px;
-    border-radius: 8px; /* 살짝 둥글게 */
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-.challenge-detail-page .detail-item strong {
+.challenge-detail-page h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2.5em;
     color: var(--primary-color);
-    margin-right: 5px;
+}
+
+.challenge-detail-page .detail-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #FDFDFD;
+}
+
+.challenge-detail-page .detail-item p {
+    margin-bottom: 8px;
 }
 
 .challenge-detail-page .difficulty-display {
     font-weight: 700;
-    font-size: 1.3em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
     margin-bottom: 15px;
-    display: block;
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.challenge-detail-page .level-id-group .copy-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.challenge-detail-page .level-id-group .copy-btn:hover {
+    background-color: var(--primary-color);
 }
 
 .challenge-detail-page .video-container {
     position: relative;
-    padding-bottom: 56.25%;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 비율 */
     height: 0;
-    overflow: hidden;
     margin-top: 20px;
-    background-color: #000;
-    border-radius: 8px; /* 살짝 둥글게 */
-    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .challenge-detail-page .video-container iframe {
@@ -365,41 +362,174 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    border: none;
+    border: 0;
 }
 
-.challenge-detail-page .go-back-link {
+.challenge-detail-page .challenge-main-image {
+    width: 50%;
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.challenge-detail-page .challenge-main-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.go-back-link {
     display: inline-block;
     margin-top: 30px;
-    color: var(--light-text-color);
-    text-decoration: none;
     font-size: 1.1em;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
 }
 
-.challenge-detail-page .go-back-link:hover {
+.go-back-link:hover {
+    background-color: #CCCCCC;
+    text-decoration: none;
+}
+
+/* 기록 제출 섹션 */
+.submitted-records-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.submitted-records-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.records-list {
+    display: grid;
+    gap: 20px;
+}
+
+.record-card {
+    background-color: #FDFDFD;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.record-card:hover {
+    transform: translateY(-3px);
+}
+
+.record-card.zre-verified {
+    border-left: 5px solid var(--success-color);
+    background-color: #E6F7ED;
+}
+
+.record-card.zre-verified h4 {
+    color: var(--success-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.record-card .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: var(--light-text-color);
+}
+
+.record-card .record-submitter {
+    font-weight: 700;
     color: var(--primary-color);
 }
 
-/* General Form Styles (Upload, Auth, Submit Record) */
+.record-card .record-comment {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+}
+
+.record-card .record-video a {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.record-card .record-video a:hover {
+    background-color: var(--primary-color);
+    text-decoration: none;
+}
+
+.record-card .record-image {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.record-card .record-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.record-card .zre-proof {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #D4EDDA;
+    border: 1px solid #C3E6CB;
+    border-radius: 8px;
+    color: #155724;
+}
+
+.record-card .zre-proof img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.no-records-message,
+.no-results,
+.loading-message,
+.not-found-message {
+    text-align: center;
+    color: var(--light-text-color);
+    font-size: 1.1em;
+    padding: 20px;
+    background-color: #F0F0F0;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* 폼 섹션 (로그인/회원가입, 챌린지 업로드, 기록 제출) */
 .form-section {
     background-color: var(--card-background);
-    padding: 30px;
-    border-radius: 8px; /* 살짝 둥글게 */
-    margin-top: 30px;
-    margin-bottom: 50px;
-    box-shadow: 0 6px 20px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    max-width: 500px;
+    margin: 40px auto;
 }
 
 .form-section h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    font-size: 2.2em;
-    margin-bottom: 25px;
     text-align: center;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 15px;
+    margin-bottom: 30px;
+    color: var(--primary-color);
 }
 
 .form-group {
@@ -409,51 +539,36 @@ footer {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-color);
-    font-size: 1.05em;
 }
 
-.form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
-.form-group input[type="number"],
-.form-group textarea,
-.form-group select {
-    width: calc(100% - 24px);
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
     padding: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 6px; /* 살짝 둥글게 */
-    background-color: var(--input-background);
-    color: var(--text-color);
+    border-radius: 8px;
     font-size: 1em;
-    outline: none;
+    box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus,
-.form-group input[type="number"]:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 3px rgba(106, 5, 114, 0.2);
+    outline: none;
 }
 
-.form-group select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 18px;
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 .button-submit {
@@ -461,153 +576,228 @@ footer {
     width: 100%;
     padding: 15px;
     background-color: var(--primary-color);
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 6px; /* 살짝 둥글게 */
-    font-size: 1.2em;
-    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 30px;
-    box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 .button-submit:hover {
-    background-color: var(--hover-color);
+    background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
-/* Auth Page specific */
 .auth-switch-link {
     text-align: center;
     margin-top: 20px;
+    font-size: 0.95em;
 }
 
 .auth-switch-link a {
-    color: var(--link-color);
+    font-weight: 600;
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-primary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
-.auth-switch-link a:hover {
-    color: var(--hover-color);
-}
-
-/* Profile Page specific */
+/* 내 프로필 페이지 */
 .profile-section {
     background-color: var(--card-background);
     padding: 30px;
-    border-radius: 8px; /* 살짝 둥글게 */
-    margin-top: 30px;
-    margin-bottom: 50px;
-    box-shadow: 0 6px 20px var(--shadow-color);
-    border: 1px solid var(--border-color);
-}
-
-.profile-section h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    font-size: 2.2em;
-    margin-bottom: 25px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    max-width: 800px;
+    margin: 40px auto;
 }
 
 .profile-info p {
     font-size: 1.1em;
     margin-bottom: 10px;
-    color: var(--light-text-color);
 }
 
 .profile-info strong {
-    color: var(--text-color);
+    color: var(--primary-color);
 }
 
-.profile-records, .profile-uploads {
-    margin-top: 40px;
-}
-
-.profile-records h3, .profile-uploads h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--secondary-color);
-    font-size: 1.8em;
+.profile-section .section-title {
+    text-align: left;
+    margin-top: 30px;
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
+    font-size: 1.8em;
+    color: var(--primary-color);
+    padding-bottom: 5px;
 }
 
-.profile-list {
+.profile-section .section-title::after {
+    left: 0;
+    transform: translateX(0);
+    width: 40px;
+}
+
+.profile-section ul {
     list-style: none;
     padding: 0;
 }
 
-.profile-list li {
-    background-color: var(--input-background); /* 배경색 조정 */
+.profile-section ul li {
+    background-color: #FDFDFD;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: 15px;
-    border-radius: 6px; /* 살짝 둥글게 */
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 5px var(--shadow-color);
+    font-size: 1em;
 }
 
-.profile-list li a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.profile-section ul li a {
+    font-weight: 600;
 }
 
-.profile-list li a:hover {
-    color: var(--hover-color);
-}
-
-.profile-list .actions button {
-    background: none;
-    border: 1px solid var(--border-color);
-    color: var(--light-text-color);
+.profile-section ul li .actions button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
+    transition: background-color 0.3s ease;
     font-size: 0.9em;
-    padding: 6px 10px;
-    border-radius: 4px; /* 살짝 둥글게 */
-    transition: all 0.3s ease;
 }
 
-.profile-list .actions button:hover {
+.profile-section ul li .actions button:hover {
+    background-color: var(--primary-color);
+}
+
+.profile-section .logout-button {
+    background-color: #DC3545;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-section .logout-button:hover {
+    background-color: #C82333;
+}
+
+/* 크리에이터 페이지 */
+.creator-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.creator-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.creator-card h3 {
     color: var(--primary-color);
-    border-color: var(--primary-color);
-    background-color: rgba(0, 123, 255, 0.1);
-}
-
-/* Submit Record Page specific */
-.record-challenge-info {
-    background-color: var(--input-background); /* 배경색 조정 */
-    padding: 20px;
-    border-radius: 6px; /* 살짝 둥글게 */
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 8px var(--shadow-color);
-}
-.record-challenge-info p {
-    margin: 5px 0;
-    color: var(--light-text-color);
-}
-.record-challenge-info strong {
-    color: var(--text-color);
-}
-
-/* No results / Not found messages */
-.loading-message, .not-found-message {
+    margin-bottom: 15px;
+    font-size: 1.6em;
     text-align: center;
-    font-size: 1.2em;
-    color: var(--light-text-color);
-    padding: 50px 0;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
 }
 
-/* Responsive Design */
+.creator-card .creator-challenges h4 {
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.creator-card .creator-challenges ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+.creator-card .creator-challenges ul li {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    color: var(--light-text-color);
+}
+
+.creator-card .creator-challenges ul li a {
+    font-weight: 500;
+}
+
+/* 필터 및 정렬 (챌린지 목록) */
+.filter-sort-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.filter-sort-controls .form-group {
+    margin-bottom: 0; /* 내부 폼 그룹 마진 제거 */
+    flex: 1 1 auto; /* 유연하게 공간 차지 */
+    min-width: 180px; /* 최소 너비 */
+    display: flex; /* 내부 요소 정렬을 위해 flex 추가 */
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: center; /* 수직 중앙 정렬 */
+}
+
+.filter-sort-controls label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.filter-sort-controls input[type="text"],
+.filter-sort-controls select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95em;
+    height: 40px; /* 높이 고정 */
+}
+
+/* 푸터 */
+footer {
+    background-color: var(--text-color);
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 0.9em;
+}
+
+/* 미디어 쿼리 (반응형 디자인) */
 @media (max-width: 768px) {
     header .container {
         flex-direction: column;
@@ -616,562 +806,68 @@ footer {
 
     header nav {
         margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    header nav a {
-        margin: 0 10px;
+    header nav a,
+    header nav button {
+        margin: 5px 10px;
     }
 
-    .hero-section h2 {
-        font-size: 2.2em;
-    }
-
-    .challenge-card {
-        padding: 15px;
-    }
-
-    .challenge-card-header h3 {
-        font-size: 1.5em;
-    }
-
-    .challenge-card .rank {
-        font-size: 1.8em;
-        margin-right: 10px;
-        min-width: 30px;
-    }
-
-    .controls-section input[type="text"],
-    .controls-section select {
-        min-width: unset;
-        width: 100%;
-    }
-
-    .challenge-detail-page h2 {
-        font-size: 2.2em;
-    }
-
-    .challenge-detail-page .detail-item {
-        padding: 20px;
-    }
-
-    .form-section {
-        padding: 20px;
-    }
-
-    .form-section h2 {
-        font-size: 1.8em;
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
+    .section-title {
         font-size: 1.8em;
     }
 
-    .hero-section h2 {
-        font-size: 1.8em;
+    /* 모바일에서는 챌린지 카드 그리드가 여전히 1열로 표시되지만,
+       이미지는 상단에 배치되도록 변경합니다. */
+    .challenge-cards-grid,
+    .creator-cards-grid {
+        grid-template-columns: 1fr;
     }
 
-    .challenge-card-header h3 {
-        font-size: 1.2em;
-    }
-
-    .challenge-card .rank {
-        font-size: 1.5em;
-    }
-    
-    .challenge-card .level-id-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .challenge-card .level-id-group span {
-        margin-right: 0;
-        margin-bottom: 8px;
-    }
-}
-/* 챌린지 카드 내 이미지 미리보기 스타일 */
-.challenge-card-link {
-    display: flex; /* 가로 배열을 위해 flex 사용 */
-    align-items: flex-start; /* 상단 정렬 */
-    gap: 20px; /* 이미지와 텍스트 사이 간격 */
-    height: 100%; /* 카드 전체 높이 사용 */
-}
-
-.challenge-card-main-content {
-    flex-grow: 1; /* 텍스트 부분이 남은 공간을 차지하도록 */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* 푸터를 하단에 고정 */
-    height: 100%; /* 부모 flex-container의 높이를 상속 */
-}
-
-.challenge-image-preview {
-    flex-shrink: 0; /* 이미지가 줄어들지 않도록 */
-    width: 200px; /* 고정 너비 */
-    height: 150px; /* 고정 높이 */
-    border-radius: 6px;
-    overflow: hidden;
-    background-color: var(--input-background);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-}
-
-.challenge-image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 */
-}
-
-/* 상세 페이지 기록 카드 내 클리어 이미지 스타일 */
-.record-card .record-image {
-    margin-top: 10px;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    background-color: var(--background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%; /* 컨테이너 너비를 넘지 않도록 */
-    height: auto;
-}
-
-.record-card .record-image img {
-    max-width: 100%;
-    height: auto;
-    display: block; /* 이미지 하단 여백 제거 */
-}
-
-/* Zre Verified specific styles (철자 'Zre'로 변경) */
-.record-card.zre-verified {
-    border: 2px solid var(--secondary-color); /* Zre 인증 시 녹색 테두리 */
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); /* 녹색 그림자 */
-    background-color: #e6ffe6; /* 아주 연한 녹색 배경 */
-}
-
-.record-card.zre-verified .zre-proof {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed var(--secondary-color); /* 녹색 점선 */
-    color: var(--text-color);
-}
-
-.record-card.zre-verified .zre-proof h4 {
-    color: var(--secondary-color);
-    margin-top: 0;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.1em;
-}
-
-.record-card.zre-verified .zre-proof p {
-    font-size: 0.95em;
-    margin-bottom: 5px;
-}
-
-.record-card.zre-verified .zre-proof a {
-    color: var(--secondary-color); /* Zre 링크는 녹색 */
-    text-decoration: underline;
-}
-
-/* Optional: Zre badge for list items (profile page) */
-.profile-list li .zre-tag {
-    background-color: var(--secondary-color);
-    color: #fff;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-/* Responsive adjustment for image preview */
-@media (max-width: 768px) {
     .challenge-card-link {
-        flex-direction: column; /* 작은 화면에서는 세로로 쌓이도록 */
-        align-items: stretch; /* 늘어나도록 */
+        flex-direction: column; /* 모바일에서는 이미지가 상단으로 오도록 세로 정렬 */
     }
 
     .challenge-image-preview {
-        width: 100%; /* 너비를 100%로 채움 */
-        height: 200px; /* 높이를 늘림 */
-        margin-top: 15px; /* 텍스트와 이미지 사이 간격 */
+        width: 100%; /* 모바일에서는 너비 100% */
+        height: 180px; /* 높이 고정 */
+        border-radius: 12px 12px 0 0; /* 상단만 둥글게 */
+        border-right: none; /* 오른쪽 경계선 제거 */
+        border-bottom: 1px solid var(--border-color); /* 하단 경계선 추가 */
     }
-}
-/* Zure Verification Styles */
-.submitted-records-section {
-    margin-top: 40px;
-    background-color: var(--card-background);
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px var(--shadow-color);
-}
 
-.submitted-records-section h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary-color);
-    font-size: 2em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
+    .challenge-card-main-content {
+        padding: 15px;
+    }
 
-.records-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+    .challenge-card h3 {
+        font-size: 1.2em;
+    }
 
-.record-card {
-    background-color: var(--input-background); /* 카드 배경을 조금 더 어둡게 */
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 그림자 연하게 */
-    position: relative;
-    overflow: hidden; /* 즈레 배지 오버플로우 대비 */
-}
+    .challenge-detail-page {
+        padding: 20px;
+    }
 
-.record-card .record-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted var(--border-color);
-}
+    .challenge-detail-page h2 {
+        font-size: 2em;
+    }
 
-.record-card .record-submitter {
-    font-weight: 600;
-    color: var(--text-color);
-}
+    .form-section {
+        padding: 25px;
+        margin: 20px auto;
+    }
 
-.record-card .record-date {
-    font-size: 0.85em;
-    color: var(--light-text-color);
-}
+    .filter-sort-controls {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
 
-.record-card .record-comment {
-    color: var(--text-color);
-    margin-bottom: 10px;
-}
-
-.record-card .record-video a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.record-card .record-video a:hover {
-    color: var(--hover-color);
-}
-
-/* Zure Verified specific styles */
-.record-card.zure-verified {
-    border: 2px solid var(--secondary-color); /* 즈레인증 시 녹색 테두리 */
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); /* 녹색 그림자 */
-    background-color: #e6ffe6; /* 아주 연한 녹색 배경 */
-}
-
-.record-card.zure-verified .zure-proof {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed var(--secondary-color); /* 녹색 점선 */
-    color: var(--text-color);
-}
-
-.record-card.zure-verified .zure-proof h4 {
-    color: var(--secondary-color);
-    margin-top: 0;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.1em;
-}
-
-.record-card.zure-verified .zure-proof p {
-    font-size: 0.95em;
-    margin-bottom: 5px;
-}
-
-.record-card.zure-verified .zure-proof a {
-    color: var(--secondary-color); /* 즈레 링크는 녹색 */
-    text-decoration: underline;
-}
-
-/* Optional: Zure badge for list items (profile page) */
-.profile-list li .zure-tag {
-    background-color: var(--secondary-color);
-    color: #fff;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-.no-records-message {
-    text-align: center;
-    color: var(--light-text-color);
-    padding: 30px;
-    font-size: 1.1em;
-}
-/* auth.html 및 my_profile.html 관련 스타일 */
-
-/* auth.html의 .form-section에 적용 */
-.form-section {
-    max-width: 500px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--card-background);
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border-color);
-    text-align: center; /* 제목과 버튼을 중앙 정렬 */
-}
-
-.form-section h2, .profile-page h2 {
-    font-size: 2.2em;
-    color: var(--primary-color);
-    margin-bottom: 30px;
-    font-family: 'Poppins', sans-serif; /* Poppins 폰트 사용 */
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 15px;
-    display: inline-block; /* border-bottom 너비 조절 */
-}
-
-.form-section .form-group {
-    margin-bottom: 20px;
-    text-align: left; /* 입력 필드는 왼쪽 정렬 */
-}
-
-.form-section .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.form-section .form-group input[type="email"],
-.form-section .form-group input[type="text"],
-.form-section .form-group input[type="password"] {
-    width: calc(100% - 20px);
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background-color: var(--input-background);
-    color: var(--text-color);
-    font-size: 1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-section .form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.2);
-    outline: none;
-}
-
-.form-section .button-submit { /* class="button-submit"로 변경 */
-    width: 100%;
-    padding: 15px;
-    font-size: 1.1em;
-    font-weight: 700;
-    margin-top: 20px;
-    border-radius: 8px;
-    background-color: var(--primary-color); /* 기존 primary-color 사용 */
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.form-section .button-submit:hover {
-    background-color: var(--hover-color);
-}
-
-
-.form-section .auth-switch-link { /* auth-switch-link 클래스 추가 */
-    margin-top: 25px;
-    color: var(--light-text-color);
-    font-size: 0.95em;
-}
-
-.form-section .auth-switch-link a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.form-section .auth-switch-link a:hover {
-    text-decoration: underline;
-    color: var(--hover-color);
-}
-
-/* 프로필 페이지 스타일 */
-.profile-page {
-    max-width: 800px; /* 프로필 페이지 너비 약간 넓게 */
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--card-background);
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border-color);
-    text-align: center;
-}
-
-.profile-info-card {
-    background-color: var(--input-background);
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.profile-info-card h3 {
-    color: var(--primary-color);
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.profile-info-card p {
-    font-size: 1.1em;
-    color: var(--text-color);
-    margin-bottom: 10px;
-}
-
-.profile-info-card p strong {
-    color: var(--dark-text-color);
-}
-
-.profile-info-card #logout-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: 600;
-    border-radius: 6px;
-    background-color: var(--button-danger-background); /* 빨간색 계열 */
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.profile-info-card #logout-button:hover {
-    background-color: var(--button-danger-hover); /* 더 진한 빨간색 */
-}
-
-.profile-section {
-    background-color: var(--card-background);
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.profile-section h3 {
-    color: var(--primary-color);
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.profile-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.profile-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px dashed var(--border-color);
-    color: var(--text-color);
-    font-size: 1.05em;
-}
-
-.profile-list li:last-child {
-    border-bottom: none;
-}
-
-.profile-list li a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.profile-list li a:hover {
-    text-decoration: underline;
-    color: var(--hover-color);
-}
-
-.profile-list li .actions button {
-    background: none;
-    border: 1px solid var(--border-color);
-    color: var(--light-text-color);
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 8px;
-    transition: all 0.2s ease;
-}
-
-.profile-list li .actions button:hover {
-    background-color: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
-}
-
-.profile-list li .loading-message,
-.profile-list li p { /* 기존 p 태그에도 적용 */
-    color: var(--light-text-color);
-    font-style: italic;
-    width: 100%; /* 너비 전체 사용 */
-    text-align: center; /* 중앙 정렬 */
-    padding: 10px 0;
-}
-
-/* 내비게이션 바 로그인/로그아웃 버튼 스타일 */
-nav .logout-button { /* nav 바로 아래 버튼에 적용 */
-    background-color: var(--button-danger-background);
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
-}
-
-nav .logout-button:hover {
-    background-color: var(--button-danger-hover);
-}
-
-nav #nav-my-profile-link { /* 로그인 상태일 때 닉네임 강조 */
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-/* 기존 색상 변수 추가 (혹시 없는 경우) */
-:root {
-    /* ... 기존 변수들 ... */
-    --button-danger-background: #dc3545; /* Red */
-    --button-danger-hover: #c82333; /* Darker Red */
+    .filter-sort-controls .form-group {
+        width: 100%;
+        min-width: unset;
+    }
 }
