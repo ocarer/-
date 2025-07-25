@@ -23,36 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 3500,
             completions: 1,
             attempts: 2000,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './the_hell_challenge.png' // 이미지 추가
         },
         {
-            id: '72591414', rank: 2, // Rebition 2
-            name: 'Rebition 2',
-            difficulty: 'extreme_demon',
-            description: '새롭게 2위로 등극한 챌린지입니다. 649 어템으로 클리어되었습니다.',
-            creator: 'Unknown',
-            verifier: 'Unknown',
-            levelId: '72591414',
-            views: 650,
+            id: '16', rank: 2, // Relief 2 (오늘 깬 맵)
+            name: 'Relief 2',
+            difficulty: 'insane_demon', // 난이도 추정
+            description: '오늘 클리어한 새로운 챌린지입니다. Relief 시리즈의 두 번째 작품입니다.',
+            creator: 'PlayerX',
+            verifier: 'PlayerX',
+            levelId: '16000000',
+            views: 50,
             completions: 1,
-            attempts: 649,
-            videoUrl: ''
+            attempts: 100,
+            videoUrl: 'https://www.youtube.com/embed/relief2_video_url', // 실제 영상 URL로 변경
+            imageUrl: './relief_2.png' // 이미지 추가
         },
         {
-            id: '2', rank: 3, // Gonna Go
-            name: 'Gonna go',
-            difficulty: 'insane_demon',
-            description: '매우 높은 순위의 챌린지로, 1125번의 시도 끝에 클리어되었습니다.',
-            creator: 'GDMaster',
-            verifier: 'OfficialGDV',
-            levelId: '11250002',
-            views: 2800,
-            completions: 3,
-            attempts: 1125,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-        },
-        {
-            id: '102', rank: 4, // Chaos Ship (업커밍에서 이동, 즈레 인증 유지)
+            id: '102', rank: 3, // Chaos Ship (랭크 조정)
             name: 'Chaos Ship',
             difficulty: 'insane_demon',
             description: '혼란스러운 패턴이 특징인 쉬프 챌린지입니다. 이제 공식 챌린지 목록에 추가되었습니다.',
@@ -65,12 +54,55 @@ document.addEventListener('DOMContentLoaded', () => {
             videoUrl: 'https://www.youtube.com/embed/your_chaos_ship_official_video',
             isZre: true,
             zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video',
-            zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof'
+            zreImageUrl: './images/chaos_ship_zre_proof.png', // 로컬 경로로 변경
+            imageUrl: './chaos_ship.png' // 이미지 추가
         },
         {
-            id: '7', rank: 5, // Rusttttt (새로운 챌린지)
-            name: 'Rusttttt',
+            id: '72591414', rank: 4, // Rebition 2 (랭크 조정)
+            name: 'Rebition 2',
+            difficulty: 'extreme_demon',
+            description: '새롭게 2위로 등극했던 챌린지입니다. 649 어템으로 클리어되었습니다.',
+            creator: 'Unknown',
+            verifier: 'Unknown',
+            levelId: '72591414',
+            views: 650,
+            completions: 1,
+            attempts: 649,
+            videoUrl: '',
+            imageUrl: './rebition_2.png' // 이미지 추가
+        },
+        {
+            id: '17', rank: 5, // True Sink (오늘 깬 맵)
+            name: 'True Sink',
             difficulty: 'hard_demon', // 난이도 추정
+            description: '오늘 클리어한 새로운 챌린지입니다. 깊이 가라앉는 듯한 느낌을 줍니다.',
+            creator: 'PlayerY',
+            verifier: 'PlayerY',
+            levelId: '17000000',
+            views: 30,
+            completions: 1,
+            attempts: 80,
+            videoUrl: 'https://www.youtube.com/embed/true_sink_video_url', // 실제 영상 URL로 변경
+            imageUrl: './true_sink.png' // 이미지 추가
+        },
+        {
+            id: '2', rank: 6, // Gonna Go (랭크 조정)
+            name: 'Gonna go',
+            difficulty: 'insane_demon',
+            description: '매우 높은 순위의 챌린지로, 1125번의 시도 끝에 클리어되었습니다.',
+            creator: 'GDMaster',
+            verifier: 'OfficialGDV',
+            levelId: '11250002',
+            views: 2800,
+            completions: 3,
+            attempts: 1125,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './gonna_go.png' // 이미지 추가
+        },
+        {
+            id: '7', rank: 7, // Rusttttt (랭크 조정)
+            name: 'Rusttttt',
+            difficulty: 'hard_demon',
             description: '새롭게 추가된 챌린지입니다. 녹슨 듯한 분위기가 특징입니다.',
             creator: 'NewCreator',
             verifier: 'NewVerifier',
@@ -78,12 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './rusttttt.png' // 이미지 추가
         },
         {
-            id: '8', rank: 6, // Buzori (새로운 챌린지)
+            id: '8', rank: 8, // Buzori (랭크 조정)
             name: 'Buzori',
-            difficulty: 'medium_demon', // 난이도 추정
+            difficulty: 'medium_demon',
             description: '새롭게 추가된 챌린지입니다. 독특한 리듬감이 돋보입니다.',
             creator: 'RhythmMaster',
             verifier: 'SoundPro',
@@ -91,10 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './buzori.png' // 이미지 추가
         },
         {
-            id: '4', rank: 7, // AAAAAAAAAAA
+            id: '4', rank: 9, // AAAAAAAAAAA (랭크 조정)
             name: 'AAAAAAAAAAAAAAAAAAAAAA',
             difficulty: 'medium_demon',
             description: '445번의 시도 끝에 클리어된 독특한 이름의 챌린지입니다.',
@@ -104,10 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 1200,
             completions: 8,
             attempts: 445,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './aaaaaaaaaaa.png' // 이미지 추가
         },
+        // Extended List에 포함될 챌린지 (10위부터 19위까지)
         {
-            id: '6', rank: 8, // Persephone
+            id: '6', rank: 10, // Persephone (랭크 조정, Extended List로 이동)
             name: 'Persephone',
             difficulty: 'extreme_demon',
             description: '새롭게 추가된 익스트림 데몬 챌린지입니다.',
@@ -117,10 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './persephone.png' // 이미지 추가
         },
         {
-            id: '3', rank: 9, // Wave Hold
+            id: '3', rank: 11, // Wave Hold (랭크 조정, Extended List로 이동)
             name: 'Wave Hold',
             difficulty: 'hard_demon',
             description: '172번의 시도로 클리어된 챌린지입니다. 웨이브 컨트롤이 중요합니다.',
@@ -130,34 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 1500,
             completions: 15,
             attempts: 172,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-        },
-        // Extended List에 포함될 챌린지 (10위부터 19위까지)
-        {
-            id: '12', rank: 10,
-            name: 'Test Challenge Ten',
-            difficulty: 'easy_demon',
-            description: '10위 테스트 챌린지입니다.',
-            creator: 'Test',
-            verifier: 'TestV',
-            levelId: '10101010',
-            views: 10,
-            completions: 0,
-            attempts: 0,
-            videoUrl: ''
-        },
-        {
-            id: '13', rank: 11,
-            name: 'Test Challenge Eleven',
-            difficulty: 'normal',
-            description: '11위 테스트 챌린지입니다.',
-            creator: 'Test',
-            verifier: 'TestV',
-            levelId: '11111111',
-            views: 11,
-            completions: 0,
-            attempts: 0,
-            videoUrl: ''
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './wave_hold.png' // 이미지 추가
         },
         {
             id: '9', rank: 12, // Ship Challenge 10000
@@ -170,7 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './ship_challenge_10000.png' // 이미지 추가
         },
         {
             id: '10', rank: 13, // Invincible Wave
@@ -183,12 +195,13 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './invincible_wave.png' // 이미지 추가
         },
         {
             id: '11', rank: 14, // Speeeeeeeeeeeeeed
             name: 'Speeeeeeeeeeeeeed',
-            difficulty: 'easy_demon', // 난이도 추정
+            difficulty: 'easy_demon',
             description: '매우 빠른 속도감을 자랑하는 챌린지입니다.',
             creator: 'SpeedDemon',
             verifier: 'FastV',
@@ -196,7 +209,36 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './speeeeeeeeeeeeeed.png' // 이미지 추가
+        },
+        {
+            id: '12', rank: 15, // Test Challenge Ten (랭크 조정)
+            name: 'Test Challenge Ten',
+            difficulty: 'easy_demon',
+            description: '10위 테스트 챌린지였던 챌린지입니다.',
+            creator: 'Test',
+            verifier: 'TestV',
+            levelId: '10101010',
+            views: 10,
+            completions: 0,
+            attempts: 0,
+            videoUrl: '',
+            imageUrl: './test_challenge_ten.png' // 이미지 추가
+        },
+        {
+            id: '13', rank: 16, // Test Challenge Eleven (랭크 조정)
+            name: 'Test Challenge Eleven',
+            difficulty: 'normal',
+            description: '11위 테스트 챌린지였던 챌린지입니다.',
+            creator: 'Test',
+            verifier: 'TestV',
+            levelId: '11111111',
+            views: 11,
+            completions: 0,
+            attempts: 0,
+            videoUrl: '',
+            imageUrl: './test_challenge_eleven.png' // 이미지 추가
         },
         // Legacy List에 포함될 챌린지 (20위부터)
         {
@@ -210,7 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 5,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './test_legacy_one.png' // 이미지 추가
         },
         {
             id: '15', rank: 21,
@@ -223,7 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 6,
             completions: 0,
             attempts: 0,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './test_legacy_two.png' // 이미지 추가
         }
     ].sort((a, b) => a.rank - b.rank); // 랭크 기준으로 정렬
 
@@ -238,19 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
             levelId: 'UPCOM001',
             views: 50,
             expectedRank: 'Top 1',
-            videoUrl: ''
-        },
-        {
-            id: '103',
-            name: 'Quantum on track',
-            difficulty: 'extreme_demon',
-            description: 'Top 1으로 예상되는 새로운 트랙 기반 챌린지입니다. 곧 공개됩니다!',
-            creator: 'TrackBuilder',
-            verifier: 'QuantumV',
-            levelId: 'UPCOM003',
-            views: 30,
-            expectedRank: 'Top 1',
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './gonna_go_full_upcoming.png' // 이미지 추가
         }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -278,14 +311,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
     // 이 데이터는 백엔드와 연동될 때 서버에서 가져오고 저장해야 합니다.
     let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [
-        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: 'https://via.placeholder.com/200x150?text=Clear+Image+1', comment: '간신히 깼습니다!', submitter: 'NormalUser', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: 'http://googleusercontent.com/file_content/10', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: 'https://via.placeholder.com/300x200?text=Zre+Proof+Image' },
-        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: 'https://via.placeholder.com/200x150?text=Clear+Image+3', comment: '깔끔하게 클리어!', submitter: 'WavePro', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: 'https://via.placeholder.com/200x150?text=Gonna+go+Clear', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './images/the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './images/the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './images/the_hell_challenge_zre_proof.png' },
+        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './images/wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: './images/gonna_go_clear.png', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
         // Chaos Ship Zre 인증 기록 추가
-        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: 'https://placehold.co/200x150/000/FFF?text=Chaos+Ship+Clear', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: 'https://placehold.co/300x200/000/FFF?text=Chaos+Ship+Zre+Proof' },
+        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: './images/chaos_ship_clear.png', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: './images/chaos_ship_zre_proof.png' },
         // Rebition 2 샘플 기록 추가
-        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: 'https://placehold.co/200x150/000/FFF?text=Rebition+2+Clear', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', isZre: false, zreVideoUrl: '', zreImageUrl: '' }
+        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: './images/rebition2_clear.png', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        // Relief 2 샘플 기록 추가
+        { id: 'rec7', challengeId: '16', challengeName: 'Relief 2', videoUrl: 'https://www.youtube.com/embed/relief2_sample_video', recordImageUrl: './images/relief2_clear.png', comment: 'Relief 2 클리어!', submitter: 'PlayerX', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        // True Sink 샘플 기록 추가
+        { id: 'rec8', challengeId: '17', challengeName: 'True Sink', videoUrl: 'https://www.youtube.com/embed/true_sink_sample_video', recordImageUrl: './images/true_sink_clear.png', comment: 'True Sink 클리어!', submitter: 'PlayerY', isZre: false, zreVideoUrl: '', zreImageUrl: '' }
     ];
 
     // 임시 업로드 챌린지 데이터
@@ -302,7 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 100,
             completions: 5,
             attempts: 50,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './images/uploaded_easy_demon.png' // 이미지 추가
         },
         {
             id: 'upl2',
@@ -315,9 +353,31 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 200,
             completions: 1,
             attempts: 300,
-            videoUrl: ''
+            videoUrl: '',
+            imageUrl: './images/uploaded_hard_one.png' // 이미지 추가
         }
     ];
+
+    // 크리에이터 목록을 직접 정의 (요청에 따라 추가)
+    const creators = [
+        'ChallengingCreator',
+        'PlayerX',
+        'ShipMaster',
+        'Unknown', // Rebition 2 제작자
+        'PlayerY',
+        'GDMaster',
+        'NewCreator', // Rusttttt 제작자
+        'RhythmMaster', // Buzori 제작자
+        'GDFunny', // AAAAAAAAAAA 제작자
+        '레즈', // Persephone 제작자
+        'WavePlayer', // Wave Hold 제작자
+        'ShipLover', // Ship Challenge 10000 제작자
+        'WaveGod', // Invincible Wave 제작자
+        'SpeedDemon', // Speeeeeeeeeeeeeed 제작자
+        'Test', // Test Challenge Ten, Eleven 제작자
+        'OldSchool', // Test Legacy One, Two 제작자
+        'TestUser' // 업로드 챌린지 제작자
+    ].sort(); // 알파벳 순으로 정렬
 
 
     // --- Helper Functions ---
@@ -336,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // createChallengeCard 함수를 전역 스코프로 이동
+    // createChallengeCard 함수를 전역 스코프로 이동 (모든 페이지에서 사용 가능하도록)
     function createChallengeCard(challenge, isUpcoming) {
         const card = document.createElement('div');
         card.classList.add('challenge-card');
@@ -347,15 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const rankDisplay = challenge.rank ? `<span class="rank">#${challenge.rank}</span>` : '';
         const expectedRankDisplay = isUpcoming && challenge.expectedRank ? `<p class="expected-rank"><strong>예상 랭크:</strong> ${challenge.expectedRank}</p>` : '';
 
-        const firstRecord = submittedRecords.find(record => record.challengeId === challenge.id);
-        let imagePreviewHtml = '';
-        if (!isUpcoming && firstRecord && firstRecord.recordImageUrl) {
-            imagePreviewHtml = `
-                <div class="challenge-image-preview">
-                    <img src="${firstRecord.recordImageUrl}" alt="${challenge.name} 클리어 이미지">
-                </div>
-            `;
-        }
+        // challenge.imageUrl을 사용하여 이미지 표시
+        const challengeImageUrl = challenge.imageUrl || 'https://placehold.co/200x150/E0E0E0/333333?text=No+Image'; // 기본 이미지
 
         card.innerHTML = `
             <a href="challenge_detail.html?id=${challenge.id}${isUpcoming ? '&upcoming=true' : ''}" class="challenge-card-link">
@@ -377,7 +430,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="stats">조회수: ${challenge.views} | 완료: ${challenge.completions || 0}</span>
                     </div>
                 </div>
-                ${imagePreviewHtml}
+                <div class="challenge-image-preview">
+                    <img src="${challengeImageUrl}" alt="${challenge.name} 이미지" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';">
+                </div>
             </a>
         `;
         card.querySelector('.copy-btn')?.addEventListener('click', (event) => {
@@ -395,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const navLogoutButton = document.getElementById('nav-logout-button');
         const navExtendedListLink = document.getElementById('nav-extended-list-link');
         const navLegacyListLink = document.getElementById('nav-legacy-list-link');
+        const navCreatorPageLink = document.getElementById('nav-creator-page-link');
 
         if (loggedInUser && authToken) {
             if (navMyProfileLink) {
@@ -429,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (navExtendedListLink) navExtendedListLink.style.display = 'inline-block';
         if (navLegacyListLink) navLegacyListLink.style.display = 'inline-block';
+        if (navCreatorPageLink) navCreatorPageLink.style.display = 'inline-block';
     }
     updateAuthNavItem(); // 페이지 로드 시 내비게이션 바 업데이트
 
@@ -476,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             filteredChallenges.forEach(challenge => {
-                const card = createChallengeCard(challenge, false); // createChallengeCard 재사용
+                const card = createChallengeCard(challenge, false);
                 challengeListContainer.appendChild(card);
             });
 
@@ -583,7 +640,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -617,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -675,6 +732,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const verifierDisplay = foundChallenge.verifier ? `<p><strong>베리파이어:</strong> ${foundChallenge.verifier}</p>` : '';
             const expectedRankDisplay = foundChallenge.expectedRank ? `<p><strong>예상 랭크:</strong> ${foundChallenge.expectedRank}</p>` : '';
 
+            // challenge.imageUrl을 사용하여 상세 페이지에 이미지 표시
+            const challengeDetailImageUrl = foundChallenge.imageUrl || 'https://placehold.co/400x300/E0E0E0/333333?text=No+Image';
+
             let submitButtonHtml = '';
             if (!isUpcoming) {
                  submitButtonHtml = `<a href="submit_record.html?challengeId=${foundChallenge.id}" class="button-primary" style="margin-top: 20px;">기록 제출하기</a>`;
@@ -695,6 +755,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>레벨 ID:</strong> ${foundChallenge.levelId} <button class="copy-btn button-primary" data-id="${foundChallenge.levelId}" type="button">복사</button></p>
                         ${attemptsDisplay}
                         <p><strong>조회수:</strong> ${foundChallenge.views} | <strong>완료 횟수:</strong> ${foundChallenge.completions || 0}</p>
+                        <div class="challenge-main-image">
+                            <img src="${challengeDetailImageUrl}" alt="${foundChallenge.name} 메인 이미지" onerror="this.onerror=null;this.src='https://placehold.co/400x300/E0E0E0/333333?text=No+Image';">
+                        </div>
                         ${submitButtonHtml}
                     </div>
                     ${videoHtml}
@@ -729,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="zre-proof">
                                     <h4>✅ Zre 인증됨</h4>
                                     ${record.zreVideoUrl && record.zreVideoUrl !== '' ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
-                                    ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;">` : ''}
+                                    ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;" onerror="this.onerror=null;this.src='https://placehold.co/300x200/E0E0E0/333333?text=No+Image';">` : ''}
                                 </div>
                             `;
                         }
@@ -741,7 +804,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                             <p class="record-comment">${record.comment}</p>
                             <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
-                            ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지"></div>` : ''}
+                            ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';"></div>` : ''}
                             ${zreProofHtml}
                         `;
                         recordsListContainer.appendChild(recordCard);
@@ -812,6 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     levelId: document.getElementById('gd-level-id').value,
                     views: 0,
                     videoUrl: document.getElementById('video-url').value,
+                    imageUrl: `./images/uploaded_challenge_${Date.now()}.png` // 업로드 시 더미 이미지 경로 생성
                 };
 
                 if (isUpcomingChecked) {
@@ -1087,51 +1151,43 @@ document.addEventListener('DOMContentLoaded', () => {
                         challengeId: targetChallenge.id,
                         challengeName: targetChallenge.name,
                         videoUrl: recordVideoUrl,
-                        recordImageUrl: recordImageUrl,
+                        recordImageUrl: recordImageUrl, // 로컬 경로 그대로 사용
                         comment: recordComment,
                         submitter: loggedInUser.nickname,
                         date: new Date().toLocaleDateString('ko-KR'),
                         isZre: isZre,
                         zreVideoUrl: zreVideoUrl,
-                        zreImageUrl: zreImageUrl
+                        zreImageUrl: zreImageUrl // 로컬 경로 그대로 사용
                     };
 
-                    // 실제로는 백엔드 API를 통해 기록을 제출해야 합니다. (예시)
-                    // try {
-                    //     const response = await fetch(`${BACKEND_API_URL}/api/records`, {
-                    //         method: 'POST',
-                    //         headers: {
-                    //             'Content-Type': 'application/json',
-                    //             'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
-                    //         },
-                    //         body: JSON.stringify(newRecord),
-                    //     });
-                    //     const data = await response.json();
-                    //     if (response.ok) {
-                    //         alert(data.message);
-                    //         // 실제 데이터베이스에 저장된 기록으로 submittedRecords 업데이트
-                    //         // submittedRecords.push(data.record);
-                    //         // localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
-                    //         window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
-                    //     } else {
-                    //         alert(`기록 제출 실패: ${data.message}`);
-                    //     }
-                    // } catch (error) {
-                    //     console.error('기록 제출 오류:', error);
-                    //     alert('기록 제출 중 오류가 발생했습니다.');
-                    // }
-
-                    // 현재는 로컬 스토리지에만 저장 (데모용)
-                    submittedRecords.push(newRecord);
-                    localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
-
-                    alert(`${targetChallenge.name} 챌린지 기록이 성공적으로 제출되었습니다! (새로고침 시 데이터 초기화)`);
-                    console.log('새 기록:', newRecord);
+                    // 백엔드 API를 통해 기록을 제출
+                    try {
+                        const response = await fetch(`${BACKEND_API_URL}/api/records`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
+                            },
+                            body: JSON.stringify(newRecord),
+                        });
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            // 실제 데이터베이스에 저장된 기록으로 submittedRecords 업데이트
+                            submittedRecords.push(data.record); // 백엔드에서 반환된 레코드를 사용
+                            localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
+                            window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
+                        } else {
+                            alert(`기록 제출 실패: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('기록 제출 오류:', error);
+                        alert('기록 제출 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+                    }
 
                     submitRecordForm.reset();
                     zreProofFields.style.display = 'none';
                     isZreCheckbox.checked = false;
-                    window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
                 });
             }
 
@@ -1141,5 +1197,41 @@ document.addEventListener('DOMContentLoaded', () => {
             if (recordNotFound) recordNotFound.style.display = 'block';
             if (submitPageTitle) submitPageTitle.textContent = `기록 제출 오류`;
         }
+    } else if (currentPage === 'creator_page.html') {
+        const creatorListContainer = document.getElementById('creator-list');
+
+        function displayCreators() {
+            if (creatorListContainer) creatorListContainer.innerHTML = '';
+
+            // 정의된 크리에이터 목록을 순회하며 표시
+            creators.forEach(creatorName => {
+                const creatorCard = document.createElement('div');
+                creatorCard.classList.add('creator-card');
+
+                // 해당 크리에이터가 제작한 챌린지 필터링
+                const creatorChallenges = challenges.filter(c => c.creator === creatorName);
+                const creatorUpcomingChallenges = upcomingChallenges.filter(c => c.creator === creatorName);
+                const creatorUploadedChallenges = uploadedChallenges.filter(c => c.creator === creatorName);
+
+                creatorCard.innerHTML = `
+                    <h3>${creatorName}</h3>
+                    <div class="creator-challenges">
+                        <h4>제작한 챌린지 (${creatorChallenges.length + creatorUpcomingChallenges.length + creatorUploadedChallenges.length}개)</h4>
+                        <ul>
+                            ${creatorChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (#${c.rank})</a></li>`).join('')}
+                            ${creatorUpcomingChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}&upcoming=true">${c.name} (업커밍)</a></li>`).join('')}
+                            ${creatorUploadedChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (업로드)</a></li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                if (creatorListContainer) creatorListContainer.appendChild(creatorCard);
+            });
+
+            // 크리에이터 목록이 비어있을 경우 메시지 표시 (현재는 하드코딩된 목록이므로 거의 발생하지 않음)
+            if (creators.length === 0 && creatorListContainer) {
+                creatorListContainer.innerHTML = '<p class="no-results">등록된 크리에이터가 없습니다.</p>';
+            }
+        }
+        displayCreators();
     }
 });
