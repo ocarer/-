@@ -315,15 +315,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
     let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [
-        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './the_hell_challenge_zre_proof.png' },
-        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: './gonna_go_clear.png', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
+        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', date: '2025.07.25', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
+        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', date: '2025.07.24', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './the_hell_challenge_zre_proof.png' }, // 날짜 추가
+        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', date: '2025.07.23', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
+        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: './gonna_go_clear.png', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', date: '2025.07.22', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
         // Chaos Ship Zre 인증 기록 추가
-        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: './chaos_ship_clear.png', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: './chaos_ship_zre_proof.png' },
-        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: './rebition2_clear.png', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec7', challengeId: '16', challengeName: 'Relief 2', videoUrl: 'https://www.youtube.com/embed/relief2_sample_video', recordImageUrl: './relief2_clear.png', comment: 'Relief 2 클리어!', submitter: 'PlayerX', isZre: false, zreVideoUrl: '', zreImageUrl: '' },
-        { id: 'rec8', challengeId: '17', challengeName: 'True Sink', videoUrl: 'https://www.youtube.com/embed/true_sink_sample_video', recordImageUrl: './true_sink_clear.png', comment: 'True Sink 클리어!', submitter: 'PlayerY', isZre: false, zreVideoUrl: '', zreImageUrl: '' }
+        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: './chaos_ship_clear.png', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', date: '2025.07.21', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: './chaos_ship_zre_proof.png' }, // 날짜 추가
+        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: './rebition2_clear.png', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', date: '2025.07.20', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
+        { id: 'rec7', challengeId: '16', challengeName: 'Relief 2', videoUrl: 'https://www.youtube.com/embed/relief2_sample_video', recordImageUrl: './relief2_clear.png', comment: 'Relief 2 클리어!', submitter: 'PlayerX', date: '2025.07.19', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
+        { id: 'rec8', challengeId: '17', challengeName: 'True Sink', videoUrl: 'https://www.youtube.com/embed/true_sink_sample_video', recordImageUrl: './true_sink_clear.png', comment: 'True Sink 클리어!', submitter: 'PlayerY', date: '2025.07.18', isZre: false, zreVideoUrl: '', zreImageUrl: '' } // 날짜 추가
     ];
 
     // 임시 업로드 챌린지 데이터
@@ -456,6 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 내비게이션 바 업데이트 ---
     function updateAuthNavItem() {
+        console.log('updateAuthNavItem 함수 호출됨. 현재 loggedInUser:', loggedInUser); // 디버깅 로그
         const navMyProfileLink = document.getElementById('nav-my-profile-link');
         const navAuthLink = document.getElementById('nav-auth-link');
         const navLogoutButton = document.getElementById('nav-logout-button');
@@ -529,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
     if (currentPage === 'challenge_list.html') {
+        console.log('--- challenge_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const challengeListContainer = document.getElementById('challenge-list');
         const searchInput = document.getElementById('search-input');
         const difficultyFilter = document.getElementById('difficulty-filter');
@@ -536,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const noResultsMessage = document.querySelector('.no-results');
 
         function displayChallenges(filteredChallenges) {
+            console.log('displayChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // 디버깅 로그
             challengeListContainer.innerHTML = '';
             if (filteredChallenges.length === 0) {
                 noResultsMessage.style.display = 'block';
@@ -559,8 +562,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortChallenges() {
-            // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
+            console.log('filterAndSortChallenges 함수 호출됨.'); // 디버깅 로그
             let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
+            console.log('랭크 필터링 후 currentChallenges (main list):', currentChallenges); // 디버깅 로그
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
@@ -605,11 +609,13 @@ document.addEventListener('DOMContentLoaded', () => {
         filterAndSortChallenges();
 
     } else if (currentPage === 'upcoming_challenges.html') {
+        console.log('--- upcoming_challenges.html 페이지 로직 시작 ---'); // 디버깅 로그
         const upcomingListContainer = document.getElementById('upcoming-challenge-list');
         const noResultsMessage = document.querySelector('.no-results');
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayUpcomingChallenges() {
+            console.log('displayUpcomingChallenges 함수 호출됨. 업커밍 챌린지 수:', upcomingChallenges.length); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (upcomingListContainer) upcomingListContainer.innerHTML = '';
 
@@ -637,6 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayUpcomingChallenges();
 
     } else if (currentPage === 'extended_list.html') { // Extended List 페이지 로직
+        console.log('--- extended_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const extendedListContainer = document.getElementById('extended-challenge-list');
         const searchInput = document.getElementById('search-input'); // 추가
         const difficultyFilter = document.getElementById('difficulty-filter'); // 추가
@@ -645,6 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayExtendedChallenges(filteredChallenges) { // 매개변수 추가
+            console.log('displayExtendedChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (extendedListContainer) extendedListContainer.innerHTML = '';
 
@@ -652,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                noResultsMessage.style.display = 'none';
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -670,12 +678,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortExtendedChallenges() { // 함수 이름 변경
+            console.log('filterAndSortExtendedChallenges 함수 호출됨.'); // 디버깅 로그
+            console.log('초기 challenges 배열:', challenges); // 디버깅 로그
+            console.log('MAX_RANK_MAIN_LIST:', MAX_RANK_MAIN_LIST); // 디버깅 로그
+            console.log('MAX_RANK_EXTENDED_LIST_UPPER_BOUND:', MAX_RANK_EXTENDED_LIST_UPPER_BOUND); // 디버깅 로그
+
             // extended_list.html에서는 MAX_RANK_MAIN_LIST 초과부터 MAX_RANK_EXTENDED_LIST_UPPER_BOUND (19위)까지의 챌린지만 보여줍니다.
             let currentChallenges = challenges.filter(c => c.rank > MAX_RANK_MAIN_LIST && c.rank <= MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+            console.log('랭크 필터링 후 currentChallenges (extended list):', currentChallenges); // 디버깅 로그
 
-            const searchTerm = searchInput.value.toLowerCase();
-            const selectedDifficulty = difficultyFilter.value;
-            const selectedSortOrder = sortOrder.value;
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : ''; // searchInput이 null일 경우 대비
+            const selectedDifficulty = difficultyFilter ? difficultyFilter.value : 'all'; // difficultyFilter가 null일 경우 대비
+            const selectedSortOrder = sortOrder ? sortOrder.value : 'rank'; // sortOrder가 null일 경우 대비
 
             if (searchTerm) {
                 currentChallenges = currentChallenges.filter(challenge =>
@@ -705,11 +719,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 return 0;
             });
+            console.log('최종 필터링 및 정렬 후 currentChallenges (extended list):', currentChallenges); // 디버깅 로그
 
             displayExtendedChallenges(currentChallenges); // 변경된 함수 호출
         }
 
         // 이벤트 리스너 추가
+        // searchInput, difficultyFilter, sortOrder 요소가 존재할 때만 이벤트 리스너를 추가합니다.
         if (searchInput) searchInput.addEventListener('input', filterAndSortExtendedChallenges);
         if (difficultyFilter) difficultyFilter.addEventListener('change', filterAndSortExtendedChallenges);
         if (sortOrder) sortOrder.addEventListener('change', filterAndSortExtendedChallenges);
@@ -717,22 +733,25 @@ document.addEventListener('DOMContentLoaded', () => {
         filterAndSortExtendedChallenges(); // 초기 로드 시 필터링 및 정렬 실행
 
     } else if (currentPage === 'legacy_list.html') { // Legacy List 페이지 로직
+        console.log('--- legacy_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const legacyListContainer = document.getElementById('legacy-challenge-list');
         const noResultsMessage = document.querySelector('.no-results');
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayLegacyChallenges() {
+            console.log('displayLegacyChallenges 함수 호출됨.'); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (legacyListContainer) legacyListContainer.innerHTML = '';
 
             // 20위 이상 챌린지만 필터링
             const filteredChallenges = challenges.filter(c => c.rank > MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+            console.log('랭크 필터링 후 filteredChallenges (legacy list):', filteredChallenges); // 디버깅 로그
 
             if (filteredChallenges.length === 0) {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                noResultsMessage.style.display = 'none';
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -751,6 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayLegacyChallenges();
 
     } else if (currentPage === 'challenge_detail.html') {
+        console.log('--- challenge_detail.html 페이지 로직 시작 ---'); // 디버깅 로그
         const challengeId = urlParams.get('id');
         const isUpcoming = urlParams.get('upcoming') === 'true';
         const challengeDetailContent = document.getElementById('challenge-detail-content');
@@ -763,6 +783,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             foundChallenge = challenges.find(c => c.id === challengeId);
         }
+        console.log('상세 페이지 - 찾은 챌린지:', foundChallenge); // 디버깅 로그
 
         if (foundChallenge) {
             const difficultyInfo = difficultyMap[foundChallenge.difficulty] || { name: foundChallenge.difficulty, class: '', order: 0 };
@@ -835,6 +856,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 기록 가져오기 (백엔드 연동 시 여기에 fetch 로직 추가)
             const relevantRecords = submittedRecords.filter(record => record.challengeId === foundChallenge.id);
+            console.log('상세 페이지 - 해당 챌린지의 관련 기록:', relevantRecords); // 디버깅 로그
+
             if (recordsListContainer) { // recordsListContainer가 존재하는지 확인
                 if (relevantRecords.length > 0) {
                     recordsListContainer.innerHTML = '';
@@ -883,6 +906,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     } else if (currentPage === 'upload_challenge.html') {
+        console.log('--- upload_challenge.html 페이지 로직 시작 ---'); // 디버깅 로그
         // 로그인 여부 확인
         if (!loggedInUser) {
             alert('챌린지를 업로드하려면 로그인이 필요합니다.');
@@ -983,6 +1007,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     } else if (currentPage === 'my_profile.html') {
+        console.log('--- my_profile.html 페이지 로직 시작 ---'); // 디버깅 로그
         if (!loggedInUser) {
             alert('프로필을 보려면 로그인이 필요합니다.');
             window.location.href = 'auth.html';
@@ -999,6 +1024,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (profileEmail) profileEmail.textContent = loggedInUser.email;
 
         const userUploadedChallenges = uploadedChallenges.filter(c => c.creator === loggedInUser.nickname);
+        console.log('사용자가 업로드한 챌린지:', userUploadedChallenges); // 디버깅 로그
 
         if (uploadedChallengesList) {
             if (userUploadedChallenges.length > 0) {
@@ -1022,8 +1048,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // 제출된 기록 표시 로직
+        // 로그인된 사용자의 닉네임과 submittedRecords의 submitter를 비교하여 필터링합니다.
+        const userSubmittedRecords = submittedRecords.filter(r => loggedInUser && r.submitter === loggedInUser.nickname);
+        console.log('총 제출된 기록:', submittedRecords); // 디버깅 로그
+        console.log('현재 로그인된 사용자:', loggedInUser); // 디버깅 로그
+        console.log('사용자가 제출한 기록 (필터링 후):', userSubmittedRecords); // 디버깅 로그
 
-        const userSubmittedRecords = submittedRecords.filter(r => r.submitter === loggedInUser.nickname);
 
         if (submittedRecordsList) {
             if (userSubmittedRecords.length > 0) {
@@ -1059,6 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     } else if (currentPage === 'auth.html') {
+        console.log('--- auth.html 페이지 로직 시작 ---'); // 디버깅 로그
         const authHeading = document.getElementById('auth-heading');
         const authButton = document.getElementById('auth-button');
         const switchAuthModeLink = document.getElementById('switch-auth-mode');
@@ -1166,6 +1198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     } else if (currentPage === 'submit_record.html') {
+        console.log('--- submit_record.html 페이지 로직 시작 ---'); // 디버깅 로그
         if (!loggedInUser) {
             alert('기록을 제출하려면 로그인이 필요합니다.');
             window.location.href = 'auth.html';
@@ -1196,6 +1229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const targetChallenge = challenges.find(c => c.id === challengeIdToSubmit);
+        console.log('기록 제출 페이지 - 대상 챌린지:', targetChallenge); // 디버깅 로그
 
         if (targetChallenge) {
             if (submitRecordHeading) submitRecordHeading.textContent = `${targetChallenge.name} - 기록 제출`;
@@ -1203,7 +1237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (recordChallengeInfo) {
                 recordChallengeInfo.innerHTML = `
                     <p><strong>챌린지 이름:</strong> ${targetChallenge.name}</p>
-                    <p><strong>난이도:</strong> <span class="${difficultyMap[targetChallenge.difficulty].class}">${difficultyMap[targetChallenge.difficulty].name}</span></p>
+                    <p><strong>난이도:</strong> <span class="${difficultyMap[targetChallenge.difficulty].class}">${difficultyMap[targetTarget.difficulty].name}</span></p>
                     <p><strong>레벨 ID:</strong> ${targetChallenge.levelId}</p>
                 `;
             }
@@ -1295,6 +1329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (submitPageTitle) submitPageTitle.textContent = `기록 제출 오류`;
         }
     } else if (currentPage === 'creator_page.html') {
+        console.log('--- creator_page.html 페이지 로직 시작 ---'); // 디버깅 로그
         const creatorListContainer = document.getElementById('creator-list');
 
         function displayCreators() {
@@ -1309,6 +1344,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const creatorChallenges = challenges.filter(c => c.creator === creatorName);
                 const creatorUpcomingChallenges = upcomingChallenges.filter(c => c.creator === creatorName);
                 const creatorUploadedChallenges = uploadedChallenges.filter(c => c.creator === creatorName);
+
+                console.log(`크리에이터 ${creatorName}의 챌린지:`, {
+                    main: creatorChallenges,
+                    upcoming: creatorUpcomingChallenges,
+                    uploaded: creatorUploadedChallenges
+                }); // 디버깅 로그
 
                 creatorCard.innerHTML = `
                     <h3>${creatorName}</h3>
@@ -1331,10 +1372,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         displayCreators();
     } else if (currentPage === 'user_scores.html') { // 사용자 스코어 페이지 로직
+        console.log('--- user_scores.html 페이지 로직 시작 ---'); // 디버깅 로그
         const userScoresListContainer = document.getElementById('user-scores-list');
         const noScoresMessage = document.querySelector('.no-scores');
 
         function displayUserScores() {
+            console.log('displayUserScores 함수 호출됨.'); // 디버깅 로그
             if (userScoresListContainer) userScoresListContainer.innerHTML = '';
 
             const sortedScores = Object.entries(userScores)
@@ -1346,6 +1389,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                 })
                 .sort((a, b) => b.score - a.score); // 점수 내림차순 정렬
+            console.log('정렬된 사용자 스코어:', sortedScores); // 디버깅 로그
 
             if (sortedScores.length === 0) {
                 if (noScoresMessage) noScoresMessage.style.display = 'block';
