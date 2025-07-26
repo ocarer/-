@@ -312,20 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // { "user_email": score } 형태로 저장
     let userScores = JSON.parse(localStorage.getItem('userScores')) || {};
 
-    // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
-    // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
-    let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [
-        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', date: '2025.07.25', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', date: '2025.07.24', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './the_hell_challenge_zre_proof.png' }, // 날짜 추가
-        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', date: '2025.07.23', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: './gonna_go_clear.png', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', date: '2025.07.22', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        // Chaos Ship Zre 인증 기록 추가
-        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: './chaos_ship_clear.png', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', date: '2025.07.21', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: './chaos_ship_zre_proof.png' }, // 날짜 추가
-        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: './rebition2_clear.png', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', date: '2025.07.20', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec7', challengeId: '16', challengeName: 'Relief 2', videoUrl: 'https://www.youtube.com/embed/relief2_sample_video', recordImageUrl: './relief2_clear.png', comment: 'Relief 2 클리어!', submitter: 'PlayerX', date: '2025.07.19', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec8', challengeId: '17', challengeName: 'True Sink', videoUrl: 'https://www.youtube.com/embed/true_sink_sample_video', recordImageUrl: './true_sink_clear.png', comment: 'True Sink 클리어!', submitter: 'PlayerY', date: '2025.07.18', isZre: false, zreVideoUrl: '', zreImageUrl: '' } // 날짜 추가
-    ];
-
     // 임시 업로드 챌린지 데이터
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
     let uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges')) || [
@@ -454,9 +440,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
+    // --- 백엔드에서 제출 기록을 불러오는 함수 (새로 추가) ---
+    async function fetchSubmittedRecords(params = {}) {
+        let url = `${BACKEND_API_URL}/api/records`;
+        const queryParams = new URLSearchParams(params).toString();
+        if (queryParams) {
+            url += `?${queryParams}`;
+        }
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const records = await response.json();
+            return records;
+        } catch (error) {
+            console.error('Error fetching submitted records:', error);
+            return []; // Return empty array on error
+        }
+    }
+
     // --- 내비게이션 바 업데이트 ---
     function updateAuthNavItem() {
-        console.log('updateAuthNavItem 함수 호출됨. 현재 loggedInUser:', loggedInUser); // 디버깅 로그
         const navMyProfileLink = document.getElementById('nav-my-profile-link');
         const navAuthLink = document.getElementById('nav-auth-link');
         const navLogoutButton = document.getElementById('nav-logout-button');
@@ -530,7 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
     if (currentPage === 'challenge_list.html') {
-        console.log('--- challenge_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const challengeListContainer = document.getElementById('challenge-list');
         const searchInput = document.getElementById('search-input');
         const difficultyFilter = document.getElementById('difficulty-filter');
@@ -538,7 +543,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const noResultsMessage = document.querySelector('.no-results');
 
         function displayChallenges(filteredChallenges) {
-            console.log('displayChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // 디버깅 로그
             challengeListContainer.innerHTML = '';
             if (filteredChallenges.length === 0) {
                 noResultsMessage.style.display = 'block';
@@ -562,9 +566,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortChallenges() {
-            console.log('filterAndSortChallenges 함수 호출됨.'); // 디버깅 로그
+            // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
             let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
-            console.log('랭크 필터링 후 currentChallenges (main list):', currentChallenges); // 디버깅 로그
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
@@ -609,13 +612,11 @@ document.addEventListener('DOMContentLoaded', () => {
         filterAndSortChallenges();
 
     } else if (currentPage === 'upcoming_challenges.html') {
-        console.log('--- upcoming_challenges.html 페이지 로직 시작 ---'); // 디버깅 로그
         const upcomingListContainer = document.getElementById('upcoming-challenge-list');
         const noResultsMessage = document.querySelector('.no-results');
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayUpcomingChallenges() {
-            console.log('displayUpcomingChallenges 함수 호출됨. 업커밍 챌린지 수:', upcomingChallenges.length); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (upcomingListContainer) upcomingListContainer.innerHTML = '';
 
@@ -639,11 +640,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
-
         displayUpcomingChallenges();
-
     } else if (currentPage === 'extended_list.html') { // Extended List 페이지 로직
-        console.log('--- extended_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const extendedListContainer = document.getElementById('extended-challenge-list');
         const searchInput = document.getElementById('search-input'); // 추가
         const difficultyFilter = document.getElementById('difficulty-filter'); // 추가
@@ -652,7 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayExtendedChallenges(filteredChallenges) { // 매개변수 추가
-            console.log('displayExtendedChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (extendedListContainer) extendedListContainer.innerHTML = '';
 
@@ -660,7 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -678,18 +675,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortExtendedChallenges() { // 함수 이름 변경
-            console.log('filterAndSortExtendedChallenges 함수 호출됨.'); // 디버깅 로그
-            console.log('초기 challenges 배열:', challenges); // 디버깅 로그
-            console.log('MAX_RANK_MAIN_LIST:', MAX_RANK_MAIN_LIST); // 디버깅 로그
-            console.log('MAX_RANK_EXTENDED_LIST_UPPER_BOUND:', MAX_RANK_EXTENDED_LIST_UPPER_BOUND); // 디버깅 로그
-
             // extended_list.html에서는 MAX_RANK_MAIN_LIST 초과부터 MAX_RANK_EXTENDED_LIST_UPPER_BOUND (19위)까지의 챌린지만 보여줍니다.
             let currentChallenges = challenges.filter(c => c.rank > MAX_RANK_MAIN_LIST && c.rank <= MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
-            console.log('랭크 필터링 후 currentChallenges (extended list):', currentChallenges); // 디버깅 로그
 
-            const searchTerm = searchInput ? searchInput.value.toLowerCase() : ''; // searchInput이 null일 경우 대비
-            const selectedDifficulty = difficultyFilter ? difficultyFilter.value : 'all'; // difficultyFilter가 null일 경우 대비
-            const selectedSortOrder = sortOrder ? sortOrder.value : 'rank'; // sortOrder가 null일 경우 대비
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedDifficulty = difficultyFilter.value;
+            const selectedSortOrder = sortOrder.value;
 
             if (searchTerm) {
                 currentChallenges = currentChallenges.filter(challenge =>
@@ -719,13 +710,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 return 0;
             });
-            console.log('최종 필터링 및 정렬 후 currentChallenges (extended list):', currentChallenges); // 디버깅 로그
 
             displayExtendedChallenges(currentChallenges); // 변경된 함수 호출
         }
 
         // 이벤트 리스너 추가
-        // searchInput, difficultyFilter, sortOrder 요소가 존재할 때만 이벤트 리스너를 추가합니다.
         if (searchInput) searchInput.addEventListener('input', filterAndSortExtendedChallenges);
         if (difficultyFilter) difficultyFilter.addEventListener('change', filterAndSortExtendedChallenges);
         if (sortOrder) sortOrder.addEventListener('change', filterAndSortExtendedChallenges);
@@ -733,25 +722,22 @@ document.addEventListener('DOMContentLoaded', () => {
         filterAndSortExtendedChallenges(); // 초기 로드 시 필터링 및 정렬 실행
 
     } else if (currentPage === 'legacy_list.html') { // Legacy List 페이지 로직
-        console.log('--- legacy_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const legacyListContainer = document.getElementById('legacy-challenge-list');
         const noResultsMessage = document.querySelector('.no-results');
         const loadingMessage = document.querySelector('.loading-message');
 
         function displayLegacyChallenges() {
-            console.log('displayLegacyChallenges 함수 호출됨.'); // 디버깅 로그
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (legacyListContainer) legacyListContainer.innerHTML = '';
 
             // 20위 이상 챌린지만 필터링
             const filteredChallenges = challenges.filter(c => c.rank > MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
-            console.log('랭크 필터링 후 filteredChallenges (legacy list):', filteredChallenges); // 디버깅 로그
 
             if (filteredChallenges.length === 0) {
                 if (noResultsMessage) noResultsMessage.style.display = 'block';
                 return;
             } else {
-                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                noResultsMessage.style.display = 'none';
             }
 
             filteredChallenges.forEach(challenge => {
@@ -770,7 +756,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayLegacyChallenges();
 
     } else if (currentPage === 'challenge_detail.html') {
-        console.log('--- challenge_detail.html 페이지 로직 시작 ---'); // 디버깅 로그
         const challengeId = urlParams.get('id');
         const isUpcoming = urlParams.get('upcoming') === 'true';
         const challengeDetailContent = document.getElementById('challenge-detail-content');
@@ -783,10 +768,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             foundChallenge = challenges.find(c => c.id === challengeId);
         }
-        console.log('상세 페이지 - 찾은 챌린지:', foundChallenge); // 디버깅 로그
 
         if (foundChallenge) {
             const difficultyInfo = difficultyMap[foundChallenge.difficulty] || { name: foundChallenge.difficulty, class: '', order: 0 };
+
             if (detailPageTitle) detailPageTitle.textContent = `${foundChallenge.name} - 챌린지 상세`;
 
             let videoHtml = '';
@@ -816,10 +801,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let submitButtonHtml = '';
             if (!isUpcoming) {
-                 submitButtonHtml = `<a href="submit_record.html?challengeId=${foundChallenge.id}" class="button-primary" style="margin-top: 20px;">기록 제출하기</a>`;
+                submitButtonHtml = `<a href="submit_record.html?challengeId=${foundChallenge.id}" class="button-primary" style="margin-top: 20px;">기록 제출하기</a>`;
             } else {
                 submitButtonHtml = `<p style="color: var(--light-text-color); margin-top: 20px;">이 챌린지는 업커밍 상태입니다. 클리어 기록을 제출할 수 없습니다.</p>`;
             }
+
 
             if (challengeDetailContent) {
                 challengeDetailContent.innerHTML = `
@@ -833,551 +819,371 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${verifierDisplay}
                         <p><strong>레벨 ID:</strong> ${foundChallenge.levelId} <button class="copy-btn button-primary" data-id="${foundChallenge.levelId}" type="button">복사</button></p>
                         ${attemptsDisplay}
-                        <p><strong>조회수:</strong> ${foundChallenge.views} | <strong>완료 횟수:</strong> ${foundChallenge.completions || 0}</p>
-                        <div class="challenge-main-image">
-                            <img src="${challengeDetailImageUrl}" alt="${foundChallenge.name} 메인 이미지" onerror="this.onerror=null;this.src='https://placehold.co/400x300/E0E0E0/333333?text=No+Image';">
+                        <p><strong>조회수:</strong> ${foundChallenge.views}</p>
+                        <p><strong>클리어 수:</strong> ${foundChallenge.completions || 0}</p>
+                        <div class="challenge-detail-image">
+                            <img src="${challengeDetailImageUrl}" alt="${foundChallenge.name} 이미지">
                         </div>
-                        ${submitButtonHtml}
                     </div>
                     ${videoHtml}
-                    <section class="submitted-records-section">
+                    ${foundChallenge.isZre ? `
+                        <div class="detail-item zre-challenge-info">
+                            <h3>ZRE 챌린지 정보</h3>
+                            <p>이 챌린지는 ZRE 인증이 필요합니다. ZRE 인증은 특정 조건을 만족하는 클리어 기록에만 부여됩니다.</p>
+                            ${foundChallenge.zreVideoUrl ? `<p><strong>ZRE 증명 영상:</strong> <a href="${foundChallenge.zreVideoUrl}" target="_blank">${foundChallenge.zreVideoUrl}</a></p>` : ''}
+                            ${foundChallenge.zreImageUrl ? `<img src="${foundChallenge.zreImageUrl}" alt="ZRE 증명 이미지" class="zre-proof-image">` : ''}
+                        </div>
+                    ` : ''}
+                    ${submitButtonHtml}
+
+                    <section class="records-section">
                         <h3>클리어 기록</h3>
-                        <div id="records-list-container" class="records-list">
-                            <!-- 클리어 기록이 여기에 로드됩니다 -->
+                        <div id="records-list-container" class="records-grid">
+                            <p class="loading-message">기록을 불러오는 중...</p>
                         </div>
                     </section>
-                    <a href="${isUpcoming ? 'upcoming_challenges.html' : 'challenge_list.html'}" class="go-back-link">← ${isUpcoming ? '업커밍 챌린지' : '챌린지'} 목록으로 돌아가기</a>
                 `;
+                // 레벨 ID 복사 버튼 이벤트 리스너 재등록
+                challengeDetailContent.querySelector('.copy-btn')?.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    copyToClipboard(event.target.dataset.id, event.target);
+                });
             }
 
-            document.querySelector('.challenge-detail-page .copy-btn')?.addEventListener('click', (event) => {
-                copyToClipboard(event.target.dataset.id, event.target);
-            });
+            // 클리어 기록 표시 (백엔드에서 데이터 불러오기)
+            const recordsListContainer = document.getElementById('records-list-container');
+            async function displayChallengeRecords() {
+                if (recordsListContainer) recordsListContainer.innerHTML = '<p class="loading-message">기록을 불러오는 중...</p>'; // Show loading message
 
-            // 기록 가져오기 (백엔드 연동 시 여기에 fetch 로직 추가)
-            const relevantRecords = submittedRecords.filter(record => record.challengeId === foundChallenge.id);
-            console.log('상세 페이지 - 해당 챌린지의 관련 기록:', relevantRecords); // 디버깅 로그
+                try {
+                    const challengeRecords = await fetchSubmittedRecords({ challengeId: foundChallenge.id }); // Assuming backend can filter by challengeId
 
-            if (recordsListContainer) { // recordsListContainer가 존재하는지 확인
-                if (relevantRecords.length > 0) {
-                    recordsListContainer.innerHTML = '';
-                    relevantRecords.forEach(record => {
-                        const recordCard = document.createElement('div');
-                        recordCard.classList.add('record-card');
-                        if (record.isZre) {
-                            recordCard.classList.add('zre-verified');
-                        }
+                    if (recordsListContainer) recordsListContainer.innerHTML = ''; // Clear loading message
 
-                        let zreProofHtml = '';
-                        if (record.isZre) {
-                            zreProofHtml = `
-                                <div class="zre-proof">
-                                    <h4>✅ Zre 인증됨</h4>
-                                    ${record.zreVideoUrl && record.zreVideoUrl !== '' ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
-                                    ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;" onerror="this.onerror=null;this.src='https://placehold.co/300x200/E0E0E0/333333?text=No+Image';">` : ''}
+                    if (challengeRecords.length === 0) {
+                        if (recordsListContainer) recordsListContainer.innerHTML = '<p class="no-results-message">아직 제출된 클리어 기록이 없습니다.</p>';
+                    } else {
+                        challengeRecords.forEach(record => {
+                            const recordCard = document.createElement('div');
+                            recordCard.classList.add('record-card');
+                            recordCard.innerHTML = `
+                                <div class="record-header">
+                                    <strong>${record.submitter || '알 수 없는 제출자'}</strong>
+                                    ${record.isZre ? '<span class="zre-badge">ZRE 인증</span>' : ''}
                                 </div>
+                                <p class="record-comment">${record.comment || '제출된 기록입니다.'}</p>
+                                ${record.videoUrl ? `<div class="record-video"><a href="${record.videoUrl}" target="_blank">영상 보기</a></div>` : ''}
+                                ${record.recordImageUrl ? `<img src="${BACKEND_API_URL}${record.recordImageUrl}" alt="클리어 기록 이미지" class="record-thumbnail">` : ''}
+                                ${record.isZre && record.zreVideoUrl ? `<div class="record-video"><a href="${record.zreVideoUrl}" target="_blank">ZRE 증명 영상 보기</a></div>` : ''}
+                                ${record.isZre && record.zreImageUrl ? `<img src="${BACKEND_API_URL}${record.zreImageUrl}" alt="ZRE 증명 이미지" class="record-thumbnail">` : ''}
                             `;
-                        }
-
-                        recordCard.innerHTML = `
-                            <div class="record-header">
-                                <span class="record-submitter">${record.submitter}</span>
-                                <span class="record-date">${record.date}</span>
-                            </div>
-                            <p class="record-comment">${record.comment}</p>
-                            <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
-                            ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';"></div>` : ''}
-                            ${zreProofHtml}
-                        `;
-                        recordsListContainer.appendChild(recordCard);
-                    });
-                } else {
-                    recordsListContainer.innerHTML = '<p class="no-records-message">아직 이 챌린지에 대한 클리어 기록이 없습니다.</p>';
+                            recordsListContainer.appendChild(recordCard);
+                        });
+                    }
+                } catch (error) {
+                    console.error('Failed to display challenge records:', error);
+                    if (recordsListContainer) {
+                        recordsListContainer.innerHTML = '<p class="error-message">기록을 불러오는 데 실패했습니다. 다시 시도해주세요.</p>';
+                    }
                 }
             }
-
+            displayChallengeRecords();
 
         } else {
-            const loadingMessage = document.querySelector('.loading-message');
-            const notFoundMessage = document.querySelector('.not-found-message');
-            if (loadingMessage) loadingMessage.style.display = 'none';
-            if (notFoundMessage) notFoundMessage.style.display = 'block';
-            if (detailPageTitle) detailPageTitle.textContent = `챌린지 없음 - Zre Challenge List`;
+            if (challengeDetailContent) challengeDetailContent.innerHTML = '<p class="error-message">챌린지를 찾을 수 없습니다.</p>';
+            if (detailPageTitle) detailPageTitle.textContent = '챌린지 상세';
         }
 
     } else if (currentPage === 'upload_challenge.html') {
-        console.log('--- upload_challenge.html 페이지 로직 시작 ---'); // 디버깅 로그
-        // 로그인 여부 확인
-        if (!loggedInUser) {
-            alert('챌린지를 업로드하려면 로그인이 필요합니다.');
-            window.location.href = 'auth.html';
-            return;
-        }
+        const uploadChallengeForm = document.getElementById('upload-challenge-form');
 
-        const uploadForm = document.getElementById('upload-challenge-form');
-        if (uploadForm) {
-            const verifierInputHtml = `
-                <div class="form-group">
-                    <label for="verifier">베리파이어 (Verifier)</label>
-                    <input type="text" id="verifier" name="verifier" placeholder="챌린지를 검증한 플레이어 이름">
-                </div>
-            `;
-            document.getElementById('gd-level-id').closest('.form-group').insertAdjacentHTML('afterend', verifierInputHtml);
+        if (uploadChallengeForm) {
+            // 현재 로그인된 사용자를 제작자로 자동 설정
+            const creatorInput = document.getElementById('creator');
+            if (creatorInput && loggedInUser) {
+                creatorInput.value = loggedInUser.nickname;
+                creatorInput.readOnly = true; // 사용자가 변경하지 못하도록
+            }
 
-            const isUpcomingCheckboxHtml = `
-                <div class="form-group">
-                    <input type="checkbox" id="is-upcoming" name="is-upcoming">
-                    <label for="is-upcoming" style="display: inline; margin-left: 10px;">이 챌린지를 업커밍으로 등록</label>
-                </div>
-            `;
-            document.getElementById('verifier').closest('.form-group').insertAdjacentHTML('afterend', isUpcomingCheckboxHtml);
-
-            const expectedRankInputHtml = `
-                <div class="form-group" id="expected-rank-group" style="display: none;">
-                    <label for="expected-rank">예상 랭크 (Upcoming)</label>
-                    <input type="text" id="expected-rank" name="expected-rank" placeholder="예: Top 1, Top 1-2 등">
-                </div>
-            `;
-            document.getElementById('is-upcoming').closest('.form-group').insertAdjacentHTML('afterend', expectedRankInputHtml);
-
-            document.getElementById('is-upcoming').addEventListener('change', (event) => {
-                document.getElementById('expected-rank-group').style.display = event.target.checked ? 'block' : 'none';
-            });
-
-            uploadForm.addEventListener('submit', async (event) => { // async 추가
+            uploadChallengeForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
 
-                const isUpcomingChecked = document.getElementById('is-upcoming').checked;
-                const newChallenge = {
-                    // id: String(challenges.length + upcomingChallenges.length + uploadedChallenges.length + 1), // 백엔드에서 ID 생성
-                    name: document.getElementById('challenge-name').value,
-                    difficulty: document.getElementById('difficulty').value,
-                    description: document.getElementById('description').value,
-                    creator: loggedInUser.nickname,
-                    verifier: document.getElementById('verifier').value,
-                    levelId: document.getElementById('gd-level-id').value,
-                    views: 0,
-                    videoUrl: document.getElementById('video-url').value,
-                    imageUrl: `./uploaded_challenge_${Date.now()}.png`, // 업로드 시 더미 이미지 경로 생성 (실제 이미지 업로드 기능 필요)
-                    isUpcoming: isUpcomingChecked, // 백엔드에 업커밍 여부 전달
-                    expectedRank: isUpcomingChecked ? document.getElementById('expected-rank').value : null,
-                    completions: 0,
-                    attempts: 0,
-                };
+                const formData = new FormData();
+                formData.append('name', document.getElementById('challenge-name').value);
+                formData.append('difficulty', document.getElementById('difficulty').value);
+                formData.append('description', document.getElementById('description').value);
+                formData.append('creator', document.getElementById('creator').value);
+                formData.append('verifier', document.getElementById('verifier').value);
+                formData.append('levelId', document.getElementById('level-id').value);
+                formData.append('videoUrl', document.getElementById('video-url').value);
+
+                const imageFile = document.getElementById('image-upload').files[0];
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
 
                 try {
-                    const authToken = localStorage.getItem('authToken'); // 저장된 토큰 가져오기
-                    const response = await fetch(`${BACKEND_API_URL}/api/challenges`, { // 새 챌린지 업로드 엔드포인트 (예시)
+                    const response = await fetch(`${BACKEND_API_URL}/api/challenges`, {
                         method: 'POST',
+                        body: formData,
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
-                        },
-                        body: JSON.stringify(newChallenge),
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        alert(data.message);
-                        // 백엔드에서 챌린지 데이터를 성공적으로 저장했으므로,
-                        // 프론트엔드 임시 배열에 추가하는 로직은 실제 배포 시에는 백엔드에서 데이터를 다시 가져오는 것으로 대체되어야 합니다.
-                        // 여기서는 데모를 위해 임시로 추가
-                        if (isUpcomingChecked) {
-                            upcomingChallenges.push(data.challenge); // 백엔드에서 반환된 챌린지 데이터 사용
-                            upcomingChallenges.sort((a, b) => a.name.localeCompare(b.name));
-                        } else {
-                            challenges.push(data.challenge); // 백엔드에서 반환된 챌린지 데이터 사용
-                            challenges.sort((a,b) => a.rank - b.rank);
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}` // 인증 토큰 추가
                         }
-                        uploadedChallenges.push(data.challenge); // 사용자 업로드 목록에도 추가
-                        localStorage.setItem('uploadedChallenges', JSON.stringify(uploadedChallenges)); // 데모용 로컬 저장
+                    });
 
-                        console.log('새 챌린지:', data.challenge);
-                        uploadForm.reset();
-                        document.getElementById('expected-rank-group').style.display = 'none';
-                        // 챌린지 목록 페이지로 리다이렉트 (선택 사항)
+                    if (response.ok) {
+                        alert('챌린지가 성공적으로 업로드되었습니다!');
+                        uploadChallengeForm.reset(); // 폼 초기화
+                        // 선택적으로 챌린지 목록 페이지로 리다이렉트
                         window.location.href = 'challenge_list.html';
                     } else {
-                        alert(`챌린지 업로드 실패: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+                        const errorData = await response.json();
+                        alert(`챌린지 업로드 실패: ${errorData.message || response.statusText}`);
                     }
                 } catch (error) {
-                    console.error('챌린지 업로드 오류:', error);
-                    alert('챌린지 업로드 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+                    console.error('Error uploading challenge:', error);
+                    alert('챌린지 업로드 중 오류가 발생했습니다.');
                 }
             });
         }
+    } else if (currentPage === 'submit_record.html') {
+        const recordSubmitForm = document.getElementById('record-submit-form');
+        const challengeId = urlParams.get('challengeId');
+        const challengeNameElement = document.getElementById('challenge-name-display');
 
-    } else if (currentPage === 'my_profile.html') {
-        console.log('--- my_profile.html 페이지 로직 시작 ---'); // 디버깅 로그
-        if (!loggedInUser) {
-            alert('프로필을 보려면 로그인이 필요합니다.');
-            window.location.href = 'auth.html';
+        // 제출할 챌린지 정보 표시
+        const challengeToSubmit = challenges.find(c => c.id === challengeId) || upcomingChallenges.find(c => c.id === challengeId);
+        if (challengeToSubmit) {
+            challengeNameElement.textContent = challengeToSubmit.name;
+        } else {
+            challengeNameElement.textContent = '알 수 없는 챌린지';
+            // 챌린지를 찾을 수 없으면 폼 비활성화
+            if (recordSubmitForm) recordSubmitForm.style.display = 'none';
+            alert('기록을 제출할 챌린지를 찾을 수 없습니다.');
             return;
         }
 
-        const profileNickname = document.getElementById('profile-nickname');
-        const profileEmail = document.getElementById('profile-email');
-        const uploadedChallengesList = document.getElementById('uploaded-challenges-list');
-        const submittedRecordsList = document.getElementById('submitted-records-list');
-        const logoutButton = document.getElementById('logout-button');
-
-        if (profileNickname) profileNickname.textContent = loggedInUser.nickname;
-        if (profileEmail) profileEmail.textContent = loggedInUser.email;
-
-        const userUploadedChallenges = uploadedChallenges.filter(c => c.creator === loggedInUser.nickname);
-        console.log('사용자가 업로드한 챌린지:', userUploadedChallenges); // 디버깅 로그
-
-        if (uploadedChallengesList) {
-            if (userUploadedChallenges.length > 0) {
-                uploadedChallengesList.innerHTML = '';
-                userUploadedChallenges.forEach(challenge => {
-                    const li = document.createElement('li');
-                    const linkTarget = challenge.expectedRank ? `challenge_detail.html?id=${challenge.id}&upcoming=true` : `challenge_detail.html?id=${challenge.id}`;
-                    const challengeType = challenge.expectedRank ? ' (업커밍)' : '';
-
-                    li.innerHTML = `
-                        <a href="${linkTarget}">${challenge.name}${challengeType}</a>
-                        <div class="actions">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    `;
-                    uploadedChallengesList.appendChild(li);
-                });
-            } else {
-                uploadedChallengesList.innerHTML = '<li><p>아직 업로드한 챌린지가 없습니다.</p></li>';
-            }
-        }
-
-        // 제출된 기록 표시 로직
-        // 로그인된 사용자의 닉네임과 submittedRecords의 submitter를 비교하여 필터링합니다.
-        const userSubmittedRecords = submittedRecords.filter(r => loggedInUser && r.submitter === loggedInUser.nickname);
-        console.log('총 제출된 기록:', submittedRecords); // 디버깅 로그
-        console.log('현재 로그인된 사용자:', loggedInUser); // 디버깅 로그
-        console.log('사용자가 제출한 기록 (필터링 후):', userSubmittedRecords); // 디버깅 로그
-
-
-        if (submittedRecordsList) {
-            if (userSubmittedRecords.length > 0) {
-                submittedRecordsList.innerHTML = '';
-                userSubmittedRecords.forEach(record => {
-                    const li = document.createElement('li');
-                    const zreTag = record.isZre ? ' <span class="zre-tag">Zre 인증</span>' : '';
-                    li.innerHTML = `
-                        <a href="challenge_detail.html?id=${record.challengeId}">${record.challengeName}</a>
-                        <span>(내 기록)${zreTag}</span>
-                        <div class="actions">
-                            <button>보기</button>
-                            <button>삭제</button>
-                        </div>
-                    `;
-                    submittedRecordsList.appendChild(li);
-                });
-            } else {
-                submittedRecordsList.innerHTML = '<li><p>아직 제출한 기록이 없습니다.</p></li>';
-            }
-        }
-
-
-        if (logoutButton) {
-            logoutButton.addEventListener('click', () => {
-                loggedInUser = null;
-                localStorage.removeItem('loggedInUser');
-                localStorage.removeItem('authToken'); // 토큰도 제거
-                alert('로그아웃 되었습니다.');
-                window.location.href = 'index.html';
-            });
-        }
-
-
-    } else if (currentPage === 'auth.html') {
-        console.log('--- auth.html 페이지 로직 시작 ---'); // 디버깅 로그
-        const authHeading = document.getElementById('auth-heading');
-        const authButton = document.getElementById('auth-button');
-        const switchAuthModeLink = document.getElementById('switch-auth-mode');
-        const nicknameGroup = document.getElementById('nickname-group');
-        const authForm = document.getElementById('auth-form');
-        const authPageTitle = document.getElementById('auth-page-title');
-
-        let isLoginMode = true; // 초기 모드: 로그인
-
-        if (loggedInUser) {
-            alert('이미 로그인되어 있습니다. 프로필 페이지로 이동합니다.');
-            window.location.href = 'my_profile.html';
-            return;
-        }
-
-        function updateAuthMode() {
-            if (authHeading) authHeading.textContent = isLoginMode ? '로그인' : '회원가입';
-            if (authButton) authButton.textContent = isLoginMode ? '로그인' : '회원가입';
-            if (document.getElementById('switch-text')) {
-                document.getElementById('switch-text').innerHTML = isLoginMode ?
-                    '계정이 없으신가요? <a href="#" id="switch-auth-mode">회원가입</a>' :
-                    '이미 계정이 있으신가요? <a href="#" id="switch-auth-mode">로그인</a>';
-            }
-            if (nicknameGroup) nicknameGroup.style.display = isLoginMode ? 'none' : 'block';
-            if (authPageTitle) authPageTitle.textContent = isLoginMode ? '로그인' : '회원가입';
-
-            const authNicknameInput = document.getElementById('auth-nickname');
-            if (authNicknameInput) {
-                if (isLoginMode) {
-                    authNicknameInput.removeAttribute('required');
-                } else {
-                    authNicknameInput.setAttribute('required', 'required');
-                }
+        if (recordSubmitForm) {
+            // 로그인된 사용자가 제출자로 자동 설정
+            const submitterInput = document.getElementById('submitter');
+            if (submitterInput && loggedInUser) {
+                submitterInput.value = loggedInUser.nickname;
+                submitterInput.readOnly = true;
             }
 
-            // 스위치 링크 이벤트 리스너는 항상 재등록
-            if (document.getElementById('switch-auth-mode')) {
-                document.getElementById('switch-auth-mode').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    isLoginMode = !isLoginMode;
-                    updateAuthMode();
-                });
-            }
-        }
-
-        updateAuthMode();
-
-        if (authForm) {
-            authForm.addEventListener('submit', async (event) => { // async 키워드 추가
+            recordSubmitForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                const email = document.getElementById('auth-email').value;
-                const password = document.getElementById('auth-password').value;
-                const nickname = document.getElementById('auth-nickname').value;
 
-                let apiUrl = '';
-                let requestBody = {};
+                if (!loggedInUser) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'auth.html';
+                    return;
+                }
 
-                if (isLoginMode) {
-                    apiUrl = `${BACKEND_API_URL}/api/login`;
-                    requestBody = { email, password };
-                } else {
-                    apiUrl = `${BACKEND_API_URL}/api/signup`;
-                    requestBody = { nickname, email, password };
+                const formData = new FormData();
+                formData.append('challengeId', challengeId);
+                formData.append('challengeName', challengeToSubmit.name); // 챌린지 이름도 함께 제출
+                formData.append('submitterEmail', loggedInUser.email); // 이메일로 제출자 식별
+                formData.append('submitter', loggedInUser.nickname); // 닉네임도 함께 제출
+                formData.append('comment', document.getElementById('record-comment').value);
+                formData.append('videoUrl', document.getElementById('video-url').value);
+                formData.append('isZre', document.getElementById('is-zre').checked);
+                formData.append('zreVideoUrl', document.getElementById('zre-video-url').value);
+
+                const recordImage = document.getElementById('record-image').files[0];
+                if (recordImage) {
+                    formData.append('recordImage', recordImage);
+                }
+                const zreImage = document.getElementById('zre-image').files[0];
+                if (zreImage) {
+                    formData.append('zreImage', zreImage);
                 }
 
                 try {
-                    const response = await fetch(apiUrl, {
+                    const response = await fetch(`${BACKEND_API_URL}/api/records`, {
                         method: 'POST',
+                        body: formData,
                         headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(requestBody),
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}` // 인증 토큰 추가
+                        }
                     });
 
-                    const data = await response.json();
-
                     if (response.ok) {
-                        alert(data.message);
-                        if (isLoginMode) {
-                            loggedInUser = data.user;
-                            // authToken은 백엔드에서 받아오므로, 로컬 스토리지에 저장
-                            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-                            localStorage.setItem('authToken', data.token); // 토큰 저장
-                            updateAuthNavItem();
-                            window.location.href = 'my_profile.html';
-                        } else {
-                            // 회원가입 성공 후, users 배열에 추가 (데모용 로컬 스토리지 유지)
-                            const newUser = { email, password, nickname };
-                            users.push(newUser);
-                            localStorage.setItem('users', JSON.stringify(users));
-
-                            isLoginMode = true;
-                            updateAuthMode();
-                            authForm.reset();
-                        }
+                        alert('기록이 성공적으로 제출되었습니다!');
+                        recordSubmitForm.reset(); // 폼 초기화
+                        // 제출 후 상세 페이지로 이동. 이 리다이렉션 시점에 상세 페이지는 백엔드에서 기록을 다시 불러올 것입니다.
+                        window.location.href = `challenge_detail.html?id=${challengeId}`;
                     } else {
-                        alert(`오류: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+                        const errorData = await response.json();
+                        alert(`기록 제출 실패: ${errorData.message || response.statusText}`);
                     }
                 } catch (error) {
-                    console.error('네트워크 또는 서버 통신 오류:', error);
-                    alert('서버와 통신하는 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+                    console.error('Error submitting record:', error);
+                    alert('기록 제출 중 오류가 발생했습니다.');
                 }
             });
         }
 
+        // ZRE 인증 체크박스에 따라 ZRE 관련 필드 표시/숨김
+        const isZreCheckbox = document.getElementById('is-zre');
+        const zreFields = document.getElementById('zre-fields');
 
-    } else if (currentPage === 'submit_record.html') {
-        console.log('--- submit_record.html 페이지 로직 시작 ---'); // 디버깅 로그
-        if (!loggedInUser) {
-            alert('기록을 제출하려면 로그인이 필요합니다.');
-            window.location.href = 'auth.html';
-            return;
-        }
-
-        const challengeIdToSubmit = urlParams.get('challengeId');
-        const recordChallengeInfo = document.getElementById('record-challenge-info');
-        const submitRecordForm = document.getElementById('submit-record-form');
-        const recordNotFound = document.getElementById('record-not-found');
-        const submitRecordHeading = document.getElementById('submit-record-heading');
-        const submitPageTitle = document.getElementById('submit-page-title');
-
-        const isZreCheckbox = document.getElementById('is-zre-verified');
-        const zreProofFields = document.getElementById('zre-proof-fields');
-        const recordImageUrlInput = document.getElementById('record-image-url');
-
-        if (isZreCheckbox) {
+        if (isZreCheckbox && zreFields) {
             isZreCheckbox.addEventListener('change', () => {
-                if (isZreCheckbox.checked) {
-                    zreProofFields.style.display = 'block';
-                } else {
-                    zreProofFields.style.display = 'none';
-                    document.getElementById('zre-video-url').value = '';
-                    document.getElementById('zre-image-url').value = '';
+                zreFields.style.display = isZreCheckbox.checked ? 'block' : 'none';
+            });
+            // 초기 상태 설정
+            zreFields.style.display = isZreCheckbox.checked ? 'block' : 'none';
+        }
+    } else if (currentPage === 'auth.html') {
+        // ... (인증 관련 기존 로직) ...
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegisterLink = document.getElementById('show-register');
+        const showLoginLink = document.getElementById('show-login');
+
+        // 회원가입 폼 표시
+        if (showRegisterLink && loginForm && registerForm) {
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+        }
+
+        // 로그인 폼 표시
+        if (showLoginLink && loginForm && registerForm) {
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            });
+        }
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const nickname = document.getElementById('register-nickname').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+
+                try {
+                    const response = await fetch(`${BACKEND_API_URL}/api/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ nickname, email, password })
+                    });
+
+                    if (response.ok) {
+                        alert('회원가입이 성공적으로 완료되었습니다! 로그인 해주세요.');
+                        registerForm.reset();
+                        // 회원가입 후 로그인 폼으로 전환
+                        if (loginForm && registerForm) {
+                            loginForm.style.display = 'block';
+                            registerForm.style.display = 'none';
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        alert(`회원가입 실패: ${errorData.message || response.statusText}`);
+                    }
+                } catch (error) {
+                    console.error('Error during registration:', error);
+                    alert('회원가입 중 오류가 발생했습니다.');
                 }
             });
         }
 
-        const targetChallenge = challenges.find(c => c.id === challengeIdToSubmit);
-        console.log('기록 제출 페이지 - 대상 챌린지:', targetChallenge); // 디버깅 로그
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
 
-        if (targetChallenge) {
-            if (submitRecordHeading) submitRecordHeading.textContent = `${targetChallenge.name} - 기록 제출`;
-            if (submitPageTitle) submitPageTitle.textContent = `기록 제출 - ${targetChallenge.name}`;
-            if (recordChallengeInfo) {
-                recordChallengeInfo.innerHTML = `
-                    <p><strong>챌린지 이름:</strong> ${targetChallenge.name}</p>
-                    <p><strong>난이도:</strong> <span class="${difficultyMap[targetChallenge.difficulty].class}">${difficultyMap[targetTarget.difficulty].name}</span></p>
-                    <p><strong>레벨 ID:</strong> ${targetChallenge.levelId}</p>
-                `;
-            }
-            if (submitRecordForm) submitRecordForm.style.display = 'block';
+                try {
+                    const response = await fetch(`${BACKEND_API_URL}/api/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
 
-            if (submitRecordForm) {
-                submitRecordForm.addEventListener('submit', async (event) => { // async 키워드 유지
-                    event.preventDefault();
-                    const recordVideoUrl = document.getElementById('record-video-url').value;
-                    const recordImageUrl = recordImageUrlInput.value;
-                    const recordComment = document.getElementById('record-comment').value;
-                    const isZre = document.getElementById('is-zre-verified').checked;
-                    const zreVideoUrl = document.getElementById('zre-video-url').value;
-                    const zreImageUrl = document.getElementById('zre-image-url').value;
-
-                    if (!recordVideoUrl) {
-                        alert('플레이 영상 URL을 입력해주세요.');
-                        return;
-                    }
-
-                    if (isZre && (!zreVideoUrl && !zreImageUrl)) {
-                        alert('Zre 인증 시에는 인증 영상 또는 인증 사진 중 하나를 반드시 입력해야 합니다.');
-                        return;
-                    }
-
-                    const newRecord = {
-                        // id: 'rec' + (submittedRecords.length + 1), // 백엔드에서 ID 생성
-                        challengeId: targetChallenge.id,
-                        challengeName: targetChallenge.name,
-                        videoUrl: recordVideoUrl,
-                        recordImageUrl: recordImageUrl, // 로컬 경로 그대로 사용
-                        comment: recordComment,
-                        submitter: loggedInUser.nickname,
-                        date: new Date().toLocaleDateString('ko-KR'), // 백엔드에서 생성하는 것이 더 정확
-                        isZre: isZre,
-                        zreVideoUrl: zreVideoUrl,
-                        zreImageUrl: zreImageUrl // 로컬 경로 그대로 사용
-                    };
-
-                    // 백엔드 API를 통해 기록을 제출
-                    try {
-                        const authToken = localStorage.getItem('authToken'); // 저장된 토큰 가져오기
-                        const response = await fetch(`${BACKEND_API_URL}/api/records`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${authToken}` // 인증 토큰 포함
-                            },
-                            body: JSON.stringify(newRecord),
-                        });
+                    if (response.ok) {
                         const data = await response.json();
-                        if (response.ok) {
-                            alert(data.message);
-                            // 백엔드에서 반환된 기록을 임시 배열에 추가 (실제 앱에서는 백엔드에서 모든 기록을 다시 가져와야 함)
-                            submittedRecords.push(data.record);
-                            localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords)); // 데모용 로컬 저장
+                        loggedInUser = { email: data.email, nickname: data.nickname };
+                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                        localStorage.setItem('authToken', data.token); // 토큰 저장
 
-                            // 사용자 스코어 업데이트 (로컬 스토리지 기반 유지)
-                            const scoreEarned = getScoreByRank(targetChallenge.rank);
-                            if (loggedInUser && loggedInUser.email) {
-                                userScores[loggedInUser.email] = (userScores[loggedInUser.email] || 0) + scoreEarned;
-                                localStorage.setItem('userScores', JSON.stringify(userScores));
-                                alert(`${targetChallenge.name} 챌린지 기록이 성공적으로 제출되었습니다! (+${scoreEarned}점)`);
-                            } else {
-                                alert(`${targetChallenge.name} 챌린지 기록이 성공적으로 제출되었습니다!`);
-                            }
-
-                            console.log('새 기록:', data.record);
-                            console.log('업데이트된 사용자 스코어:', userScores);
-
-                            submitRecordForm.reset();
-                            zreProofFields.style.display = 'none';
-                            isZreCheckbox.checked = false;
-                            window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
-                        } else {
-                            alert(`기록 제출 실패: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
-                        }
-                    } catch (error) {
-                        console.error('기록 제출 오류:', error);
-                        alert('기록 제출 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+                        alert('로그인 성공!');
+                        window.location.href = 'index.html'; // 로그인 후 메인 페이지로 이동
+                    } else {
+                        const errorData = await response.json();
+                        alert(`로그인 실패: ${errorData.message || response.statusText}`);
                     }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    alert('로그인 중 오류가 발생했습니다.');
+                }
+            });
+        }
+
+    } else if (currentPage === 'creator_page.html') {
+        const creatorListContainer = document.getElementById('creator-list');
+        const searchInput = document.getElementById('search-input'); // 검색창 추가
+        const noResultsMessage = document.querySelector('.no-results');
+
+        function displayCreators(filteredCreators) {
+            if (creatorListContainer) creatorListContainer.innerHTML = '';
+            if (filteredCreators.length === 0) {
+                if (noResultsMessage) noResultsMessage.style.display = 'block';
+            } else {
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                filteredCreators.forEach(creator => {
+                    const creatorCard = document.createElement('div');
+                    creatorCard.classList.add('creator-card');
+                    creatorCard.innerHTML = `
+                        <h3>${creator}</h3>
+                        <p>이 크리에이터가 만든 챌린지 정보를 여기에 표시할 수 있습니다.</p>
+                        <button class="view-creator-challenges-btn button-secondary" data-creator-name="${creator}">챌린지 보기</button>
+                    `;
+                    if (creatorListContainer) creatorListContainer.appendChild(creatorCard);
+                });
+
+                document.querySelectorAll('.view-creator-challenges-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const creatorName = event.target.dataset.creatorName;
+                        // 해당 크리에이터의 챌린지를 보여주는 페이지로 이동 또는 모달 띄우기
+                        alert(`${creatorName}의 챌린지 목록을 표시하는 로직이 필요합니다.`);
+                        // 예: window.location.href = `challenges_by_creator.html?creator=${encodeURIComponent(creatorName)}`;
+                    });
                 });
             }
-
-        } else {
-            if (recordChallengeInfo) recordChallengeInfo.style.display = 'none';
-            if (submitRecordForm) submitRecordForm.style.display = 'none';
-            if (recordNotFound) recordNotFound.style.display = 'block';
-            if (submitPageTitle) submitPageTitle.textContent = `기록 제출 오류`;
         }
-    } else if (currentPage === 'creator_page.html') {
-        console.log('--- creator_page.html 페이지 로직 시작 ---'); // 디버깅 로그
-        const creatorListContainer = document.getElementById('creator-list');
 
-        function displayCreators() {
-            if (creatorListContainer) creatorListContainer.innerHTML = '';
+        function filterCreators() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let filtered = creators;
 
-            // 정의된 크리에이터 목록을 순회하며 표시
-            creators.forEach(creatorName => {
-                const creatorCard = document.createElement('div');
-                creatorCard.classList.add('creator-card');
-
-                // 해당 크리에이터가 제작한 챌린지 필터링
-                const creatorChallenges = challenges.filter(c => c.creator === creatorName);
-                const creatorUpcomingChallenges = upcomingChallenges.filter(c => c.creator === creatorName);
-                const creatorUploadedChallenges = uploadedChallenges.filter(c => c.creator === creatorName);
-
-                console.log(`크리에이터 ${creatorName}의 챌린지:`, {
-                    main: creatorChallenges,
-                    upcoming: creatorUpcomingChallenges,
-                    uploaded: creatorUploadedChallenges
-                }); // 디버깅 로그
-
-                creatorCard.innerHTML = `
-                    <h3>${creatorName}</h3>
-                    <div class="creator-challenges">
-                        <h4>제작한 챌린지 (${creatorChallenges.length + creatorUpcomingChallenges.length + creatorUploadedChallenges.length}개)</h4>
-                        <ul>
-                            ${creatorChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (#${c.rank})</a></li>`).join('')}
-                            ${creatorUpcomingChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}&upcoming=true">${c.name} (업커밍)</a></li>`).join('')}
-                            ${creatorUploadedChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (업로드)</a></li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-                if (creatorListContainer) creatorListContainer.appendChild(creatorCard);
-            });
-
-            // 크리에이터 목록이 비어있을 경우 메시지 표시 (현재는 하드코딩된 목록이므로 거의 발생하지 않음)
-            if (creators.length === 0 && creatorListContainer) {
-                creatorListContainer.innerHTML = '<p class="no-results">등록된 크리에이터가 없습니다.</p>';
+            if (searchTerm) {
+                filtered = creators.filter(creator =>
+                    creator.toLowerCase().includes(searchTerm)
+                );
             }
+            displayCreators(filtered);
         }
-        displayCreators();
-    } else if (currentPage === 'user_scores.html') { // 사용자 스코어 페이지 로직
-        console.log('--- user_scores.html 페이지 로직 시작 ---'); // 디버깅 로그
-        const userScoresListContainer = document.getElementById('user-scores-list');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterCreators);
+        }
+        filterCreators(); // 초기 로드 시 크리에이터 목록 표시
+    } else if (currentPage === 'user_scores.html') {
+        const userScoresListContainer = document.getElementById('user-scores-list-container');
         const noScoresMessage = document.querySelector('.no-scores');
 
         function displayUserScores() {
-            console.log('displayUserScores 함수 호출됨.'); // 디버깅 로그
             if (userScoresListContainer) userScoresListContainer.innerHTML = '';
 
             const sortedScores = Object.entries(userScores)
@@ -1389,7 +1195,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                 })
                 .sort((a, b) => b.score - a.score); // 점수 내림차순 정렬
-            console.log('정렬된 사용자 스코어:', sortedScores); // 디버깅 로그
 
             if (sortedScores.length === 0) {
                 if (noScoresMessage) noScoresMessage.style.display = 'block';
