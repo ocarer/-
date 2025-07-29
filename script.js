@@ -305,59 +305,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 가상의 사용자 데이터 및 세션 관리 (로컬 스토리지) ---
     // 사용자 정보를 localStorage에서 가져옵니다.
-    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || 'null') || null;
-    let users = JSON.parse(localStorage.getItem('users') || '[]') || []; // 등록된 사용자 목록
+    let loggedInUser;
+    try {
+        loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    } catch (e) {
+        console.error("Error parsing loggedInUser from localStorage:", e);
+        loggedInUser = null;
+    }
+
+    let users;
+    try {
+        users = JSON.parse(localStorage.getItem('users'));
+    } catch (e) {
+        console.error("Error parsing users from localStorage:", e);
+        users = [];
+    }
+    if (!users) users = []; // Fallback if parsing results in null
 
     // 사용자 스코어 관리 (새로 추가)
     // { "user_email": score } 형태로 저장
-    let userScores = JSON.parse(localStorage.getItem('userScores') || '{}') || {};
+    let userScores;
+    try {
+        userScores = JSON.parse(localStorage.getItem('userScores'));
+    } catch (e) {
+        console.error("Error parsing userScores from localStorage:", e);
+        userScores = {};
+    }
+    if (!userScores) userScores = {}; // Fallback if parsing results in null
 
     // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
-    let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords') || '[]') || [
-        { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', date: '2025.07.25', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', date: '2025.07.24', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './the_hell_challenge_zre_proof.png' }, // 날짜 추가
-        { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', date: '2025.07.23', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec4', challengeId: '2', challengeName: 'Gonna go', videoUrl: 'https://www.youtube.com/embed/g_H2rUqL1qE0', recordImageUrl: './gonna_go_clear.png', comment: '간신히 통과! 다음 레벨로!', submitter: 'FastRunner', date: '2025.07.22', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        // Chaos Ship Zre 인증 기록 추가
-        { id: 'rec5', challengeId: '102', challengeName: 'Chaos Ship', videoUrl: 'https://www.youtube.com/embed/chaos_ship_clear_video', recordImageUrl: './chaos_ship_clear.png', comment: 'Chaos Ship Zre 인증 클리어!', submitter: 'ZreMaster', date: '2025.07.21', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video', zreImageUrl: './chaos_ship_zre_proof.png' }, // 날짜 추가
-        { id: 'rec6', challengeId: '72591414', challengeName: 'Rebition 2', videoUrl: 'https://www.youtube.com/embed/rebition2_clear_video', recordImageUrl: './rebition2_clear.png', comment: 'Rebition 2 클리어!', submitter: 'RebitionPlayer', date: '2025.07.20', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec7', challengeId: '16', challengeName: 'Relief 2', videoUrl: 'https://www.youtube.com/embed/relief2_sample_video', recordImageUrl: './relief2_clear.png', comment: 'Relief 2 클리어!', submitter: 'PlayerX', date: '2025.07.19', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
-        { id: 'rec8', challengeId: '17', challengeName: 'True Sink', videoUrl: 'https://www.youtube.com/embed/true_sink_sample_video', recordImageUrl: './true_sink_clear.png', comment: 'True Sink 클리어!', submitter: 'PlayerY', date: '2025.07.18', isZre: false, zreVideoUrl: '', zreImageUrl: '' } // 날짜 추가
-    ];
+    let submittedRecords;
+    try {
+        submittedRecords = JSON.parse(localStorage.getItem('submittedRecords'));
+    } catch (e) {
+        console.error("Error parsing submittedRecords from localStorage:", e);
+        submittedRecords = [];
+    }
+    if (!submittedRecords) submittedRecords = []; // Fallback if parsing results in null
 
     // 임시 업로드 챌린지 데이터
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
-    let uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges') || '[]') || [
-        {
-            id: 'upl1',
-            name: 'My Custom Easy Demon',
-            difficulty: 'easy_demon',
-            description: '내가 만든 쉬운 데몬 챌린지!',
-            creator: 'TestUser',
-            verifier: 'GDPro',
-            levelId: 'MYLEVEL001',
-            views: 100,
-            completions: 5,
-            attempts: 50,
-            videoUrl: '',
-            imageUrl: './uploaded_easy_demon.png' // 이미지 경로 변경
-        },
-        {
-            id: 'upl2',
-            name: 'Another Hard One',
-            difficulty: 'hard_demon',
-            description: '매우 어려운 챌린지.',
-            creator: 'TestUser',
-            verifier: 'ExpertV',
-            levelId: 'MYLEVEL002',
-            views: 200,
-            completions: 1,
-            attempts: 300,
-            videoUrl: '',
-            imageUrl: './uploaded_hard_one.png' // 이미지 경로 변경
-        }
-    ];
+    let uploadedChallenges;
+    try {
+        uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges'));
+    } catch (e) {
+        console.error("Error parsing uploadedChallenges from localStorage:", e);
+        uploadedChallenges = [];
+    }
+    if (!uploadedChallenges) uploadedChallenges = []; // Fallback if parsing results in null
+
 
     // 크리에이터 목록을 직접 정의 (요청에 따라 추가)
     const creators = [
@@ -732,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (selectedSortOrder === 'difficulty_asc') {
                     return (difficultyMap[a.difficulty]?.order || 0) - (difficultyMap[b.difficulty]?.order || 0);
                 } else if (selectedSortOrder === 'difficulty_desc') {
-                    return (difficultyMap[b.difficulty]?.order || 0) - (difficultyMap[a.difficulty]?.order || 0);
+                    return (difficultyMap[b.difficulty]?.order || 0) - (difficultyMap[b.difficulty]?.order || 0);
                 } else if (selectedSortOrder === 'popular') {
                     return (b.views + b.completions) - (a.views + a.completions);
                 }
@@ -1317,5 +1314,110 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         displayUserScores();
+    }
+    // --- 기록 제출 페이지 로직 (`submit_record.html`) ---
+    else if (currentPage === 'submit_record.html') {
+        console.log('--- submit_record.html 페이지 로직 시작 ---'); // 디버깅 로그
+        if (!loggedInUser) {
+            alert('기록을 제출하려면 로그인이 필요합니다.');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const challengeId = urlParams.get('challengeId');
+        const recordChallengeInfo = document.getElementById('record-challenge-info');
+        const recordNotFoundMessage = document.getElementById('record-not-found');
+        const submitRecordForm = document.getElementById('submit-record-form');
+        const isZreVerifiedCheckbox = document.getElementById('is-zre-verified');
+        const zreProofFields = document.getElementById('zre-proof-fields');
+
+        let targetChallenge = challenges.find(c => c.id === challengeId);
+        if (!targetChallenge) {
+            // 업커밍 챌린지에서도 찾아봅니다.
+            targetChallenge = upcomingChallenges.find(c => c.id === challengeId);
+            if (targetChallenge && targetChallenge.isUpcoming) {
+                alert('업커밍 챌린지에는 기록을 제출할 수 없습니다.');
+                window.location.href = 'challenge_detail.html?id=' + challengeId + '&upcoming=true';
+                return;
+            }
+        }
+
+        if (targetChallenge) {
+            recordChallengeInfo.innerHTML = `
+                <h3>${targetChallenge.name}</h3>
+                <p class="difficulty ${difficultyMap[targetChallenge.difficulty]?.class}">난이도: ${difficultyMap[targetChallenge.difficulty]?.name}</p>
+                <p>제작자: ${targetChallenge.creator}</p>
+                <p>레벨 ID: ${targetChallenge.levelId}</p>
+                <img src="${targetChallenge.imageUrl || 'https://placehold.co/200x150/E0E0E0/333333?text=No+Image'}" alt="${targetChallenge.name} 이미지" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px;" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';">
+            `;
+            submitRecordForm.style.display = 'block';
+        } else {
+            recordChallengeInfo.style.display = 'none';
+            recordNotFoundMessage.style.display = 'block';
+        }
+
+        isZreVerifiedCheckbox.addEventListener('change', (event) => {
+            zreProofFields.style.display = event.target.checked ? 'block' : 'none';
+        });
+
+        submitRecordForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const newRecord = {
+                challengeId: challengeId,
+                challengeName: targetChallenge.name,
+                videoUrl: document.getElementById('record-video-url').value,
+                recordImageUrl: document.getElementById('record-image-url').value,
+                comment: document.getElementById('record-comment').value,
+                isZre: isZreVerifiedCheckbox.checked,
+                zreVideoUrl: document.getElementById('zre-video-url').value,
+                zreImageUrl: document.getElementById('zre-image-url').value,
+                submitter: loggedInUser.nickname,
+                date: new Date().toISOString().slice(0, 10) // YYYY-MM-DD 형식
+            };
+
+            // Zre 인증 기록인데 증명 자료가 없는 경우
+            if (newRecord.isZre && !newRecord.zreVideoUrl && !newRecord.zreImageUrl) {
+                alert('Zre 인증 기록을 제출하려면 인증 영상 URL 또는 인증 이미지 URL 중 하나 이상을 입력해야 합니다.');
+                return;
+            }
+
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const response = await fetch(`${BACKEND_API_URL}/api/records`, { // 기록 제출 엔드포인트 (예시)
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(newRecord),
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    // 로컬 스토리지에 임시로 추가 (실제 배포 시에는 백엔드에서 다시 가져오는 로직 필요)
+                    submittedRecords.push(data.record);
+                    localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
+
+                    // 챌린지 완료 횟수 및 점수 업데이트 (데모용)
+                    if (targetChallenge && targetChallenge.completions !== undefined) {
+                        targetChallenge.completions += 1;
+                        // 사용자 점수 업데이트
+                        userScores[loggedInUser.email] = (userScores[loggedInUser.email] || 0) + getScoreByRank(targetChallenge.rank);
+                        localStorage.setItem('userScores', JSON.stringify(userScores));
+                    }
+                    localStorage.setItem('challenges', JSON.stringify(challenges)); // challenges 배열도 업데이트 (completions 반영)
+
+
+                    window.location.href = `challenge_detail.html?id=${challengeId}`;
+                } else {
+                    alert(`기록 제출 실패: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+                }
+            } catch (error) {
+                console.error('기록 제출 오류:', error);
+                alert('기록 제출 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+            }
+        });
     }
 });
