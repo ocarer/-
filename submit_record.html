@@ -3,89 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="submit-page-title">기록 제출</title>
+    <title>기록 제출 - Zre Challenge List</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-    <div class="container">
-        <h1><a href="index.html">Zre Challenge List</a></h1>
-        <nav>
-            <a href="challenge_list.html">챌린지 목록</a>
-            <a href="upload_challenge.html">챌린지 업로드</a>
-            <a href="upcoming_challenges.html">업커밍 챌린지</a>
-            <a href="extended_list.html" id="nav-extended-list-link">Extended List</a>
-            <a href="legacy_list.html" id="nav-legacy-list-link">Legacy List</a>
-            <a href="creator_page.html" id="nav-creator-page-link">크리에이터</a>
-            <a href="my_profile.html" id="nav-my-profile-link" style="display: none;">내 프로필</a>
-            <a href="auth.html" id="nav-auth-link">로그인/회원가입</a>
-            <button id="nav-logout-button" class="logout-button" style="display: none;">로그아웃</button>
-        </nav>
-    </div>
-</header>
+        <div class="container">
+            <h1><a href="index.html">Zre Challenge List</a></h1>
+            <nav>
+                <a href="challenge_list.html">챌린지 목록</a>
+                <a href="upload_challenge.html">챌린지 업로드</a>
+                <a href="upcoming_challenges.html">업커밍 챌린지</a>
+                <a href="extended_list.html" id="nav-extended-list-link">Extended List</a>
+                <a href="legacy_list.html" id="nav-legacy-list-link">Legacy List</a>
+                <a href="creator_page.html" id="nav-creator-page-link">크리에이터</a>
+                <a href="my_profile.html" id="nav-my-profile-link" style="display: none;">내 프로필</a>
+                <a href="login.html" id="nav-login-link">로그인</a>
+                <a href="signup.html" id="nav-signup-link">회원가입</a>
+                <button id="nav-logout-button" class="logout-button" style="display: none;">로그아웃</button>
+            </nav>
+        </div>
+    </header>
 
-    <main class="container">
-        <section class="form-section">
-            <h2 id="submit-record-heading">기록 제출</h2>
-            <div id="record-challenge-info" class="record-challenge-info">
-                <p>챌린지 정보를 불러오는 중...</p>
+    <main class="container submit-record-page">
+        <h2 class="section-title" id="submit-record-heading">기록 제출</h2>
+
+        <div class="submit-record-card">
+            <div id="record-challenge-info" class="challenge-info-display">
+                <!-- 챌린지 정보가 여기에 동적으로 로드됩니다 -->
+                <p class="loading-message">챌린지 정보를 불러오는 중...</p>
             </div>
 
-            <form id="submit-record-form" class="hidden">
+            <p id="record-not-found" style="display: none; color: var(--danger-color); text-align: center;">
+                선택된 챌린지를 찾을 수 없습니다. 올바른 챌린지 ID로 접근했는지 확인해주세요.
+            </p>
+
+            <form id="submit-record-form" style="display: none;">
                 <div class="form-group">
-                    <label for="record-video-url">기록 영상 URL (YouTube 또는 Twitch)</label>
-                    <input type="text" id="record-video-url" name="video-url" required placeholder="예: http://youtube.com/watch?v=YOUR_VIDEO_ID">
+                    <label for="record-video-url">플레이 영상 URL (필수)</label>
+                    <input type="url" id="record-video-url" name="record-video-url" placeholder="유튜브 영상 URL을 입력하세요" required>
                 </div>
                 <div class="form-group">
-    <label for="record-video-url">플레이 영상 URL <span class="required-star">*</span></label>
-    <input type="text" id="record-video-url" name="record-video-url" placeholder="유튜브, 트위치 등 플레이 영상 링크" required>
-</div>
-
-<div class="form-group">
-    <label for="record-image-url">클리어 화면 이미지 URL (선택 사항)</label>
-    <input type="text" id="record-image-url" name="record-image-url" placeholder="클리어 화면 스크린샷 등 이미지 링크 (예: imgur)">
-</div>
-
-<div class="form-group">
-    <label for="record-comment">코멘트</label>
-    <textarea id="record-comment" name="record-comment" placeholder="챌린지 클리어 소감이나 팁을 남겨주세요." rows="4"></textarea>
-</div>
-
-<div class="form-group">
-    <input type="checkbox" id="is-zre-verified" name="is-zre-verified">
-    <label for="is-zre-verified" class="zre-verified-label">
-        Zre 인증 (Zre Verification)
-    </label>
-</div>
-
-<div id="zre-proof-fields" class="zre-proof-fields">
-    <p class="zre-proof-fields-info">Zre 인증을 위해 영상 또는 사진을 첨부해주세요. (둘 중 하나 필수)</p>
-    <div class="form-group">
-        <label for="zre-video-url">Zre 인증 영상 URL</label>
-        <input type="text" id="zre-video-url" name="zre-video-url" placeholder="유튜브, 트위치 등 Zre 인증 영상 링크">
-    </div>
-    <div class="form-group">
-        <label for="zre-image-url">Zre 인증 사진 URL</label>
-        <input type="text" id="zre-image-url" name="zre-image-url" placeholder="사진 호스팅 서비스 링크 (예: imgur)">
-    </div>
-</div>
-                <div class="form-group">
-                    <label for="record-comment">추가 코멘트 (선택 사항)</label>
-                    <textarea id="record-comment" name="comment" rows="3" placeholder="기록에 대한 추가 설명을 남겨주세요."></textarea>
+                    <label for="record-image-url">클리어 이미지 URL (선택)</label>
+                    <input type="url" id="record-image-url" name="record-image-url" placeholder="클리어 스크린샷 이미지 URL (예: imgur.com)">
                 </div>
-                <button type="submit" class="button-submit">기록 제출하기</button>
+                <div class="form-group">
+                    <label for="record-comment">코멘트 (선택)</label>
+                    <textarea id="record-comment" name="record-comment" rows="4" placeholder="기록에 대한 짧은 코멘트를 남겨주세요."></textarea>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="is-zre-verified" name="is-zre-verified">
+                    <label for="is-zre-verified">Zre 인증 기록입니다.</label>
+                </div>
+
+                <div id="zre-proof-fields" style="display: none;">
+                    <p class="info-text">Zre 인증 기록을 제출하는 경우, 아래 필드 중 하나 이상을 입력해야 합니다.</p>
+                    <div class="form-group">
+                        <label for="zre-video-url">Zre 인증 영상 URL (선택)</label>
+                        <input type="url" id="zre-video-url" name="zre-video-url" placeholder="Zre 인증 영상 URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="zre-image-url">Zre 인증 이미지 URL (선택)</label>
+                        <input type="url" id="zre-image-url" name="zre-image-url" placeholder="Zre 인증 스크린샷 이미지 URL">
+                    </div>
+                </div>
+
+                <button type="submit" class="button-primary">기록 제출하기</button>
             </form>
-            <div id="record-not-found" class="not-found-message hidden">
-                <p>기록을 제출할 챌린지를 찾을 수 없습니다.</p>
-                <a href="challenge_list.html" class="button-primary">챌린지 목록으로 돌아가기</a>
-            </div>
-        </section>
+        </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2025 Zre Challenge List. All rights reserved.</p>
+            <p>&copy; 2025 Zre Challenge List. All rights reserved.</p>
         </div>
     </footer>
 
