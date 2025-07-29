@@ -305,16 +305,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 가상의 사용자 데이터 및 세션 관리 (로컬 스토리지) ---
     // 사용자 정보를 localStorage에서 가져옵니다.
-    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
-    let users = JSON.parse(localStorage.getItem('users')) || []; // 등록된 사용자 목록
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || 'null') || null;
+    let users = JSON.parse(localStorage.getItem('users') || '[]') || []; // 등록된 사용자 목록
 
     // 사용자 스코어 관리 (새로 추가)
     // { "user_email": score } 형태로 저장
-    let userScores = JSON.parse(localStorage.getItem('userScores')) || {};
+    let userScores = JSON.parse(localStorage.getItem('userScores') || '{}') || {};
 
     // 임시 제출 기록 (모든 챌린지 클리어 기록, 사진 포함)
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
-    let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [
+    let submittedRecords = JSON.parse(localStorage.getItem('submittedRecords') || '[]') || [
         { id: 'rec1', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/2X_2IdXT_gE', recordImageUrl: './the_hell_challenge_clear.png', comment: '간신히 깼습니다!', submitter: 'NormalUser', date: '2025.07.25', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
         { id: 'rec2', challengeId: '1', challengeName: 'The Hell Challenge', videoUrl: 'https://www.youtube.com/embed/3Y_pP4sVdss', recordImageUrl: './the_hell_challenge_zre.png', comment: '제가 Zre입니다! 확인해주세요!', submitter: 'ZreKing', date: '2025.07.24', isZre: true, zreVideoUrl: 'https://www.youtube.com/embed/zure_proof_video', zreImageUrl: './the_hell_challenge_zre_proof.png' }, // 날짜 추가
         { id: 'rec3', challengeId: '3', challengeName: 'Wave Hold', videoUrl: 'https://www.youtube.com/embed/4W_pP4sVdss', recordImageUrl: './wave_hold_clear.png', comment: '깔끔하게 클리어!', submitter: 'WavePro', date: '2025.07.23', isZre: false, zreVideoUrl: '', zreImageUrl: '' }, // 날짜 추가
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 임시 업로드 챌린지 데이터
     // 실제 백엔드 연동 시 이 데이터는 백엔드에서 가져와야 합니다.
-    let uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges')) || [
+    let uploadedChallenges = JSON.parse(localStorage.getItem('uploadedChallenges') || '[]') || [
         {
             id: 'upl1',
             name: 'My Custom Easy Demon',
@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
     if (currentPage === 'challenge_list.html') {
-        console.log('--- challenge_list.html 페이지 로직 시작 ---'); // 디버깅 로그
+        console.log('--- challenge_list.html 페이지 로직 시작 ---'); // Debugging log
         const challengeListContainer = document.getElementById('challenge-list');
         const searchInput = document.getElementById('search-input');
         const difficultyFilter = document.getElementById('difficulty-filter');
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const noResultsMessage = document.querySelector('.no-results');
 
         function displayChallenges(filteredChallenges) {
-            console.log('displayChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // 디버깅 로그
+            console.log('displayChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // Debugging log
             challengeListContainer.innerHTML = '';
             if (filteredChallenges.length === 0) {
                 noResultsMessage.style.display = 'block';
@@ -570,13 +570,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function filterAndSortChallenges() {
-            console.log('filterAndSortChallenges 함수 호출됨.'); // 디버깅 로그
+            console.log('filterAndSortChallenges 함수 호출됨.'); // Debugging log
+            // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
             let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
-            console.log('랭크 필터링 후 currentChallenges (main list):', currentChallenges); // 디버깅 로그
+            console.log('초기 challenges 배열:', challenges); // Debugging log
+            console.log('MAX_RANK_MAIN_LIST:', MAX_RANK_MAIN_LIST); // Debugging log
+            console.log('랭크 필터링 후 currentChallenges (main list):', currentChallenges); // Debugging log
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
             const selectedSortOrder = sortOrder.value;
+
+            console.log('검색어:', searchTerm); // Debugging log
+            console.log('선택된 난이도:', selectedDifficulty); // Debugging log
+            console.log('선택된 정렬 순서:', selectedSortOrder); // Debugging log
+
 
             if (searchTerm) {
                 currentChallenges = currentChallenges.filter(challenge =>
@@ -584,12 +592,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     challenge.levelId.includes(searchTerm) ||
                     (challenge.verifier && challenge.verifier.toLowerCase().includes(searchTerm))
                 );
+                console.log('검색어 필터링 후 currentChallenges:', currentChallenges); // Debugging log
             }
 
             if (selectedDifficulty !== 'all') {
                 currentChallenges = currentChallenges.filter(challenge =>
                     challenge.difficulty === selectedDifficulty
                 );
+                console.log('난이도 필터링 후 currentChallenges:', currentChallenges); // Debugging log
             }
 
             currentChallenges.sort((a, b) => {
@@ -606,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 return 0;
             });
+            console.log('최종 필터링 및 정렬 후 currentChallenges:', currentChallenges); // Debugging log
 
             displayChallenges(currentChallenges);
         }
