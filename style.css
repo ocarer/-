@@ -1,873 +1,337 @@
-/* 기본 스타일 */
-:root {
-    --primary-color: #6A0572; /* 보라색 계열 */
-    --secondary-color: #A030A9; /* 더 밝은 보라색 */
-    --accent-color: #FFC300; /* 강조 색상 (노란색) */
-    --background-color: #F8F8F8; /* 밝은 배경 */
-    --card-background: #FFFFFF; /* 카드 배경 */
-    --text-color: #333333; /* 어두운 텍스트 */
-    --light-text-color: #666666; /* 밝은 텍스트 */
-    --border-color: #E0E0E0; /* 경계선 색상 */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* 그림자 색상 (투명도 약간 증가) */
-    --success-color: #28A745; /* 성공 메시지 */
-    --error-color: #DC3545; /* 오류 메시지 */
-    --info-color: #17A2B8; /* 정보 메시지 */
-}
+/* style.css */
 
+/* 전체 페이지 스타일 */
 body {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: #f4f7f6;
+    color: #333;
 }
 
+/* 컨테이너 */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--secondary-color);
-    text-decoration: underline;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-h1 { font-size: 2.5em; }
-h2 { font-size: 2em; }
-h3 { font-size: 1.5em; }
-
 /* 헤더 */
 header {
-    background-color: var(--primary-color);
-    color: #FFFFFF;
-    padding: 15px 0;
-    box-shadow: 0 2px 5px var(--shadow-color);
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap; /* 모바일에서 줄 바꿈 */
+    background-color: #4b0082;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
+    font-family: 'Poppins', sans-serif;
     margin: 0;
-    font-size: 1.8em;
+    font-size: 1.5rem;
+    display: inline-block;
 }
 
 header h1 a {
-    color: #FFFFFF;
+    color: white;
     text-decoration: none;
+}
+
+header nav {
+    float: right;
+    margin-top: 5px;
 }
 
 header nav a,
 header nav button {
-    color: #FFFFFF;
+    color: white;
     text-decoration: none;
+    font-weight: 500;
     margin-left: 20px;
-    padding: 8px 12px;
+    padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    font-weight: 500;
-    background: none;
     border: none;
+    background: none;
     cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 1em;
 }
 
 header nav a:hover,
 header nav button:hover {
-    background-color: var(--secondary-color);
-    text-decoration: none;
+    background-color: #6a0dad;
 }
 
-header nav button.logout-button {
-    background-color: #DC3545;
-}
-
-header nav button.logout-button:hover {
-    background-color: #C82333;
-}
-
-/* 메인 콘텐츠 */
-main {
-    flex-grow: 1;
-    padding: 40px 0;
-}
-
+/* 메인 섹션 */
 .section-title {
+    font-family: 'Poppins', sans-serif;
+    color: #4b0082;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.2em;
-    color: var(--primary-color);
-    position: relative;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    border-bottom: 3px solid #4b0082;
     padding-bottom: 10px;
 }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: var(--accent-color);
-    border-radius: 2px;
+/* 폼 스타일 */
+.form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 }
 
-/* 챌린지 카드 그리드 */
-.challenge-cards-grid,
-.creator-cards-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* 모든 화면 크기에서 한 줄에 하나씩 (세로 정렬) */
-    gap: 30px;
-    margin-top: 30px;
+.form-group {
+    margin-bottom: 1rem;
 }
 
-.challenge-card,
-.creator-card {
-    background-color: var(--card-background);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* Flexbox를 사용하여 내부 요소를 정렬합니다 */
-    flex-direction: column; /* 기본적으로 세로 정렬 */
-}
-
-.challenge-card:hover,
-.creator-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.challenge-card-link {
-    display: flex;
-    flex-direction: row; /* 이미지를 왼쪽에 배치하기 위해 가로 정렬로 변경 */
-    height: 100%;
-    color: inherit;
-    text-decoration: none;
-    align-items: stretch; /* 자식 요소들이 높이를 채우도록 */
-}
-
-.challenge-image-preview {
-    width: 500px; /* 이미지 미리보기 너비 확대 */
-    height: 250px; /* 이미지 미리보기 높이 확대 */
-    flex-shrink: 0; /* 이미지 미리보기가 줄어들지 않도록 */
-    overflow: hidden; /* 이 부분을 통해 이미지가 컨테이너를 벗어나면 잘립니다 */
-    border-top-left-radius: 12px; /* 좌측 상단 둥글게 */
-    border-bottom-left-radius: 12px; /* 좌측 하단 둥글게 */
-    border-right: 1px solid var(--border-color); /* 오른쪽에 얇은 경계선 추가 */
-}
-
-.challenge-image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지를 컨테이너에 맞게 자르고 채웁니다 (비율 유지) */
+.form-group label {
     display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
-.challenge-card-main-content {
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4b0082;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #6a0dad;
+}
+
+.button-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.button-danger:hover {
+    background-color: #c0392b;
+}
+
+.alert-message {
+    text-align: center;
+    padding: 10px;
+    margin-top: 1rem;
+    border-radius: 5px;
+    color: white;
+    display: none;
+}
+
+.alert-success {
+    background-color: #2ecc71;
+}
+
+.alert-error {
+    background-color: #e74c3c;
+}
+
+/* 챌린지 카드 리스트 */
+.challenge-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* 챌린지 카드 */
+.challenge-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 */
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    border-left: 5px solid;
     display: flex;
     flex-direction: column;
 }
 
-.challenge-card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+.challenge-card:hover {
+    transform: translateY(-5px);
 }
 
-.challenge-card .rank {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    font-size: 0.9em;
-}
+.challenge-card.extreme_demon { border-color: #ff0000; }
+.challenge-card.insane_demon { border-color: #ff8000; }
+.challenge-card.hard_demon { border-color: #ffff00; }
+.challenge-card.medium_demon { border-color: #00ff00; }
+.challenge-card.easy_demon { border-color: #0080ff; }
+.challenge-card.is_upcoming { border-color: #808080; }
+
 
 .challenge-card h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #4b0082;
     flex-grow: 1;
 }
 
-.challenge-card .difficulty {
+.challenge-card p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.challenge-card a {
+    color: #4b0082;
+    text-decoration: none;
     font-weight: 700;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 0.85em;
-    text-transform: uppercase;
+    margin-top: auto;
 }
-
-/* 난이도별 색상 */
-.difficulty-easy { background-color: #4CAF50; color: white; }
-.difficulty-normal { background-color: #8BC34A; color: white; }
-.difficulty-hard { background-color: #FFEB3B; color: var(--text-color); }
-.difficulty-insane { background-color: #FF9800; color: white; }
-.difficulty-easy_demon { background-color: #F44336; color: white; }
-.difficulty-medium_demon { background-color: #E91E63; color: white; }
-.difficulty-hard_demon { background-color: #9C27B0; color: white; }
-.difficulty-insane_demon { background-color: #673AB7; color: white; }
-.difficulty-extreme_demon { background-color: #3F51B5; color: white; }
-
-.challenge-card .description-preview {
-    font-size: 0.95em;
-    color: var(--light-text-color);
-    margin-bottom: 15px;
-    flex-grow: 1;
-}
-
-.challenge-card .level-id-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: var(--light-text-color);
-}
-
-.challenge-card .level-id-group .copy-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.8em;
-    transition: background-color 0.3s ease;
-}
-
-.challenge-card .level-id-group .copy-btn:hover {
-    background-color: var(--primary-color);
-}
-
-.challenge-card .card-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85em;
-    color: var(--light-text-color);
-    margin-top: auto; /* 하단 정렬 */
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
-}
-
-.challenge-card .creator,
-.challenge-card .verifier,
-.challenge-card .stats {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.challenge-card .verifier {
-    font-weight: 500;
-}
-
 
 /* 챌린지 상세 페이지 */
-.challenge-detail-page {
-    background-color: var(--card-background);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-color);
+.challenge-detail {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 }
 
-.challenge-detail-page h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2.5em;
-    color: var(--primary-color);
-}
-
-.challenge-detail-page .detail-item {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: #FDFDFD;
-}
-
-.challenge-detail-page .detail-item p {
-    margin-bottom: 8px;
-}
-
-.challenge-detail-page .difficulty-display {
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-bottom: 15px;
-    font-size: 1em;
-    text-transform: uppercase;
-}
-
-.challenge-detail-page .level-id-group .copy-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-}
-
-.challenge-detail-page .level-id-group .copy-btn:hover {
-    background-color: var(--primary-color);
-}
-
-.challenge-detail-page .video-container {
+.challenge-detail .video-container {
     position: relative;
-    width: 100%;
     padding-bottom: 56.25%; /* 16:9 비율 */
     height: 0;
-    margin-top: 20px;
-    border-radius: 8px;
     overflow: hidden;
+    margin-bottom: 1rem;
 }
 
-.challenge-detail-page .video-container iframe {
+.challenge-detail .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: 0;
 }
 
-.challenge-detail-page .challenge-main-image {
-    width: 50%;
-    max-height: 400px;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-top: 20px;
-    text-align: center;
+.challenge-detail .challenge-info h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #4b0082;
+    font-size: 1.5rem;
 }
 
-.challenge-detail-page .challenge-main-image img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-.go-back-link {
-    display: inline-block;
-    margin-top: 30px;
-    font-size: 1.1em;
-    font-weight: 500;
-    padding: 10px 15px;
-    border-radius: 8px;
-    background-color: var(--border-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease;
-}
-
-.go-back-link:hover {
-    background-color: #CCCCCC;
-    text-decoration: none;
-}
-
-/* 기록 제출 섹션 */
-.submitted-records-section {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.submitted-records-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: 1.8em;
-}
-
-.records-list {
-    display: grid;
-    gap: 20px;
-}
-
-.record-card {
-    background-color: #FDFDFD;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
-}
-
-.record-card:hover {
-    transform: translateY(-3px);
-}
-
-.record-card.zre-verified {
-    border-left: 5px solid var(--success-color);
-    background-color: #E6F7ED;
-}
-
-.record-card.zre-verified h4 {
-    color: var(--success-color);
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.record-card .record-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: var(--light-text-color);
-}
-
-.record-card .record-submitter {
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.record-card .record-comment {
-    font-size: 0.95em;
-    margin-bottom: 15px;
-}
-
-.record-card .record-video a {
-    display: inline-block;
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-}
-
-.record-card .record-video a:hover {
-    background-color: var(--primary-color);
-    text-decoration: none;
-}
-
-.record-card .record-image {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.record-card .record-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.record-card .zre-proof {
-    margin-top: 15px;
-    padding: 15px;
-    background-color: #D4EDDA;
-    border: 1px solid #C3E6CB;
-    border-radius: 8px;
-    color: #155724;
-}
-
-.record-card .zre-proof img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-.no-records-message,
-.no-results,
-.loading-message,
-.not-found-message {
-    text-align: center;
-    color: var(--light-text-color);
-    font-size: 1.1em;
-    padding: 20px;
-    background-color: #F0F0F0;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-
-/* 폼 섹션 (로그인/회원가입, 챌린지 업로드, 기록 제출) */
-.form-section {
-    background-color: var(--card-background);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-    max-width: 500px;
-    margin: 40px auto;
-}
-
-.form-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--primary-color);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="text"],
-.form-group input[type="url"],
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1em;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(106, 5, 114, 0.2);
-    outline: none;
-}
-
-.form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.button-submit {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.button-submit:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-}
-
-.auth-switch-link {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.95em;
-}
-
-.auth-switch-link a {
-    font-weight: 600;
-}
-
-.button-primary {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-align: center;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.button-primary:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-    text-decoration: none;
-}
-
-/* 내 프로필 페이지 */
-.profile-section {
-    background-color: var(--card-background);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-    max-width: 800px;
-    margin: 40px auto;
-}
-
-.profile-info p {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-}
-
-.profile-info strong {
-    color: var(--primary-color);
-}
-
-.profile-section .section-title {
-    text-align: left;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-    color: var(--primary-color);
-    padding-bottom: 5px;
-}
-
-.profile-section .section-title::after {
-    left: 0;
-    transform: translateX(0);
-    width: 40px;
-}
-
-.profile-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.profile-section ul li {
-    background-color: #FDFDFD;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1em;
-}
-
-.profile-section ul li a {
-    font-weight: 600;
-}
-
-.profile-section ul li .actions button {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
-    font-size: 0.9em;
-}
-
-.profile-section ul li .actions button:hover {
-    background-color: var(--primary-color);
-}
-
-.profile-section .logout-button {
-    background-color: #DC3545;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    margin-top: 30px;
-    transition: background-color 0.3s ease;
-}
-
-.profile-section .logout-button:hover {
-    background-color: #C82333;
+/* 업커밍 챌린지 페이지 */
+.upcoming-challenge-list .challenge-card {
+    border-color: #808080;
 }
 
 /* 크리에이터 페이지 */
-.creator-card {
-    background-color: var(--card-background);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-    padding: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.creator-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.creator-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+.creator-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .creator-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 1.6em;
-    text-align: center;
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 10px;
+    margin: 0;
+    font-size: 1.2rem;
+    color: #4b0082;
 }
 
-.creator-card .creator-challenges h4 {
-    font-size: 1.2em;
-    color: var(--secondary-color);
-    margin-top: 20px;
-    margin-bottom: 10px;
+.creator-card p {
+    margin: 5px 0;
+    font-size: 0.9rem;
 }
 
-.creator-card .creator-challenges ul {
-    list-style: disc;
-    padding-left: 20px;
+/* 프로필 페이지 */
+.profile-page .profile-info-card,
+.profile-page .profile-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
-.creator-card .creator-challenges ul li {
-    margin-bottom: 5px;
-    font-size: 0.95em;
-    color: var(--light-text-color);
+.profile-page .profile-info-card h3,
+.profile-page .profile-section h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #4b0082;
+    margin-top: 0;
 }
 
-.creator-card .creator-challenges ul li a {
-    font-weight: 500;
+.profile-page .profile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* 필터 및 정렬 (챌린지 목록) */
-.filter-sort-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: var(--card-background);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px var(--shadow-color);
-}
-
-.filter-sort-controls .form-group {
-    margin-bottom: 0; /* 내부 폼 그룹 마진 제거 */
-    flex: 1 1 auto; /* 유연하게 공간 차지 */
-    min-width: 180px; /* 최소 너비 */
-    display: flex; /* 내부 요소 정렬을 위해 flex 추가 */
-    flex-direction: column; /* 세로 정렬 */
-    justify-content: center; /* 수직 중앙 정렬 */
-}
-
-.filter-sort-controls label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: var(--primary-color);
-}
-
-.filter-sort-controls input[type="text"],
-.filter-sort-controls select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.95em;
-    height: 40px; /* 높이 고정 */
+.profile-page .profile-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
 /* 푸터 */
 footer {
-    background-color: var(--text-color);
-    color: #FFFFFF;
     text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-    font-size: 0.9em;
+    padding: 1rem 0;
+    background-color: #333;
+    color: white;
+    margin-top: 2rem;
 }
 
-/* 미디어 쿼리 (반응형 디자인) */
-@media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        text-align: center;
-    }
+/* Challenge List 전용 컨트롤 */
+.challenge-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
+.challenge-controls input,
+.challenge-controls select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    flex: 1; /* 검색 필드가 화면 크기에 따라 유연하게 늘어나도록 설정 */
+    min-width: 200px; /* 최소 너비 설정 */
+    box-sizing: border-box;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
     header nav {
-        margin-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        float: none;
+        text-align: center;
+        margin-top: 1rem;
     }
 
     header nav a,
     header nav button {
-        margin: 5px 10px;
+        display: block;
+        margin: 10px 0;
     }
 
-    .section-title {
-        font-size: 1.8em;
-    }
-
-    /* 모바일에서는 챌린지 카드 그리드가 여전히 1열로 표시되지만,
-       이미지는 상단에 배치되도록 변경합니다. */
-    .challenge-cards-grid,
-    .creator-cards-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .challenge-card-link {
-        flex-direction: column; /* 모바일에서는 이미지가 상단으로 오도록 세로 정렬 */
-    }
-
-    .challenge-image-preview {
-        width: 100%; /* 모바일에서는 너비 100% */
-        height: 180px; /* 높이 고정 */
-        border-radius: 12px 12px 0 0; /* 상단만 둥글게 */
-        border-right: none; /* 오른쪽 경계선 제거 */
-        border-bottom: 1px solid var(--border-color); /* 하단 경계선 추가 */
-    }
-
-    .challenge-card-main-content {
-        padding: 15px;
-    }
-
-    .challenge-card h3 {
-        font-size: 1.2em;
-    }
-
-    .challenge-detail-page {
-        padding: 20px;
-    }
-
-    .challenge-detail-page h2 {
-        font-size: 2em;
-    }
-
-    .form-section {
-        padding: 25px;
-        margin: 20px auto;
-    }
-
-    .filter-sort-controls {
+    .challenge-controls {
         flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-    }
-
-    .filter-sort-controls .form-group {
-        width: 100%;
-        min-width: unset;
     }
 }
