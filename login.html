@@ -26,31 +26,32 @@
         </div>
     </header>
 
-    <main class="container auth-page">
-        <h2 class="section-title" id="auth-heading">로그인</h2>
-
-        <div class="auth-card">
+    <main class="container auth-container">
+        <section class="auth-section" id="login-section">
+            <h2 class="section-title">로그인</h2>
             <form id="login-form">
                 <div class="form-group">
-                    <label for="auth-email">이메일</label>
-                    <input type="email" id="auth-email" name="email" required>
+                    <label for="login-email">이메일:</label>
+                    <input type="email" id="login-email" name="login-email" required>
                 </div>
                 <div class="form-group">
-                    <label for="auth-password">비밀번호</label>
-                    <input type="password" id="auth-password" name="password" required>
+                    <label for="login-password">비밀번호:</label>
+                    <input type="password" id="login-password" name="login-password" required>
                 </div>
-                <button type="submit" class="button-primary" id="auth-button">로그인</button>
+                <button type="submit" class="button-primary">로그인</button>
+                <div id="login-message" class="alert" style="display: none;"></div>
             </form>
-            <p class="switch-auth-mode-text" id="switch-text">계정이 없으신가요? <a href="signup.html">회원가입</a></p>
-        </div>
+            <p>계정이 없으신가요? <a href="signup.html">회원가입</a></p>
+        </section>
     </main>
-
-    <footer>
+    
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Zre Challenge List. All rights reserved.</p>
+            <p>&copy; 2024 Zre Challenge List. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/firebase-init.js" type="module"></script>
+    <script src="js/script.js" type="module"></script>
 </body>
 </html>
