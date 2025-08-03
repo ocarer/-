@@ -761,6 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ... (기존 로그인 로직)
         }
     }
+// --- 회원가입 페이지 로직 (`signup.html`) ---
     else if (currentPage === 'signup.html') {
         const signupForm = document.getElementById('signup-form');
         if (loggedInUser) {
@@ -768,8 +769,33 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'my_profile.html';
             return;
         }
+
         if (signupForm) {
-            // ... (기존 회원가입 로직)
+            signupForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const nickname = document.getElementById('nickname').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                if (password !== confirmPassword) {
+                    alert('비밀번호가 일치하지 않습니다.');
+                    return;
+                }
+
+                if (users.some(u => u.email === email)) {
+                    alert('이미 사용 중인 이메일입니다.');
+                    return;
+                }
+
+                const newUserData = { nickname, email, password };
+                users.push(newUserData);
+                localStorage.setItem('users', JSON.stringify(users));
+
+                alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+                window.location.href = 'login.html';
+            });
         }
     }
     else if (currentPage === 'creator_page.html') {
@@ -859,3 +885,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
