@@ -481,9 +481,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPage === 'challenge_list.html') {
         console.log('--- challenge_list.html 페이지 로직 시작 ---'); // Debugging log
         const challengeListContainer = document.getElementById('challenge-list');
-        const searchInput = document.getElementById('search-input');
+        const searchInput = document.getElementById('challenge-search'); // ID 수정
         const difficultyFilter = document.getElementById('difficulty-filter');
-        const sortOrder = document.getElementById('sort-order');
+        const sortOrder = document.getElementById('sort-by'); // ID 수정
         const noResultsMessage = document.querySelector('.no-results');
 
         function displayChallenges(filteredChallenges) {
@@ -605,9 +605,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (currentPage === 'extended_list.html') { // Extended List 페이지 로직
         console.log('--- extended_list.html 페이지 로직 시작 ---'); // 디버깅 로그
         const extendedListContainer = document.getElementById('extended-challenge-list');
-        const searchInput = document.getElementById('search-input'); // 추가
-        const difficultyFilter = document.getElementById('difficulty-filter'); // 추가
-        const sortOrder = document.getElementById('sort-order'); // 추가
+        const searchInput = document.getElementById('challenge-search'); // ID 수정
+        const difficultyFilter = document.getElementById('difficulty-filter');
+        const sortOrder = document.getElementById('sort-by'); // ID 수정
         const noResultsMessage = document.querySelector('.no-results');
         const loadingMessage = document.querySelector('.loading-message');
 
@@ -1365,4 +1365,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
