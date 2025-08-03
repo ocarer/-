@@ -18,8 +18,8 @@
                 <a href="legacy_list.html" id="nav-legacy-list-link">Legacy List</a>
                 <a href="creator_page.html" id="nav-creator-page-link">크리에이터</a>
                 <a href="my_profile.html" id="nav-my-profile-link" style="display: none;">내 프로필</a>
-                <a href="login.html" id="nav-login-link">로그인</a>
-                <a href="signup.html" id="nav-signup-link">회원가입</a>
+                <a href="login.html" id="nav-login-link">로그인</a> <!-- 로그인 링크로 변경 -->
+                <a href="signup.html" id="nav-signup-link">회원가입</a> <!-- 회원가입 링크 추가 -->
                 <button id="nav-logout-button" class="logout-button" style="display: none;">로그아웃</button>
             </nav>
         </div>
@@ -28,20 +28,41 @@
     <main class="container">
         <section class="challenge-list-section">
             <h2 class="section-title">Extended List (10위 이하)</h2>
+            <div class="filters-sort-search">
+                <input type="text" id="search-input" placeholder="챌린지 이름, ID, 검증자 검색...">
+                <select id="difficulty-filter">
+                    <option value="all">모든 난이도</option>
+                    <option value="easy">Easy</option>
+                    <option value="normal">Normal</option>
+                    <option value="hard">Hard</option>
+                    <option value="insane">Insane</option>
+                    <option value="easy_demon">Easy Demon</option>
+                    <option value="medium_demon">Medium Demon</option>
+                    <option value="hard_demon">Hard Demon</option>
+                    <option value="insane_demon">Insane Demon</option>
+                    <option value="extreme_demon">Extreme Demon</option>
+                </select>
+                <select id="sort-order">
+                    <option value="rank">랭크 순</option>
+                    <option value="latest">최신 순</option>
+                    <option value="difficulty_asc">난이도 낮은 순</option>
+                    <option value="difficulty_desc">난이도 높은 순</option>
+                    <option value="popular">인기 순</option>
+                </select>
+            </div>
             <div id="extended-challenge-list" class="challenge-cards-grid">
                 <p class="loading-message">챌린지를 불러오는 중...</p>
-                <p class="no-results-message" style="display: none;">아직 Extended List에 챌린지가 없습니다.</p>
+                <p class="no-results" style="display: none;">해당 랭크의 챌린지가 없습니다.</p>
             </div>
         </section>
     </main>
-    
-    <footer class="footer">
+
+    <footer>
         <div class="container">
-            <p>&copy; 2024 Zre Challenge List. All rights reserved.</p>
+            <p>&copy; 2025 Zre Challenge List. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/firebase-init.js" type="module"></script>
-    <script src="js/extended_list.js" type="module"></script>
+    <script src="script.js"></script>
 </body>
 </html>
