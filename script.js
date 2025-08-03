@@ -1,15 +1,201 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 백엔드 API의 기본 URL을 정의합니다.
-    const BACKEND_API_URL = 'https://backend-w61z.onrender.com';
+    // 백엔드 API의 기본 URL을 정의합니다. (챌린지 정보는 이 스크립트 내부에 저장됩니다.)
+    const BACKEND_API_URL = 'https://backend-w61z.onrender.com'; // <-- 이 부분은 사용자 인증을 위해 유지됩니다.
 
     // 챌린지 랭크 기준 상수
     const MAX_RANK_MAIN_LIST = 9;
     const MAX_RANK_EXTENDED_LIST_UPPER_BOUND = 19;
 
-    let allChallenges = []; // 백엔드에서 가져온 모든 챌린지 데이터를 저장할 배열
-    let upcomingChallenges = []; // 백엔드에서 가져온 모든 업커밍 챌린지 데이터를 저장할 배열
-    let users = []; // 백엔드에서 가져온 유저 데이터를 저장할 배열
-    let userRecords = []; // 백엔드에서 가져온 유저 기록 데이터를 저장할 배열
+    // 챌린지 데이터 (업데이트된 챌린지 리스트)
+    const challenges = [
+        {
+            id: '1', rank: 1,
+            name: 'The Hell Challenge',
+            difficulty: 'extreme_demon',
+            description: '비대칭 듀얼, 좁은 간격의 웨이브, 일자비행, 삼단가시가 맵에 도배되어있는 극악무도한 맵입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123150415',
+            views: 4500,
+            completions: 3
+        },
+        {
+            id: '2', rank: 2,
+            name: 'Chaos Ship',
+            difficulty: 'extreme_demon',
+            description: '조금만 틀어져도 죽는 매우 좁은 간격의 비행 챌린지입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123189789',
+            views: 3800,
+            completions: 6
+        },
+        {
+            id: '3', rank: 3,
+            name: 'ReLief 2',
+            difficulty: 'extreme_demon',
+            description: '잦은 변속과 모드전환이 특징인 맵입니다. 몇 안되는 고퀄맵이기도 합니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '100556994',
+            views: 5100,
+            completions: 4
+        },
+        {
+            id: '4', rank: 4,
+            name: 'Rebition 2',
+            difficulty: 'insane_demon',
+            description: '유명 익스트림 데몬 The Golden 의 노래를 사용한 웨이브 챌린지 맵입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '72591414',
+            views: 2500,
+            completions: 15
+        },
+        {
+            id: '5', rank: 5,
+            name: 'Gonna Go',
+            difficulty: 'insane_demon',
+            description: '즈레 챌린지 리스트의 난이도가 급격하게 오르게 만든 맵입니다. 극칼타로 이루어진 맵이며 프퍼펙이 있는 것이 특징입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '122035043',
+            views: 1800,
+            completions: 11
+        },
+        {
+            id: '6', rank: 6,
+            name: 'NEVADA',
+            difficulty: 'insane_demon',
+            description: '싱크 기반의 챌린지입니다. 마지막에 투명 상태로 좁은 간격을 지나가야하는 악독한 소고기 유도가 있는 것이 특징입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123872401',
+            views: 1200,
+            completions: 22
+        },
+        {
+            id: '7', rank: 7,
+            name: 'True Sink',
+            difficulty: 'hard_demon',
+            description: '싱크 기반의 챌린지입니다. 마지막에 공점 칼타로 1칸 간격을 지나야 하는 것이 특징입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123362423',
+            views: 900,
+            completions: 35
+        },
+        {
+            id: '8', rank: 8,
+            name: 'AAAAAAAAAAAAAAAAAAAA',
+            difficulty: 'hard_demon',
+            description: '좁은 간격과 칼타, 타이밍을 잡기 어려운 비행기가 특징인 맵입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '122654332',
+            views: 850,
+            completions: 45
+        },
+        {
+            id: '9', rank: 9,
+            name: 'Persephone',
+            difficulty: 'hard_demon',
+            description: '극칼타로 이루어진 챌린지입니다. 현재는 업데이트 버전의 등장으로 플레이 할 수 없습니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123358917',
+            views: 700,
+            completions: 50
+        },
+        {
+            id: '10', rank: 10,
+            name: 'Speeeeeeeeeeeeeeed',
+            difficulty: 'medium_demon',
+            description: '극칼타로 이루어진 챌린지입니다. 마지막 삼단가시로 소고기 유도가 있습니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123073199',
+            views: 650,
+            completions: 70
+        },
+        {
+            id: '11', rank: 11,
+            name: 'Rusttttt',
+            difficulty: 'medium_demon',
+            description: '약 5초의 매우 짧은 웨이브 챌린지입니다. 짧은 길이를 좁은 간격으로 보완한 챌린지입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123417172',
+            views: 550,
+            completions: 85
+        },
+        {
+            id: '12', rank: 12,
+            name: 'Buzori',
+            difficulty: 'easy_demon',
+            description: '대시링을 이용하여 극칼타를 만들어낸 챌린지입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '114207036',
+            views: 400,
+            completions: 110
+        },
+        {
+            id: '13', rank: 13,
+            name: 'invincible wave',
+            difficulty: 'easy_demon',
+            description: '싱크에 맞춰 가감속을 배치해 일명 "꾹꾹이 겜플"을 만들어낸 맵입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '117950820',
+            views: 350,
+            completions: 130
+        },
+        {
+            id: '14', rank: 14,
+            name: 'Epilogue',
+            difficulty: 'easy_demon',
+            description: '싱크 기반의 칼타 챌린지입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '123780214',
+            views: 300,
+            completions: 150
+        },
+        {
+            id: '15', rank: 15,
+            name: 'Yescubed',
+            difficulty: 'easy_demon',
+            description: '싱크 기반의 웨이브 챌린지입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '115388205',
+            views: 280,
+            completions: 165
+        },
+        {
+            id: '16', rank: 16,
+            name: 'Extreme jump',
+            difficulty: 'easy_demon',
+            description: '저속 큐브 칼타 챌린지입니다. 후반에 급발진 4배속 웨이브가 있는 것이 특징입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '111094992',
+            views: 250,
+            completions: 180
+        },
+        {
+            id: '17', rank: 17,
+            name: 'JK Chall Rm',
+            difficulty: 'easy_demon',
+            description: '웨이브 챌린지입니다. 마지막에 D블럭을 이용한 버그성 겜플이 있는 것이 특징입니다.',
+            creator: 'ZreGD',
+            verifier: 'GDVerifierPro',
+            levelId: '117995228',
+            views: 220,
+            completions: 195
+        }
+    ];
 
     // DOM 요소 캐싱
     const navMyProfileLink = document.getElementById('nav-my-profile-link');
@@ -39,206 +225,228 @@ document.addEventListener('DOMContentLoaded', () => {
         navLogoutButton.addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            // 'alert()' 함수는 사용되지 않으므로, 커스텀 메시지 모달 등으로 대체해야 합니다.
             alert('로그아웃되었습니다.');
             window.location.href = 'index.html';
         });
     }
-    // API로부터 챌린지 데이터를 가져오는 비동기 함수
-    async function fetchChallenges() {
-        try {
-            // 로딩 메시지 표시
-            if (challengeListContainer) challengeListContainer.innerHTML = '<p class="loading-message">챌린지를 불러오는 중...</p>';
-            if (extendedChallengeListContainer) extendedChallengeListContainer.innerHTML = '<p class="loading-message">챌린지를 불러오는 중...</p>';
-            if (legacyChallengeListContainer) legacyChallengeListContainer.innerHTML = '<p class="loading-message">챌린지를 불러오는 중...</p>';
-            if (upcomingChallengeListContainer) upcomingChallengeListContainer.innerHTML = '<p class="loading-message">업커밍 챌린지를 불러오는 중...</p>';
 
-            const response = await fetch(`${BACKEND_API_URL}/challenges`);
-            if (!response.ok) {
-                throw new Error('네트워크 응답이 올바르지 않습니다.');
-            }
-            const data = await response.json();
-            
-            // 데이터 분류 및 저장
-            allChallenges = data.filter(c => !c.isUpcoming);
-            upcomingChallenges = data.filter(c => c.isUpcoming);
+    // 챌린지 카드 생성 함수
+    function createChallengeCard(challenge) {
+        const card = document.createElement('div');
+        card.classList.add('challenge-card', `difficulty-${challenge.difficulty}`);
 
-            // 데이터가 성공적으로 로드되면 각 페이지에 챌린지 목록 표시
-            displayMainChallenges(allChallenges);
-            displayExtendedChallenges(allChallenges);
-            displayLegacyChallenges(allChallenges);
-            displayUpcomingChallenges(upcomingChallenges);
+        // 랜덤 이미지 URL 생성 (유니크한 이미지 제공을 위해)
+        const imageUrl = `https://picsum.photos/500/300?random=${challenge.id}`;
 
-        } catch (error) {
-            console.error('챌린지 데이터를 가져오는 중 오류 발생:', error);
-            const errorMessage = '<p class="error-message">챌린지를 불러오는 데 실패했습니다. 다시 시도해 주세요.</p>';
-            if (challengeListContainer) challengeListContainer.innerHTML = errorMessage;
-            if (extendedChallengeListContainer) extendedChallengeListContainer.innerHTML = errorMessage;
-            if (legacyChallengeListContainer) legacyChallengeListContainer.innerHTML = errorMessage;
-            if (upcomingChallengeListContainer) upcomingChallengeListContainer.innerHTML = errorMessage;
-        }
+        card.innerHTML = `
+            <a href="challenge_detail.html?id=${challenge.id}" class="challenge-card-link">
+                <div class="challenge-image-preview">
+                    <img src="${imageUrl}" alt="${challenge.name} thumbnail" onerror="this.onerror=null; this.src='https://placehold.co/500x300/e0e0e0/ffffff?text=No+Image';">
+                </div>
+                <div class="challenge-card-main-content">
+                    <div class="challenge-card-header">
+                        ${challenge.rank ? `<span class="rank">#${challenge.rank}</span>` : ''}
+                        <h3>${challenge.name}</h3>
+                    </div>
+                    <span class="difficulty">${challenge.difficulty.replace(/_/g, ' ')}</span>
+                    <p class="description-preview">${challenge.description}</p>
+                    <div class="card-footer">
+                        <span class="creator">Creator: ${challenge.creator}</span>
+                        <span class="verifier">Verifier: ${challenge.verifier}</span>
+                    </div>
+                </div>
+            </a>
+        `;
+        return card;
     }
 
-    // 메인 챌린지 목록을 렌더링하는 함수 (1위 ~ 10위)
-    function displayMainChallenges(challenges) {
+    // 챌린지 목록 페이지 렌더링
+    function renderChallengeList(listId, filterFunc, sortKey = 'rank') {
+        const challengeListContainer = document.getElementById(listId);
         if (!challengeListContainer) return;
 
-        const mainList = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
+        let filteredChallenges = challenges.filter(filterFunc);
 
-        if (mainList.length === 0) {
-            challengeListContainer.innerHTML = '<p>아직 등록된 챌린지가 없습니다.</p>';
-            return;
-        }
+        // 정렬 적용
+        filteredChallenges.sort((a, b) => {
+            if (sortKey === 'rank') return (a.rank || 9999) - (b.rank || 9999);
+            if (sortKey === 'views') return b.views - a.views;
+            if (sortKey === 'completions') return b.completions - a.completions;
+        });
 
         challengeListContainer.innerHTML = '';
-        mainList.forEach(challenge => {
-            const challengeCard = document.createElement('div');
-            challengeCard.classList.add('challenge-card');
-            challengeCard.innerHTML = `
-                <div class="card-rank">#${challenge.rank}</div>
-                <h3 class="card-title">${challenge.name}</h3>
-                <p class="card-difficulty">난이도: <span class="${challenge.difficulty}">${getDifficultyText(challenge.difficulty)}</span></p>
-                <p class="card-description">${challenge.description}</p>
-                <div class="card-meta">
-                    <span>크리에이터: ${challenge.creator}</span>
-                    <span>뷰: ${challenge.views}</span>
-                    <span>클리어: ${challenge.completions}</span>
-                </div>
-                <button class="card-button" onclick="window.location.href='challenge_detail.html?id=${challenge.id}'">자세히 보기</button>
-            `;
-            challengeListContainer.appendChild(challengeCard);
-        });
-    }
-
-    // Extended 챌린지 목록을 렌더링하는 함수 (10위 초과 ~ 20위)
-    function displayExtendedChallenges(challenges) {
-        if (!extendedChallengeListContainer) return;
-
-        const extendedList = challenges.filter(c => c.rank > MAX_RANK_MAIN_LIST && c.rank <= MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
-
-        if (extendedList.length === 0) {
-            extendedChallengeListContainer.innerHTML = '<p>아직 등록된 Extended 챌린지가 없습니다.</p>';
-            return;
-        }
-
-        extendedChallengeListContainer.innerHTML = '';
-        extendedList.forEach(challenge => {
-            const challengeCard = document.createElement('div');
-            challengeCard.classList.add('challenge-card');
-            challengeCard.innerHTML = `
-                <div class="card-rank">#${challenge.rank}</div>
-                <h3 class="card-title">${challenge.name}</h3>
-                <p class="card-difficulty">난이도: <span class="${challenge.difficulty}">${getDifficultyText(challenge.difficulty)}</span></p>
-                <div class="card-meta">
-                    <span>크리에이터: ${challenge.creator}</span>
-                    <span>클리어: ${challenge.completions}</span>
-                </div>
-                <button class="card-button" onclick="window.location.href='challenge_detail.html?id=${challenge.id}'">자세히 보기</button>
-            `;
-            extendedChallengeListContainer.appendChild(challengeCard);
-        });
-    }
-
-    // Legacy 챌린지 목록을 렌더링하는 함수 (20위 초과)
-    function displayLegacyChallenges(challenges) {
-        if (!legacyChallengeListContainer) return;
-
-        const legacyList = challenges.filter(c => c.rank > MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
-
-        if (legacyList.length === 0) {
-            legacyChallengeListContainer.innerHTML = '<p>아직 등록된 Legacy 챌린지가 없습니다.</p>';
-            return;
-        }
-
-        legacyChallengeListContainer.innerHTML = '';
-        legacyList.forEach(challenge => {
-            const challengeCard = document.createElement('div');
-            challengeCard.classList.add('challenge-card');
-            challengeCard.innerHTML = `
-                <div class="card-rank">#${challenge.rank}</div>
-                <h3 class="card-title">${challenge.name}</h3>
-                <p class="card-difficulty">난이도: <span class="${challenge.difficulty}">${getDifficultyText(challenge.difficulty)}</span></p>
-                <div class="card-meta">
-                    <span>크리에이터: ${challenge.creator}</span>
-                    <span>클리어: ${challenge.completions}</span>
-                </div>
-                <button class="card-button" onclick="window.location.href='challenge_detail.html?id=${challenge.id}'">자세히 보기</button>
-            `;
-            legacyChallengeListContainer.appendChild(challengeCard);
-        });
-    }
-
-    // 업커밍 챌린지 목록을 렌더링하는 함수
-    function displayUpcomingChallenges(challenges) {
-        if (!upcomingChallengeListContainer) return;
-
-        if (challenges.length === 0) {
-            upcomingChallengeListContainer.innerHTML = '<p>아직 등록된 업커밍 챌린지가 없습니다.</p>';
-            return;
-        }
-
-        upcomingChallengeListContainer.innerHTML = '';
-        challenges.forEach(challenge => {
-            const challengeCard = document.createElement('div');
-            challengeCard.classList.add('challenge-card');
-            challengeCard.innerHTML = `
-                <div class="card-rank">#${challenge.rank}</div>
-                <h3 class="card-title">${challenge.name}</h3>
-                <p class="card-description">${challenge.description}</p>
-                <div class="card-meta">
-                    <span>크리에이터: ${challenge.creator}</span>
-                </div>
-            `;
-            upcomingChallengeListContainer.appendChild(challengeCard);
-        });
-    }
-
-    // 난이도 텍스트를 반환하는 헬퍼 함수
-    function getDifficultyText(difficulty) {
-        switch (difficulty) {
-            case 'easy_demon': return 'Easy Demon';
-            case 'medium_demon': return 'Medium Demon';
-            case 'hard_demon': return 'Hard Demon';
-            case 'insane_demon': return 'Insane Demon';
-            case 'extreme_demon': return 'Extreme Demon';
-            default: return '미정';
-        }
-    }
-
-    // 랭킹 순위표를 렌더링하는 함수
-    function displayUserScores() {
-        const noScoresMessage = document.querySelector('.no-scores');
-        
-        if (userScoresListContainer) userScoresListContainer.innerHTML = '';
-
-        const sortedScores = Object.entries(userScores)
-            .map(([email, score]) => {
-                const user = users.find(u => u.email === email);
-                return {
-                    nickname: user ? user.nickname : email.split('@')[0],
-                    score: score
-                };
-            })
-            .sort((a, b) => b.score - a.score);
-
-        if (sortedScores.length === 0) {
-            if (noScoresMessage) noScoresMessage.style.display = 'block';
-            return;
+        if (filteredChallenges.length === 0) {
+            const noResultsMessage = document.querySelector('.no-results-message');
+            if (noResultsMessage) noResultsMessage.style.display = 'block';
         } else {
-            if (noScoresMessage) noResultsMessage.style.display = 'none';
+            const noResultsMessage = document.querySelector('.no-results-message');
+            if (noResultsMessage) noResultsMessage.style.display = 'none';
+            filteredChallenges.forEach(challenge => {
+                challengeListContainer.appendChild(createChallengeCard(challenge));
+            });
+        }
+    }
+
+    // 챌린지 목록 페이지 로직
+    if (document.getElementById('challenge-list-main')) {
+        const searchInput = document.getElementById('challenge-search');
+        const difficultyFilter = document.getElementById('difficulty-filter');
+        const sortBy = document.getElementById('sort-by');
+        const listContainer = document.getElementById('challenge-list-main');
+
+        function filterAndRender() {
+            const searchQuery = searchInput.value.toLowerCase();
+            const selectedDifficulty = difficultyFilter.value;
+            const selectedSort = sortBy.value;
+
+            let filteredChallenges = challenges.filter(challenge => {
+                const matchesSearch = challenge.name.toLowerCase().includes(searchQuery) || (challenge.levelId && challenge.levelId.includes(searchQuery));
+                const matchesDifficulty = selectedDifficulty === 'all' || challenge.difficulty === selectedDifficulty;
+                const isMainList = challenge.rank > 0 && challenge.rank <= MAX_RANK_MAIN_LIST;
+                return matchesSearch && matchesDifficulty && isMainList;
+            });
+
+            filteredChallenges.sort((a, b) => {
+                if (selectedSort === 'rank') return (a.rank || 9999) - (b.rank || 9999);
+                if (selectedSort === 'views') return b.views - a.views;
+                if (selectedSort === 'completions') return b.completions - a.completions;
+            });
+
+            const noResultsMessage = document.querySelector('.no-results-message');
+            listContainer.innerHTML = '';
+            if (filteredChallenges.length === 0) {
+                if (noResultsMessage) noResultsMessage.style.display = 'block';
+            } else {
+                if (noResultsMessage) noResultsMessage.style.display = 'none';
+                filteredChallenges.forEach(challenge => {
+                    listContainer.appendChild(createChallengeCard(challenge));
+                });
+            }
         }
 
-        sortedScores.forEach((user, index) => {
-            const scoreCard = document.createElement('div');
-            scoreCard.classList.add('score-card');
-            scoreCard.innerHTML = `
-                <span class=\"score-rank\">#${index + 1}</span>
-                <span class=\"score-nickname\">${user.nickname}</span>
-                <span class=\"score-value\">${user.score}점</span>
-            `;
-            userScoresListContainer.appendChild(scoreCard);
+        searchInput.addEventListener('input', filterAndRender);
+        difficultyFilter.addEventListener('change', filterAndRender);
+        sortBy.addEventListener('change', filterAndRender);
+
+        filterAndRender(); // 페이지 로드 시 초기 렌더링
+    }
+
+    // Extended List 페이지 로직
+    if (document.getElementById('extended-challenge-list')) {
+        renderChallengeList('extended-challenge-list', challenge => challenge.rank > MAX_RANK_MAIN_LIST && challenge.rank <= MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+    }
+
+    // Legacy List 페이지 로직
+    if (document.getElementById('legacy-challenge-list')) {
+        renderChallengeList('legacy-challenge-list', challenge => challenge.rank > MAX_RANK_EXTENDED_LIST_UPPER_BOUND);
+    }
+
+    // 내 프로필 페이지 로직
+    if (document.querySelector('.profile-page')) {
+        const profileNicknameSpan = document.getElementById('profile-nickname');
+        const profileEmailSpan = document.getElementById('profile-email');
+
+        function renderProfile() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                if (profileNicknameSpan) profileNicknameSpan.textContent = user.nickname;
+                if (profileEmailSpan) profileEmailSpan.textContent = user.email;
+            } else {
+                if (mainContent) mainContent.innerHTML = `<p class="not-found-message">로그인이 필요합니다.</p>`;
+            }
+        }
+        renderProfile();
+    }
+
+    // 로그인 페이지 로직
+    if (document.getElementById('login-form')) {
+        const loginForm = document.getElementById('login-form');
+        const messageEl = document.getElementById('login-message');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target.elements['login-email'].value;
+            const password = e.target.elements['login-password'].value;
+
+            try {
+                const response = await fetch(`${BACKEND_API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    if (messageEl) {
+                        messageEl.textContent = '로그인 성공!';
+                        messageEl.className = 'alert alert-success';
+                        messageEl.style.display = 'block';
+                    }
+                    window.location.href = 'index.html';
+                } else {
+                    if (messageEl) {
+                        messageEl.textContent = result.message || '로그인 실패';
+                        messageEl.className = 'alert alert-error';
+                        messageEl.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                if (messageEl) {
+                    messageEl.textContent = '서버 오류가 발생했습니다.';
+                    messageEl.className = 'alert alert-error';
+                    messageEl.style.display = 'block';
+                }
+            }
         });
     }
 
-    // 초기 데이터 로드 시작
-    fetchChallenges();
+    // 회원가입 페이지 로직
+    if (document.getElementById('signup-form')) {
+        const signupForm = document.getElementById('signup-form');
+        const messageEl = document.getElementById('signup-message');
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nickname = e.target.elements['signup-nickname'].value;
+            const email = e.target.elements['signup-email'].value;
+            const password = e.target.elements['signup-password'].value;
+
+            try {
+                const response = await fetch(`${BACKEND_API_URL}/api/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nickname, email, password })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    if (messageEl) {
+                        messageEl.textContent = '회원가입 성공! 이제 로그인해주세요.';
+                        messageEl.className = 'alert alert-success';
+                        messageEl.style.display = 'block';
+                    }
+                    window.location.href = 'login.html';
+                } else {
+                    if (messageEl) {
+                        messageEl.textContent = result.message || '회원가입 실패';
+                        messageEl.className = 'alert alert-error';
+                        messageEl.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                if (messageEl) {
+                    messageEl.textContent = '서버 오류가 발생했습니다.';
+                    messageEl.className = 'alert alert-error';
+                    messageEl.style.display = 'block';
+                }
+            }
+        });
+    }
+
+    updateNavbar();
 });
