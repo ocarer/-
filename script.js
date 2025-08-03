@@ -478,13 +478,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
+// --- 챌린지 리스트 페이지 로직 (`challenge_list.html`) ---
     if (currentPage === 'challenge_list.html') {
         console.log('--- challenge_list.html 페이지 로직 시작 ---'); // Debugging log
-        const challengeListContainer = document.getElementById('challenge-list');
-        const searchInput = document.getElementById('challenge-search'); // ID 수정
+        const challengeListContainer = document.getElementById('challenge-list-main'); // ID를 'challenge-list'에서 'challenge-list-main'으로 수정
+        const searchInput = document.getElementById('challenge-search'); // ID를 'search-input'에서 'challenge-search'로 수정
         const difficultyFilter = document.getElementById('difficulty-filter');
-        const sortOrder = document.getElementById('sort-by'); // ID 수정
-        const noResultsMessage = document.querySelector('.no-results');
+        const sortOrder = document.getElementById('sort-by'); // ID를 'sort-order'에서 'sort-by'로 수정
+        const noResultsMessage = document.querySelector('.no-results-message'); // 클래스 선택자를 '.no-results'에서 '.no-results-message'로 수정
 
         function displayChallenges(filteredChallenges) {
             console.log('displayChallenges 함수 호출됨. 필터링된 챌린지 수:', filteredChallenges.length); // Debugging log
@@ -514,9 +515,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('filterAndSortChallenges 함수 호출됨.'); // Debugging log
             // challenge_list.html에서는 1위부터 MAX_RANK_MAIN_LIST (9위)까지의 챌린지만 보여줍니다.
             let currentChallenges = challenges.filter(c => c.rank <= MAX_RANK_MAIN_LIST);
-            console.log('초기 challenges 배열:', challenges); // Debugging log
-            console.log('MAX_RANK_MAIN_LIST:', MAX_RANK_MAIN_LIST); // Debugging log
-            console.log('랭크 필터링 후 currentChallenges (main list):', currentChallenges); // Debugging log
 
             const searchTerm = searchInput.value.toLowerCase();
             const selectedDifficulty = difficultyFilter.value;
@@ -533,27 +531,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     challenge.levelId.includes(searchTerm) ||
                     (challenge.verifier && challenge.verifier.toLowerCase().includes(searchTerm))
                 );
-                console.log('검색어 필터링 후 currentChallenges:', currentChallenges); // Debugging log
             }
 
             if (selectedDifficulty !== 'all') {
                 currentChallenges = currentChallenges.filter(challenge =>
                     challenge.difficulty === selectedDifficulty
                 );
-                console.log('난이도 필터링 후 currentChallenges:', currentChallenges); // Debugging log
             }
 
             currentChallenges.sort((a, b) => {
                 if (selectedSortOrder === 'rank') {
                     return a.rank - b.rank;
-                } else if (selectedSortOrder === 'latest') {
-                    return parseInt(b.id) - parseInt(a.id);
+                } else if (selectedSortOrder === 'views') { // 'popular' 대신 'views'로 변경
+                    return (b.views) - (a.views);
+                } else if (selectedSortOrder === 'completions') { // 'popular' 대신 'completions'로 변경
+                    return (b.completions) - (a.completions);
                 } else if (selectedSortOrder === 'difficulty_asc') {
                     return (difficultyMap[a.difficulty]?.order || 0) - (difficultyMap[b.difficulty]?.order || 0);
                 } else if (selectedSortOrder === 'difficulty_desc') {
-                    return (difficultyMap[b.difficulty]?.order || 0) - (difficultyMap[a.difficulty]?.order || 0);
-                } else if (selectedSortOrder === 'popular') {
-                    return (b.views + b.completions) - (a.views + a.completions);
+                    return (difficultyMap[b.difficulty]?.order || 0) - (difficultyMap[b.difficulty]?.order || 0);
                 }
                 return 0;
             });
@@ -562,11 +558,12 @@ document.addEventListener('DOMContentLoaded', () => {
             displayChallenges(currentChallenges);
         }
 
-        searchInput.addEventListener('input', filterAndSortChallenges);
-        difficultyFilter.addEventListener('change', filterAndSortChallenges);
-        sortOrder.addEventListener('change', filterAndSortChallenges);
+        if (searchInput) searchInput.addEventListener('input', filterAndSortChallenges);
+        if (difficultyFilter) difficultyFilter.addEventListener('change', filterAndSortChallenges);
+        if (sortOrder) sortOrder.addEventListener('change', filterAndSortChallenges);
 
         filterAndSortChallenges();
+    }
 
     } else if (currentPage === 'upcoming_challenges.html') {
         console.log('--- upcoming_challenges.html 페이지 로직 시작 ---'); // 디버깅 로그
@@ -1365,5 +1362,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
