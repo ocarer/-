@@ -21,29 +21,41 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '123150415',
             views: 4500,
-            completions: 3
+            completions: 3,
+            attempts: 2000,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './the_hell_challenge.png' // 이미지 경로 변경
         },
         {
-            id: '2', rank: 2,
+            id: '2', rank: 2, // Chaos Ship (랭크 조정)
             name: 'Chaos Ship',
             difficulty: 'extreme_demon',
             description: '조금만 틀어져도 죽는 매우 좁은 간격의 비행 챌린지입니다.',
-            creator: 'ZreGD',
-            verifier: 'GDVerifierPro',
+            creator: 'ShipMaster',
+            verifier: 'ChaosV',
             levelId: '123189789',
-            views: 3800,
-            completions: 6
+            views: 40,
+            completions: 0,
+            attempts: 0,
+            videoUrl: 'https://www.youtube.com/embed/your_chaos_ship_official_video',
+            isZre: true,
+            zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video',
+            zreImageUrl: './chaos_ship_zre_proof.png', // 이미지 경로 변경
+            imageUrl: './chaos_ship.png' // 이미지 경로 변경
         },
         {
-            id: '3', rank: 3,
-            name: 'ReLief 2',
-            difficulty: 'extreme_demon',
+            id: '3', rank: 3, // Relief 2 (오늘 깬 맵)
+            name: 'Relief 2',
+            difficulty: 'extreme_demon', // 난이도 추정
             description: '잦은 변속과 모드전환이 특징인 맵입니다. 몇 안되는 고퀄맵이기도 합니다.',
-            creator: 'ZreGD',
-            verifier: 'GDVerifierPro',
+            creator: 'PlayerX',
+            verifier: 'PlayerX',
             levelId: '100556994',
-            views: 5100,
-            completions: 4
+            views: 50,
+            completions: 1,
+            attempts: 100,
+            videoUrl: 'https://www.youtube.com/embed/relief2_video_url', // 실제 영상 URL로 변경
+            imageUrl: './relief_2.png' // 이미지 경로 변경
         },
         {
             id: '4', rank: 4,
@@ -54,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '72591414',
             views: 2500,
-            completions: 15
+            completions: 15,
+            videoUrl: '',
+            imageUrl: './rebition_2.png' // 이미지 경로 변경
         },
         {
             id: '5', rank: 5,
@@ -65,7 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '122035043',
             views: 1800,
-            completions: 11
+            completions: 11,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './gonna_go.png' // 이미지 경로 변경
         },
         {
             id: '6', rank: 6,
@@ -87,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '123362423',
             views: 900,
-            completions: 35
+            completions: 35,
+            videoUrl: 'https://www.youtube.com/embed/true_sink_video_url', // 실제 영상 URL로 변경
+            imageUrl: './true_sink.png' // 이미지 경로 변경
         },
         {
             id: '8', rank: 8,
@@ -98,7 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '122654332',
             views: 850,
-            completions: 45
+            completions: 45,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './aaaaaaaaaaa.png' // 이미지 경로 변경
         },
         {
             id: '9', rank: 9,
@@ -109,10 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '123358917',
             views: 700,
-            completions: 50
+            completions: 50,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            imageUrl: './persephone.png' // 이미지 경로 변경
         },
         // Extended List에 포함될 챌린지 (10위부터 19위까지)
-                {
+        {
             id: '10', rank: 10,
             name: 'Speeeeeeeeeeeeeeed',
             difficulty: 'medium_demon',
@@ -121,7 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '123073199',
             views: 650,
-            completions: 70
+            completions: 70,
+            videoUrl: '',
+            imageUrl: './speeeeeeeeeeeeeed.png' // 이미지 경로 변경
         },
         {
             id: '11', rank: 11,
@@ -132,7 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '123417172',
             views: 550,
-            completions: 85
+            completions: 85,
+            videoUrl: '',
+            imageUrl: './rusttttt.png' // 이미지 경로 변경
         },
         {
             id: '12', rank: 12,
@@ -143,7 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '114207036',
             views: 400,
-            completions: 110
+            completions: 110,,
+            videoUrl: '',
+            imageUrl: './buzori.png' // 이미지 경로 변경
         },
         {
             id: '13', rank: 13,
@@ -154,7 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '117950820',
             views: 350,
-            completions: 130
+            completions: 130,
+            videoUrl: '',
+            imageUrl: './invincible_wave.png' // 이미지 경로 변경
         },
         {
             id: '14', rank: 14,
@@ -1335,3 +1365,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
