@@ -154,6 +154,8 @@ main {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex; /* Flexbox를 사용하여 내부 요소를 정렬합니다 */
     flex-direction: column; /* 기본적으로 세로 정렬 */
+    gap: 20px; /* 챌린지 카드 사이의 간격 */
+    align-items: center;
 }
 
 .challenge-card:hover,
@@ -867,3 +869,4 @@ footer {
         min-width: unset;
     }
 }
+
