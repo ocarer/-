@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             verifier: 'GDVerifierPro',
             levelId: '114207036',
             views: 400,
-            completions: 110,,
+            completions: 110,
             videoUrl: '',
             imageUrl: './buzori.png' // 이미지 경로 변경
         },
@@ -1365,4 +1365,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
