@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '13', rank: 13,
             name: 'invincible wave',
             difficulty: 'easy_demon',
-            description: '싱크에 맞춰 가감속을 배치해 일명 "꾹꾹이 겜플"을 만들어낸 맵입니다.',
+            description: '싱크에 맞춰 가감속을 배치해 일명 "꾹꾾이 겜플"을 만들어낸 맵입니다.',
             creator: 'ZreGD',
             verifier: 'GDVerifierPro',
             levelId: '117950820',
@@ -788,14 +788,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     else if (currentPage === 'creator_page.html') {
         const creatorListContainer = document.getElementById('creator-list');
+        // 챌린지 데이터에서 제작자 이름을 자동 추출
+        const allCreatorNames = [
+            ...new Set(challenges.map(c => c.creator)
+                .concat((uploadedChallenges || []).map(c => c.creator))
+                .concat((upcomingChallenges || []).map(c => c.creator)))
+        ].filter(Boolean).sort();
+
         function displayCreators() {
             if (creatorListContainer) creatorListContainer.innerHTML = '';
-            creators.forEach(creatorName => {
+            allCreatorNames.forEach(creatorName => {
                 const creatorCard = document.createElement('div');
                 creatorCard.classList.add('creator-card');
                 const creatorChallenges = challenges.filter(c => c.creator === creatorName);
-                const creatorUpcomingChallenges = upcomingChallenges.filter(c => c.creator === creatorName);
-                const creatorUploadedChallenges = uploadedChallenges.filter(c => c.creator === creatorName);
+                const creatorUpcomingChallenges = (upcomingChallenges || []).filter(c => c.creator === creatorName);
+                const creatorUploadedChallenges = (uploadedChallenges || []).filter(c => c.creator === creatorName);
                 creatorCard.innerHTML = `
                     <h3>${creatorName}</h3>
                     <div class="creator-challenges">
@@ -807,9 +814,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </ul>
                     </div>
                 `;
-                if (creatorListContainer) creatorListContainer.appendChild(creatorCard);
+                creatorListContainer.appendChild(creatorCard);
             });
-            if (creators.length === 0 && creatorListContainer) {
+            if (allCreatorNames.length === 0 && creatorListContainer) {
                 creatorListContainer.innerHTML = '<p class="no-results">등록된 크리에이터가 없습니다.</p>';
             }
         }
