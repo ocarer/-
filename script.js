@@ -283,23 +283,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const creators = [
-        'ChallengingCreator',
-        'PlayerX',
-        'ShipMaster',
-        'Unknown',
-        'PlayerY',
-        'GDMaster',
-        'NewCreator',
-        'RhythmMaster',
-        'GDFunny',
-        '레즈',
-        'WavePlayer',
-        'ShipLover',
-        'WaveGod',
-        'SpeedDemon',
-        'Test',
-        'OldSchool',
-        'TestUser'
+        '모찌',
+        '보라색 구슬',
+        '게임하는 김치',
+        'RAX',
+        '맛포(맛있는 포도)',
     ].sort();
 
 
@@ -885,5 +873,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 
 
