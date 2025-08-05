@@ -840,7 +840,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const creatorCard = document.createElement('div');
                 creatorCard.classList.add('creator-card');
                 const creatorChallenges = challenges.filter(c => c.creator === creatorName);
-                const creatorUpcomingChallenges = (upcomingChallenges || []).filter(c => c.creator === creatorName);
                 const creatorUploadedChallenges = (uploadedChallenges || []).filter(c => c.creator === creatorName);
                 creatorCard.innerHTML = `
                     <h3>${creatorName}</h3>
@@ -919,6 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
