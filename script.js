@@ -793,9 +793,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (signupForm) {
             signupForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                const email = document.getElementById('auth-email').value;
-                const password = document.getElementById('auth-password').value;
-                const nickname = document.getElementById('auth-nickname').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const nickname = document.getElementById('nickname').value;
 
                 try {
                     const response = await fetch(`${BACKEND_API_URL}/api/signup`, {
@@ -920,6 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
