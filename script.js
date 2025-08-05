@@ -746,12 +746,43 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (loginForm) {
-            // ... (기존 로그인 로직)
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+
+                try {
+                    const response = await fetch(`${BACKEND_API_URL}/api/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert(data.message);
+                        loggedInUser = data.user;
+                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                        localStorage.setItem('authToken', data.token);
+                        updateAuthNavItem();
+                        window.location.href = 'my_profile.html';
+                    } else {
+                        alert(`오류: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+                    }
+                } catch (error) {
+                    console.error('네트워크 또는 서버 통신 오류:', error);
+                    alert('서버와 통신하는 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+                }
+            });
         }
-    }
 // --- 회원가입 페이지 로직 (`signup.html`) ---
-    else if (currentPage === 'signup.html') {
+    } else if (currentPage === 'signup.html') { // 회원가입 페이지 로직 (auth.html에서 분리)
+        console.log('--- signup.html 페이지 로직 시작 ---'); // 디버깅 로그
         const signupForm = document.getElementById('signup-form');
+
         if (loggedInUser) {
             alert('이미 로그인되어 있습니다. 프로필 페이지로 이동합니다.');
             window.location.href = 'my_profile.html';
@@ -759,33 +790,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (signupForm) {
-            signupForm.addEventListener('submit', (event) => {
+            signupForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                const nickname = document.getElementById('auth-nickname').value;
 
-                const nickname = document.getElementById('nickname').value;
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirm-password').value;
+                try {
+                    const response = await fetch(`${BACKEND_API_URL}/api/signup`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ nickname, email, password }),
+                    });
 
-                if (password !== confirmPassword) {
-                    alert('비밀번호가 일치하지 않습니다.');
-                    return;
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert(data.message);
+                        // 회원가입 성공 후, users 배열에 추가 (데모용 로컬 스토리지 유지)
+                        const newUser = { email, password, nickname };
+                        users.push(newUser);
+                        localStorage.setItem('users', JSON.stringify(users));
+                        // 회원가입 성공 후 로그인 페이지로 리다이렉트
+                        window.location.href = 'login.html';
+                    } else {
+                        alert(`오류: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+                    }
+                } catch (error) {
+                    console.error('네트워크 또는 서버 통신 오류:', error);
+                    alert('서버와 통신하는 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
                 }
-
-                if (users.some(u => u.email === email)) {
-                    alert('이미 사용 중인 이메일입니다.');
-                    return;
-                }
-
-                const newUserData = { nickname, email, password };
-                users.push(newUserData);
-                localStorage.setItem('users', JSON.stringify(users));
-
-                alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-                window.location.href = 'login.html';
             });
         }
-    }
     else if (currentPage === 'creator_page.html') {
         const creatorListContainer = document.getElementById('creator-list');
         // 챌린지 데이터에서 제작자 이름을 자동 추출
@@ -880,6 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 
 
 
