@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '13', rank: 13,
             name: 'invincible wave',
             difficulty: 'easy_demon',
-            description: '싱크에 맞춰 가감속을 배치해 일명 "꾹꾾이 겜플"을 만들어낸 맵입니다.',
+            description: '싱크에 맞춰 가감속을 배치해 일명 "꾹꾹이 겜플"을 만들어낸 맵입니다.',
             creator: 'ZreGD',
             verifier: 'GDVerifierPro',
             levelId: '117950820',
@@ -919,6 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
