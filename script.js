@@ -821,7 +821,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h4>제작한 챌린지 (${creatorChallenges.length + creatorUploadedChallenges.length}개)</h4>
                         <ul>
                             ${creatorChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (#${c.rank})</a></li>`).join('')}
-                            ${creatorUpcomingChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}&upcoming=true">${c.name} (업커밍)</a></li>`).join('')}
                             ${creatorUploadedChallenges.map(c => `<li><a href="challenge_detail.html?id=${c.id}">${c.name} (업로드)</a></li>`).join('')}
                         </ul>
                     </div>
@@ -892,6 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
