@@ -893,28 +893,29 @@ document.addEventListener('DOMContentLoaded', () => {
         displayUserScores();
     }
     else if (currentPage === 'submit_record.html') {
-        if (!loggedInUser) {
-            alert('기록을 제출하려면 로그인이 필요합니다.');
-            window.location.href = 'login.html';
+    if (!loggedInUser) {
+        alert('기록을 제출하려면 로그인이 필요합니다.');
+        window.location.href = 'login.html';
+        return;
+    }
+    const challengeId = urlParams.get('challengeId');
+    const recordChallengeInfo = document.getElementById('record-challenge-info');
+    const recordNotFoundMessage = document.getElementById('record-not-found');
+    const submitRecordForm = document.getElementById('submit-record-form');
+    const isZreVerifiedCheckbox = document.getElementById('is-zre-verified');
+    const zreProofFields = document.getElementById('zre-proof-fields');
+    let targetChallenge = challenges.find(c => c.id === challengeId);
+    if (!targetChallenge) {
+        targetChallenge = upcomingChallenges.find(c => c.id === challengeId);
+        if (targetChallenge && targetChallenge.isUpcoming) {
+            alert('업커밍 챌린지에는 기록을 제출할 수 없습니다.');
+            window.location.href = 'challenge_detail.html?id=' + challengeId + '&upcoming=true';
             return;
         }
-        const challengeId = urlParams.get('challengeId');
-        const recordChallengeInfo = document.getElementById('record-challenge-info');
-        const recordNotFoundMessage = document.getElementById('record-not-found');
-        const submitRecordForm = document.getElementById('submit-record-form');
-        const isZreVerifiedCheckbox = document.getElementById('is-zre-verified');
-        const zreProofFields = document.getElementById('zre-proof-fields');
-        let targetChallenge = challenges.find(c => c.id === challengeId);
-        if (!targetChallenge) {
-            targetChallenge = upcomingChallenges.find(c => c.id === challengeId);
-            if (targetChallenge && targetChallenge.isUpcoming) {
-                alert('업커밍 챌린지에는 기록을 제출할 수 없습니다.');
-                window.location.href = 'challenge_detail.html?id=' + challengeId + '&upcoming=true';
-                return;
-            }
-        }
-        if (targetChallenge) {
-            // ... (기존 기록 제출 폼 로직)
-        }
     }
-};
+    if (targetChallenge) {
+        // ... (기존 기록 제출 폼 로직)
+    }
+} // <-- ADD THIS!
+}; // <-- Keep this to close DOMContentLoaded event
+
