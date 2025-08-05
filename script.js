@@ -824,6 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+    }
     else if (currentPage === 'creator_page.html') {
         const creatorListContainer = document.getElementById('creator-list');
         // 챌린지 데이터에서 제작자 이름을 자동 추출
@@ -918,4 +919,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }; // <-- Keep this to close DOMContentLoaded event
+
 
