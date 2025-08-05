@@ -918,6 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ... (기존 기록 제출 폼 로직)
     }
 } // <-- ADD THIS!
-}; // <-- Keep this to close DOMContentLoaded event
+}); // <-- Keep this to close DOMContentLoaded event
+
 
 
