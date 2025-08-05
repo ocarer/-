@@ -917,7 +917,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ... (기존 기록 제출 폼 로직)
         }
     }
-});
+
 
 
 
