@@ -831,7 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const allCreatorNames = [
             ...new Set(challenges.map(c => c.creator)
                 .concat((uploadedChallenges || []).map(c => c.creator))
-                .concat((upcomingChallenges || []).map(c => c.creator)))
+                      )
         ].filter(Boolean).sort();
 
         function displayCreators() {
@@ -919,6 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
