@@ -488,32 +488,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 이외 페이지 로직들은 기존 코드에서 오류 없이 동작했으므로 그대로 유지합니다.
-    else if (currentPage === 'upcoming_challenges.html') {
-        const upcomingListContainer = document.getElementById('upcoming-challenge-list');
-        const noResultsMessage = document.querySelector('.no-results');
-        const loadingMessage = document.querySelector('.loading-message');
-        function displayUpcomingChallenges() {
-            if (loadingMessage) loadingMessage.style.display = 'none';
-            if (upcomingListContainer) upcomingListContainer.innerHTML = '';
-            if (upcomingChallenges.length === 0) {
-                if (noResultsMessage) noResultsMessage.style.display = 'block';
-            } else {
-                if (noResultsMessage) noResultsMessage.style.display = 'none';
-                upcomingChallenges.forEach(challenge => {
-                    const card = createChallengeCard(challenge, true);
-                    if (upcomingListContainer) upcomingListContainer.appendChild(card);
-                });
-            }
-            document.querySelectorAll('.copy-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    copyToClipboard(event.target.dataset.id, event.target);
-                });
-            });
-        }
-        displayUpcomingChallenges();
-    }
     
     // --- Extended List 페이지 로직 (`extended_list.html`) ---
     else if (currentPage === 'extended_list.html') {
@@ -918,6 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
