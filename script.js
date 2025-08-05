@@ -750,6 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 event.preventDefault();
                 const email = document.getElementById('auth-email').value;
                 const password = document.getElementById('auth-password').value;
+                const nickname = document.getElementById('auth-nickname').value;
 
                 try {
                     const response = await fetch(`${BACKEND_API_URL}/api/login`, {
@@ -919,6 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
