@@ -34,6 +34,16 @@
                 <a href="challenge_list.html" class="button-primary">목록으로 돌아가기</a>
             </div>
         </section>
+        <!-- 챌린지 상세 정보 아래에 기록 제출 섹션 추가 -->
+<section id="record-submit-section">
+    <h3>기록 제출</h3>
+    <form id="record-submit-form">
+        <label for="videoUrl">영상 URL:</label>
+        <input type="url" id="videoUrl" name="videoUrl" required>
+        <button type="submit" class="button-primary">기록 제출</button>
+    </form>
+    <div id="record-submit-message"></div>
+</section>
     </main>
 
     <footer>
@@ -45,3 +55,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
