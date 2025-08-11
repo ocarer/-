@@ -759,11 +759,27 @@ else if (currentPage === 'submit_record.html') {
                     zreImageUrl,
                     date: dateStr
                 };
-                submittedRecords.push(newRecord);
-                localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
-                alert('기록이 성공적으로 제출되었습니다!');
-                // 완료 후 챌린지 상세 페이지로 이동
-                window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
+                fetch('https://backend-w61z.onrender.com/api/records', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+        // 로그인한 경우, 토큰이 있으면 Authorization 헤더 추가(선택)
+                        ...(localStorage.getItem('authToken') ? { Authorization: 'Bearer ' + localStorage.getItem('authToken') } : {})
+                    },
+                    body: JSON.stringify(newRecord)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('기록이 성공적으로 제출되었습니다!');
+                            window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
+                        } else {
+                            alert('기록 제출 중 오류: ' + (data.message || '알 수 없는 오류'));
+                        }
+                    })
+                    .catch(err => {
+                        alert('서버 통신 오류: ' + err);
+                    });
             });
         }
     } else {
@@ -959,6 +975,7 @@ else if (currentPage === 'submit_record.html') {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
