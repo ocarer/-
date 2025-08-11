@@ -693,17 +693,85 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 이외 로그인, 회원가입, 프로필, 업로드 등 페이지 로직은 기존 코드와 동일합니다.
-    else if (currentPage === 'upload_challenge.html') {
-        if (!loggedInUser) {
-            alert('챌린지를 업로드하려면 로그인이 필요합니다.');
-            window.location.href = 'login.html';
+else if (currentPage === 'submit_record.html') {
+    if (!loggedInUser) {
+        alert('기록을 제출하려면 로그인이 필요합니다.');
+        window.location.href = 'login.html';
+        return;
+    }
+    const challengeId = urlParams.get('challengeId');
+    const recordChallengeInfo = document.getElementById('record-challenge-info');
+    const recordNotFoundMessage = document.getElementById('record-not-found');
+    const submitRecordForm = document.getElementById('submit-record-form');
+    const isZreVerifiedCheckbox = document.getElementById('is-zre-verified');
+    const zreProofFields = document.getElementById('zre-proof-fields');
+    let targetChallenge = challenges.find(c => c.id === challengeId);
+    if (!targetChallenge) {
+        targetChallenge = upcomingChallenges.find(c => c.id === challengeId);
+        if (targetChallenge && targetChallenge.isUpcoming) {
+            alert('업커밍 챌린지에는 기록을 제출할 수 없습니다.');
+            window.location.href = 'challenge_detail.html?id=' + challengeId + '&upcoming=true';
             return;
         }
-        const uploadForm = document.getElementById('upload-challenge-form');
-        if (uploadForm) {
-            // ... (기존 업로드 폼 로직)
-        }
     }
+    if (targetChallenge) {
+        // 챌린지 정보 표시
+        if (recordChallengeInfo) {
+            recordChallengeInfo.innerHTML = `
+                <h3>${targetChallenge.name}</h3>
+                <p><strong>난이도:</strong> ${(difficultyMap[targetChallenge.difficulty]?.name) || targetChallenge.difficulty}</p>
+                <p><strong>제작자:</strong> ${targetChallenge.creator}</p>
+            `;
+        }
+        if (recordNotFoundMessage) recordNotFoundMessage.style.display = 'none';
+        if (submitRecordForm) {
+            // Zre 인증 체크박스에 따라 필드 노출
+            if (isZreVerifiedCheckbox && zreProofFields) {
+                isZreVerifiedCheckbox.addEventListener('change', () => {
+                    zreProofFields.style.display = isZreVerifiedCheckbox.checked ? 'block' : 'none';
+                });
+            }
+            submitRecordForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const videoUrl = document.getElementById('record-video-url').value.trim();
+                const comment = document.getElementById('record-comment').value.trim();
+                const recordImageUrl = document.getElementById('record-image-url')?.value.trim() || '';
+                const isZre = isZreVerifiedCheckbox && isZreVerifiedCheckbox.checked;
+                const zreVideoUrl = isZre ? document.getElementById('zre-video-url')?.value.trim() : '';
+                const zreImageUrl = isZre ? document.getElementById('zre-image-url')?.value.trim() : '';
+
+                if (!videoUrl) {
+                    alert('플레이 영상 URL을 입력해주세요.');
+                    return;
+                }
+                // 날짜 포맷: YYYY-MM-DD HH:mm
+                const now = new Date();
+                const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+                const newRecord = {
+                    challengeId: targetChallenge.id,
+                    submitter: loggedInUser.nickname,
+                    videoUrl,
+                    comment,
+                    recordImageUrl,
+                    isZre,
+                    zreVideoUrl,
+                    zreImageUrl,
+                    date: dateStr
+                };
+                submittedRecords.push(newRecord);
+                localStorage.setItem('submittedRecords', JSON.stringify(submittedRecords));
+                alert('기록이 성공적으로 제출되었습니다!');
+                // 완료 후 챌린지 상세 페이지로 이동
+                window.location.href = `challenge_detail.html?id=${targetChallenge.id}`;
+            });
+        }
+    } else {
+        if (recordChallengeInfo) recordChallengeInfo.innerHTML = '';
+        if (recordNotFoundMessage) recordNotFoundMessage.style.display = 'block';
+        if (submitRecordForm) submitRecordForm.style.display = 'none';
+    }
+}
     else if (currentPage === 'my_profile.html') {
         if (!loggedInUser) {
             alert('프로필을 보려면 로그인이 필요합니다.');
@@ -891,6 +959,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 } // <-- ADD THIS!
 }); // <-- Keep this to close DOMContentLoaded event
+
 
 
 
