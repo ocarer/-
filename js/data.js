@@ -10,7 +10,7 @@ const challenges = [
             views: 4500,
             completions: 3,
             attempts: 2000,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+            videoUrl: 'https://www.youtube.com/watch?v=Ed6U_NmhWPk',
             imageUrl: './the_hell_challenge.png'
         },
         {
@@ -26,7 +26,7 @@ const challenges = [
             attempts: 0,
             videoUrl: 'https://www.youtube.com/embed/your_chaos_ship_official_video',
             isZre: true,
-            zreVideoUrl: 'https://www.youtube.com/embed/chaos_ship_zre_proof_video',
+            zreVideoUrl: 'https://www.youtube.com/watch?v=p3eM8utDvJ8',
             zreImageUrl: './chaos_ship_zre_proof.png',
             imageUrl: './chaos_ship.png'
         },
@@ -41,7 +41,7 @@ const challenges = [
             views: 50,
             completions: 1,
             attempts: 100,
-            videoUrl: 'https://www.youtube.com/embed/relief2_video_url',
+            videoUrl: 'https://www.youtube.com/watch?v=xXKBQAr_nv0',
             imageUrl: './relief_2.png'
         },
         {
@@ -79,7 +79,9 @@ const challenges = [
             verifier: 'GDVerifierPro',
             levelId: '123872401',
             views: 1200,
-            completions: 22
+            completions: 22,
+            videoUrl: 'https://www.youtube.com/watch?v=9roZ0X9GKPk',
+            imageUrl: './NVEDA.png'
         },
         {
             id: '7', rank: 7,
