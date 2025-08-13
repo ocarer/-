@@ -54,7 +54,7 @@ const challenges = [
             levelId: '72591414',
             views: 2500,
             completions: 15,
-            videoUrl: '',
+            videoUrl: 'https://youtu.be/fjk6_v8lpVs',
             imageUrl: './rebition_2.png'
         },
         {
