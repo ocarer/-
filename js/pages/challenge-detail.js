@@ -1,8 +1,9 @@
 import { challenges, upcomingChallenges } from '../data.js';
 import { difficultyMap } from '../config.js';
 import { copyToClipboard } from '../ui.js';
+import { BACKEND_API_URL } from '../config.js';
 
-export function initChallengeDetailPage() {
+export async function initChallengeDetailPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const challengeId = urlParams.get('id');
     const isUpcoming = urlParams.get('upcoming') === 'true';
@@ -66,40 +67,51 @@ export function initChallengeDetailPage() {
         document.querySelector('.challenge-detail-page .copy-btn')?.addEventListener('click', (event) => {
             copyToClipboard(event.target.dataset.id, event.target);
         });
+
         const recordsListContainer = document.getElementById('records-list-container');
-        const submittedRecords = JSON.parse(localStorage.getItem('submittedRecords')) || [];
-        const relevantRecords = submittedRecords.filter(record => record.challengeId === foundChallenge.id);
-        if (recordsListContainer) {
-            if (relevantRecords.length > 0) {
-                recordsListContainer.innerHTML = '';
-                relevantRecords.forEach(record => {
-                    const recordCard = document.createElement('div');
-                    recordCard.classList.add('record-card');
-                    if (record.isZre) recordCard.classList.add('zre-verified');
-                    let zreProofHtml = '';
-                    if (record.isZre) {
-                        zreProofHtml = `
-                            <div class="zre-proof">
-                                <h4>✅ Zre 인증됨</h4>
-                                ${record.zreVideoUrl && record.zreVideoUrl !== '' ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
-                                ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;" onerror="this.onerror=null;this.src='https://placehold.co/300x200/E0E0E0/333333?text=No+Image';">` : ''}
+        try {
+            const response = await fetch(`${BACKEND_API_URL}/api/records?challengeId=${challengeId}`);
+            const records = await response.json();
+            const relevantRecords = records.data || [];
+
+            if (recordsListContainer) {
+                if (relevantRecords.length > 0) {
+                    recordsListContainer.innerHTML = '';
+                    relevantRecords.forEach(record => {
+                        const recordCard = document.createElement('div');
+                        recordCard.classList.add('record-card');
+                        if (record.isZre) recordCard.classList.add('zre-verified');
+                        let zreProofHtml = '';
+                        if (record.isZre) {
+                            zreProofHtml = `
+                                <div class="zre-proof">
+                                    <h4>✅ Zre 인증됨</h4>
+                                    ${record.zreVideoUrl && record.zreVideoUrl !== '' ? `<p><strong>인증 영상:</strong> <a href="${record.zreVideoUrl}" target="_blank">${record.zreVideoUrl}</a></p>` : ''}
+                                    ${record.zreImageUrl && record.zreImageUrl !== '' ? `<p><strong>인증 사진:</strong> <a href="${record.zreImageUrl}" target="_blank">사진 보기</a></p><img src="${record.zreImageUrl}" alt="Zre Proof Image" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px;" onerror="this.onerror=null;this.src='https://placehold.co/300x200/E0E0E0/333333?text=No+Image';">` : ''}
+                                </div>
+                            `;
+                        }
+                        recordCard.innerHTML = `
+                            <div class="record-header">
+                                <span class="record-submitter">${record.submitter}</span>
+                                ${record.frame ? `<span class="record-frame">(${record.frame})</span>` : ''}
+                                <span class="record-date">${record.date}</span>
                             </div>
+                            <p class="record-comment">${record.comment}</p>
+                            <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
+                            ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';"></div>` : ''}
+                            ${zreProofHtml}
                         `;
-                    }
-                    recordCard.innerHTML = `
-                        <div class="record-header">
-                            <span class="record-submitter">${record.submitter}</span>
-                            <span class="record-date">${record.date}</span>
-                        </div>
-                        <p class="record-comment">${record.comment}</p>
-                        <p class="record-video"><a href="${record.videoUrl}" target="_blank">플레이 영상 보기</a></p>
-                        ${record.recordImageUrl && record.recordImageUrl !== '' ? `<div class="record-image"><img src="${record.recordImageUrl}" alt="클리어 이미지" onerror="this.onerror=null;this.src='https://placehold.co/200x150/E0E0E0/333333?text=No+Image';"></div>` : ''}
-                        ${zreProofHtml}
-                    `;
-                    recordsListContainer.appendChild(recordCard);
-                });
-            } else {
-                recordsListContainer.innerHTML = '<p class="no-records-message">아직 이 챌린지에 대한 클리어 기록이 없습니다.</p>';
+                        recordsListContainer.appendChild(recordCard);
+                    });
+                } else {
+                    recordsListContainer.innerHTML = '<p class="no-records-message">아직 이 챌린지에 대한 클리어 기록이 없습니다.</p>';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching records:', error);
+            if (recordsListContainer) {
+                recordsListContainer.innerHTML = '<p class="no-records-message">기록을 불러오는 중 오류가 발생했습니다.</p>';
             }
         }
     } else {

@@ -46,6 +46,7 @@ export function initSubmitRecordPage() {
                 const videoUrl = document.getElementById('record-video-url').value.trim();
                 const comment = document.getElementById('record-comment').value.trim();
                 const recordImageUrl = document.getElementById('record-image-url')?.value.trim() || '';
+                const frame = document.getElementById('record-frame')?.value.trim() || '';
                 const isZre = isZreVerifiedCheckbox && isZreVerifiedCheckbox.checked;
                 const zreVideoUrl = isZre ? document.getElementById('zre-video-url')?.value.trim() : '';
                 const zreImageUrl = isZre ? document.getElementById('zre-image-url')?.value.trim() : '';
@@ -64,6 +65,7 @@ export function initSubmitRecordPage() {
                     videoUrl,
                     comment,
                     recordImageUrl,
+                    frame,
                     isZre,
                     zreVideoUrl,
                     zreImageUrl,
